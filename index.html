@@ -8,21 +8,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/favico/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favico/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favico/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./assets/favico/site.webmanifest" />
+    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
     />
+    <link rel="stylesheet" href="./assets/style.css" />
     <title>Gereksiz Posta's Personal</title>
   </head>
   <body>
-    <header>
-      <nav
-        class="navbar is-link"
+    <section class = "section mt-0 pt-0">
+      <div class = "container">
+    <nav
+        class="navbar is-link pl-3"
         role="navigation"
         aria-label="main navigation"
       >
         <div class="navbar-brand">
           <a class="navbar-item" href="#">
-            <img src="" width="112" height="28" />
+            <img
+              src="./assets/favico/apple-touch-icon.png"
+              width="28"
+              height="28"
+            />
           </a>
 
           <a
@@ -40,20 +64,19 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
-            <a class="navbar-item"> Home </a>
-
-            <a class="navbar-item"> Documentation </a>
+            <a class="navbar-item" href="./"> Home </a>
+            <!-- <a class="navbar-item"> Documentation </a> -->
           </div>
         </div>
       </nav>
-    </header>
-    <section class="section">
-      <div class="container">
-		<h1 class="title">This is my personal site.</h1>
-		<p>
-			Test
-		</p>
       </div>
+      <div class="container mt-3 px-5">
+        <h1 class="title">This is my personal site.</h1>
+        <p>Test</p>
+      </div>
+      <footer>
+        <script src="./assets/script.js"></script>
+      </footer>
     </section>
   </body>
 </html>
