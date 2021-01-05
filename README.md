@@ -1,4 +1,4 @@
-### This is Gereksiz Posta [Gereksiz]
+### This is Gereksiz
 
 Coding is a hobby of mine. I know basic javascript and some python. 
 - 🔭 I’m currently working on: Nothing really... 
