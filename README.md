@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # This is Gereksiz
+=======
+### This is Gereksiz
+>>>>>>> 47d5d72e5c2e54d33b8d17d4de1e07480734a4f6
 
 Coding is a hobby of mine. I know basic HTML, CSS, javascript, and some python.
 
