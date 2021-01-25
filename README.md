@@ -4,7 +4,7 @@ Coding is a hobby of mine. I know basic HTML, CSS, javascript, and some python.
 
 - 🔭 I’m currently working on: Nothing really...
 - 🌱 I’m currently learning: JavaScript / Python
-- 🤔 Wondering what to do next...
+- 🤔 Wondering what to do next... Maybe React?
 
 <!--
 **GereksizPosta/GereksizPosta** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
