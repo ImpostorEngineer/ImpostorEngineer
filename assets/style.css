@@ -1,5 +1,34 @@
-@import url('https://fonts.googleapis.com/css?family=Inter:400,700,900');
+:root {
+  --darkViolet: #10002b;
+  --violet: #240046;
+  --indigo: #3c096c;
+  --purple: #5a189a;
+  --frenchViolet: #7b2cbf;
+  --darkOrchid: #9d4edd;
+  --lightViolet: #c77dff;
+  --lightOrchid: #e0aaff;
+}
 
-* {
-	font-family: Inter, sans-serif !important;
+/* @import url('https://fonts.googleapis.com/css?family=Inter:400,700,900'); */
+
+body {
+  font-family: Inter, sans-serif;
+}
+a:hover {
+  color: var(--darkOrchid);
+}
+.twitch:hover,
+.github:hover,
+.twitter:hover {
+  color: var(--darkOrchid);
+  text-shadow: 1px 1px 3px #000;
+}
+.twitch {
+  color: rgb(120, 52, 221);
+}
+.github {
+  color: #333;
+}
+.twitter {
+  color: #1da1f2;
 }
