@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Roboto, Arial, Helvetica, sans-serif;
+      }
+      .container {
+        margin: auto;
+        margin-top: 20px;
+        width: 550px;
+      }
+      .data {
+        margin-top: 10px;
+      }
+      .headers {
+        font-weight: 700;
+      }
+      .row {
+        display: flex;
+        gap: 5px;
+        font-size: 0.75em;
+        padding: 5px;
+      }
+      .row:hover {
+        background-color: #ccc;
+      }
+      .row > div {
+        flex-grow: 0; /* do not grow   - initial value: 0 */
+        flex-shrink: 0; /* do not shrink - initial value: 1 */
+      }
+      .row > div:first-child {
+        flex-basis: 3em; /* width/height  - initial value: auto */
+      }
+      .row > div:nth-child(2) {
+        flex-basis: 3em; /* width/height  - initial value: auto */
+      }
+      .row > div:nth-child(3) {
+        flex-basis: 7em; /* width/height  - initial value: auto */
+      }
+      .row > div:nth-child(4) {
+        flex-basis: 7em; /* width/height  - initial value: auto */
+      }
+      .row > div:nth-child(5) {
+        flex-basis: 6em; /* width/height  - initial value: auto */
+      }
+      .row > div:nth-child(6) {
+        flex-basis: 8em; /* width/height  - initial value: auto */
+      }
+      .row > div:nth-child(7) {
+        flex-basis: 6em; /* width/height  - initial value: auto */
+      }
+      .cikinput {
+        border-radius: 5px;
+        padding: 6px;
+        width: 250px;
+        border: 1px solid #ccc;
+      }
+      .formlist {
+        width: 70px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .yearinput {
+        width: 90px;
+        padding: 6px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      .searchButton {
+        border-radius: 5px;
+        padding: 5px 8px;
+        background-color: #900;
+        color: #fff;
+        appearance: button;
+        border: 1px solid #ccc;
+      }
+    </style>
+    <title>SEC Data</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="compInfo">
+        <form method="get" action="">
+          <input
+            type="text"
+            name="cik"
+            id="cikinput"
+            class="cikinput"
+            placeholder="Enter company CIKs, coma separated"
+          />
+          <select name="formName" id="formlist" class="formlist">
+            <option value="">All</option>
+            <option value="10-K">10-K</option>
+            <option value="10-Q">10-Q</option>
+          </select>
+          <input type="number" name="year" id="yearinput" class="yearinput" placeholder="Beginning year" />
+          <button onclick="" type="submit" class="searchButton">Search</button>
+        </form>
+      </div>
+      <div class="data">
+        <div class="row headers">
+          <div>TIC</div>
+          <div>Year</div>
+          <div>Filing Date</div>
+          <div>Report Date</div>
+          <div>Form</div>
+          <div>Description</div>
+          <div>Doc</div>
+        </div>
+      </div>
+      <div class="data" id="data"> </div>
+    </div>
+  </body>
+  <script>
+    const form = document.querySelector('form');
+    const cik = document.querySelector('.cikinput');
+    const formlist = document.querySelector('.formlist');
+    const yearinput = document.querySelector('.yearinput');
+    form.addEventListener('submit', formSubmitted);
+
+    async function getFileLists(cik, formType, year) {
+      const url = `https://data.sec.gov/submissions/CIK${cik}.json`;
+      const data = await fetch(url).then((response) => response.json());
+      let fileData = [];
+      for (let i = 0; i < data.filings.recent.accessionNumber.length; i++) {
+        let tic = '-';
+        if (data.tickers[0]) {
+          tic = data.tickers[0];
+        }
+        fileData.push({
+          tic: tic,
+          filingYear: data.filings.recent.filingDate[i].split('-')[0],
+          reportYear: data.filings.recent.reportDate[i].split('-')[0],
+          accessionNumber: data.filings.recent.accessionNumber[i],
+          filingDate: data.filings.recent.filingDate[i],
+          reportDate: data.filings.recent.reportDate[i],
+          form: data.filings.recent.form[i],
+          primaryDocDescription: data.filings.recent.primaryDocDescription[i],
+          primaryDocument: data.filings.recent.primaryDocument[i],
+        });
+      }
+      if (formType) {
+        finalData = fileData.filter((f) => f.form == formType);
+      } else {
+        finalData = fileData;
+      }
+      if (year) {
+        finalData = finalData.filter((y) => y.reportYear >= year);
+      } else {
+        finalData = finalData;
+      }
+      renderHtml(finalData, cik);
+    }
+    function renderHtml(finalData, cik) {
+      const filingSize = finalData.length;
+      for (let i = 0; i < filingSize; i++) {
+        const folderName = finalData[i].accessionNumber.replaceAll('-', '');
+        let financialData = '';
+        if ((finalData[i].form == '10-K') | (finalData[i].form == '10-Q')) {
+          financialData = `&nbsp;|&nbsp;<a href='https://www.sec.gov/Archives/edgar/data/${cik}/${folderName}/Financial_Report.xlsx'>XLS</a>`;
+        }
+        document.querySelector('#data').innerHTML += `<div class='row'>
+    <div>${finalData[i].tic}</div>
+       <div>${finalData[i].reportYear}</div>
+    <div>${finalData[i].filingDate}</div>
+     <div>${finalData[i].reportDate}</div>
+     <div>${finalData[i].form}</div>
+     <div>${finalData[i].primaryDocDescription}</div>
+     <div><a href='https://www.sec.gov/Archives/edgar/data/${cik}/${folderName}/${finalData[i].primaryDocument}' target='_blank'>Doc</a>${financialData}
+    </div>
+     </div>
+     `;
+      }
+    }
+    function getFilings(cikList, formType, year) {
+      for (let i = 0; i < cikList.length; i++) {
+        getFileLists(cikList[i], formType, year);
+      }
+    }
+    function formSubmitted(event) {
+      event.preventDefault();
+      document.querySelector('#data').innerHTML = '';
+      const cikList = cik.value;
+      const formName = formlist.value;
+      const year = yearinput.value;
+      let companies = cikList.replaceAll(' ', '').split(',');
+      getFilings(companies, formName, year);
+    }
+  </script>
+</html>
