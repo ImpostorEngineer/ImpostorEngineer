@@ -15,13 +15,14 @@ body {
   font-family: Inter, sans-serif;
 }
 a:hover {
-  color: var(--darkOrchid);
+  color: var(--darkViolet);
 }
 .twitch:hover,
 .github:hover,
-.twitter:hover {
-  color: var(--darkOrchid);
-  text-shadow: 1px 1px 3px #000;
+.twitter:hover,
+.kaggle:hover {
+  color: var(--darkViolet);
+  filter: drop-shadow(1px 1px 3px #000);
 }
 .twitch {
   color: rgb(120, 52, 221);
@@ -34,4 +35,9 @@ a:hover {
 }
 .kaggle {
   color: #20beff;
+}
+#logos {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
 }
