@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        font-family: 'Roboto', sans-serif;
+      }
+      /* .main-container {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+      } */
+      .container {
+        width: 900px;
+        margin: auto;
+      }
+    </style>
+    <title>Ilhan Demirer</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="main-container">
+        <div id="employmentChart"></div>
+        <!-- <div class="controls m-1">
+          <form>
+            <input type="checkbox" name="totalEmpCheck" id="totalEmpCheck" />
+            <label for="totalEmpCheck">Total Employment</label> <br />
+            <input type="checkbox" name="hospitalityEmpCheck" id="hospitalityEmpCheck" />
+            <label for="hospitalityEmpCheck">Hospitality Employment</label>
+          </form>
+        </div> -->
+      </div>
+      <div id="percentChangeChart"></div>
+    </div>
+  </body>
+  <script>
+    const key = 'fed63d4a94724905ac40ce8472c10e4e';
+    const startyear = '2017';
+    const endyear = '2022';
+    const series1 = 'CES0000000001';
+    const series2 = 'CES7000000001';
+    const series1URL = `https://api.bls.gov/publicAPI/v2/timeseries/data/${series1}/?registrationkey=${key}&startyear=${startyear}&endyear=${endyear}`;
+    const series2URL = `https://api.bls.gov/publicAPI/v2/timeseries/data/${series2}/?registrationkey=${key}&startyear=${startyear}&endyear=${endyear}`;
+    let chartData = {};
+    let percentData = {};
+
+    async function compileChart() {
+      const totalEmpData = await getLaborStats(series1URL);
+      const hospitalityEmpData = await getLaborStats(series2URL);
+      // Actual Numbers in 000
+      const totalEmpChartData = await createDataArray(totalEmpData);
+      const hospitalityEmpChartData = await createDataArray(hospitalityEmpData);
+      chartData.series1 = totalEmpChartData.employmentData;
+      chartData.series2 = hospitalityEmpChartData.employmentData;
+      apexChart(chartData, totalEmpChartData.dateData, '#employmentChart');
+      // Percent Change
+      const totalPercentChange = await percentChange(totalEmpData);
+      const hospitalityPercentChange = await percentChange(hospitalityEmpData);
+      percentData.series1 = totalPercentChange.employmentData;
+      percentData.series2 = hospitalityPercentChange.employmentData;
+      apexChart(percentData, totalPercentChange.dateData, '#percentChangeChart');
+    }
+
+    async function getLaborStats(dataURL) {
+      const data = await fetch(dataURL, {
+        method: 'GET',
+      }).then((response) => response.json());
+      return data;
+    }
+
+    async function createDataArray(data) {
+      let employmentData = [];
+      let dateData = [];
+      const seriesData = await data.Results.series[0].data;
+      for (let i = 0; i < seriesData.length; i++) {
+        employmentData.unshift(seriesData[i].value);
+        dateData.unshift(seriesData[i].year + '-' + seriesData[i].period);
+      }
+      return { employmentData, dateData };
+    }
+
+    async function percentChange(data) {
+      let employmentData = [];
+      let dateData = [];
+      const seriesData = await data.Results.series[0].data;
+      for (let i = 1; i < seriesData.length; i++) {
+        employmentData.unshift((seriesData[i - 1].value / seriesData[i].value - 1) * 100);
+        dateData.unshift(seriesData[i - 1].year + '-' + seriesData[i - 1].period);
+      }
+      return { employmentData, dateData };
+    }
+
+    function apexChart(data, xcategories, location) {
+      let ChartOptions = {
+        series: [
+          {
+            name: 'Total Employment',
+            data: data.series1,
+          },
+          {
+            name: 'Leisure & Hospitality',
+            data: data.series2,
+          },
+        ],
+        theme: {
+          mode: 'dark',
+          palette: 'palette6',
+          monochrome: {
+            enabled: false,
+            color: '#255aee',
+            shadeTo: 'light',
+            shadeIntensity: 0.65,
+          },
+        },
+        chart: {
+          background: '#000',
+          dropShadow: {
+            enabled: true,
+            enabledOnSeries: [0, 1, 2],
+            top: 1,
+            left: 1,
+            blur: 0,
+            color: '#000',
+            opacity: 1,
+          },
+          fontFamily: 'Roboto, Arial, sans-serif',
+          height: 400,
+          width: 800,
+          type: 'line',
+          zoom: {
+            enabled: false,
+          },
+        },
+        colors: ['#d90429', '#ffc300'],
+        fill: {
+          type: 'solid',
+          opacity: [1, 1],
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'straight',
+          width: 3,
+        },
+        title: {
+          text: 'U.S. Employment',
+          align: 'center',
+        },
+        xaxis: {
+          categories: xcategories,
+          labels: {
+            rotate: -45,
+            maxHeight: 80,
+          },
+          title: {
+            text: 'Source: BLS',
+            style: {
+              color: '#9C9C9C',
+              fontSize: '10px',
+              fontFamily: 'Roboto, sans-serif',
+              fontWeight: 400,
+            },
+          },
+          tickAmount: 15,
+        },
+        yaxis: [
+          { seriesName: 'Total Employment', forceNiceScale: true, decimalsInFloat: 2 },
+          { opposite: true, seriesName: 'Leisure & Hospitality', forceNiceScale: true, decimalsInFloat: 2 },
+        ],
+      };
+      const chart = new ApexCharts(document.querySelector(location), ChartOptions);
+
+      // const showTotalEmpSeries = document.querySelector('#totalEmpCheck');
+      // const showHospEmpSeries = document.querySelector('#hospitalityEmpCheck');
+
+      chart.render();
+      // showTotalEmpSeries.addEventListener('change', function () {
+      //   if (this.checked) {
+      //     chart.toggleSeries('Total Employment');
+      //   } else {
+      //     chart.toggleSeries('Total Employment');
+      //   }
+      // });
+      // showHospEmpSeries.addEventListener('change', function () {
+      //   if (!this.checked) {
+      //     chart.toggleSeries('Leisure & Hospitality');
+      //   } else {
+      //     chart.toggleSeries('Leisure & Hospitality');
+      //   }
+      // });
+    }
+    compileChart();
+  </script>
+</html>
