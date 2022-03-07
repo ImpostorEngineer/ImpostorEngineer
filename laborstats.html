@@ -20,6 +20,7 @@
       .container {
         width: 900px;
         margin: auto;
+        margin-top: 20px;
       }
     </style>
     <title>Ilhan Demirer</title>
@@ -59,13 +60,18 @@
       const hospitalityEmpChartData = await createDataArray(hospitalityEmpData);
       chartData.series1 = totalEmpChartData.employmentData;
       chartData.series2 = hospitalityEmpChartData.employmentData;
-      apexChart(chartData, totalEmpChartData.dateData, '#employmentChart');
+      apexChart(chartData, totalEmpChartData.dateData, '#employmentChart', 'U.S. Employment');
       // Percent Change
       const totalPercentChange = await percentChange(totalEmpData);
       const hospitalityPercentChange = await percentChange(hospitalityEmpData);
       percentData.series1 = totalPercentChange.employmentData;
       percentData.series2 = hospitalityPercentChange.employmentData;
-      apexChart(percentData, totalPercentChange.dateData, '#percentChangeChart');
+      apexChart(
+        percentData,
+        totalPercentChange.dateData,
+        '#percentChangeChart',
+        'U.S. Employment vs 36 month prior % Change'
+      );
     }
 
     async function getLaborStats(dataURL) {
@@ -90,14 +96,14 @@
       let employmentData = [];
       let dateData = [];
       const seriesData = await data.Results.series[0].data;
-      for (let i = 1; i < seriesData.length; i++) {
-        employmentData.unshift((seriesData[i - 1].value / seriesData[i].value - 1) * 100);
-        dateData.unshift(seriesData[i - 1].year + '-' + seriesData[i - 1].period);
+      for (let i = 35; i < seriesData.length; i++) {
+        employmentData.unshift((seriesData[i - 35].value / seriesData[i].value - 1) * 100);
+        dateData.unshift(seriesData[i - 35].year + '-' + seriesData[i - 35].period);
       }
       return { employmentData, dateData };
     }
 
-    function apexChart(data, xcategories, location) {
+    function apexChart(data, xcategories, location, title) {
       let ChartOptions = {
         series: [
           {
@@ -151,7 +157,7 @@
           width: 3,
         },
         title: {
-          text: 'U.S. Employment',
+          text: title,
           align: 'center',
         },
         xaxis: {
