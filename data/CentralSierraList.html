@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+      #employeeList > :nth-child(12n + 1),
+      #employeeList > :nth-child(12n + 2),
+      #employeeList > :nth-child(12n + 3),
+      #employeeList > :nth-child(12n + 4),
+      #employeeList > :nth-child(12n + 5),
+      #employeeList > :nth-child(12n + 6) {
+        background-color: #bbb;
+      }
+      #employeeList > div {
+        padding: 2px;
+      }
+      /* #employeeList > :nth-child(3n + 1) {
+        background-color: #fff;
+      } */
+    </style>
+
+    <title>Central Sierra Employee List</title>
+  </head>
+  <body>
+    <div class="container p-4">
+      <form action="" method="get" style="width: 500px">
+        <div class="grid grid-cols-2 gap-1">
+          <div class="mb-5">
+            <input
+              class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              value=""
+              placeholder="Search"
+              id="search"
+              name="search"
+            />
+          </div>
+          <div class="mb-5">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+              onclick=""
+              >Search</button
+            >
+          </div>
+        </div>
+      </form>
+
+      <div id="employeeList" class="grid grid-cols-6">
+        <div class="font-bold">EmpID</div>
+        <div class="font-bold">First Name</div>
+        <div class="font-bold">Last Name</div>
+        <div class="font-bold">Branch</div>
+        <div class="font-bold">Title</div>
+        <div class="font-bold">Base Monthly Salary</div>
+      </div>
+    </div>
+    <script>
+      // const form = document.querySelector('form');
+      // const input = document.querySelector('input');
+      // form.addEventListener('submit', search);
+
+      async function empList() {
+        const data = await fetch('./CentralSierraData.json', { mode: 'same-origin' }).then((r) => r.json());
+        // return data;
+        renderHTML(data);
+      }
+
+      async function search(name) {
+        const data = await empList();
+        console.log(data);
+        renderHTML(data);
+      }
+
+      function renderHTML(data) {
+        for (let e = 0; e < data.length; e++) {
+          document
+            .getElementById('employeeList')
+            .insertAdjacentHTML(
+              'beforeend',
+              '<div>' +
+                data[e].EmpID +
+                '</div><div>' +
+                data[e].FirstName +
+                '</div><div>' +
+                data[e].LastName +
+                '</div><div>' +
+                data[e].Branch +
+                '</div><div>' +
+                data[e].Title +
+                '</div><div>' +
+                data[e].BaseMonthlySalary +
+                '</div>'
+            );
+        }
+      }
+      empList();
+    </script>
+  </body>
+</html>
