@@ -114,9 +114,7 @@ export default function SECFilings() {
             <div>Doc</div>
           </div>
         </div>
-        <div className={secStyles.data} id='data'>
-          {' '}
-        </div>
+        <div className={secStyles.dataRows} id='data'></div>
       </div>
     </Layout>
   );
