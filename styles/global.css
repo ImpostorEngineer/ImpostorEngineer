@@ -1,27 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Merriweather:wght@200;400;700&display=swap');
-/* :root {
-  --lightTextColor: #000;
-  --lightBackgroundColor: #ddd;
-  --lightLinkColor: #000;
-  --lightHoverColor: #e67e22;
-  --lightShadow: #333;
-  --lightLText: #666;
-
-  /* Dark Theme */ /*
-  --darkTextColor: #fff;
-  --darkBackgroundColor: #222222;
-  --darkLinkColor: #fff;
-  --darkHoverColor: #e67e22;
-  --darkShadow: #000;
-  --lightDText: #ccc;
-
-  --text: var(--lightTextColor);
-  --background: var(--lightBackgroundColor);
-  --hover: var(--lightHoverColor);
-  --link: var(--lightLinkColor);
-  --shadow: var(--lightShadow);
-  --lightText: var(--lightLText);
-} */
 body,
 body[data-theme='light'] {
   --text: #000;
@@ -45,8 +21,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
-    Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'InterVariable', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 1rem;
   background-color: var(--background);

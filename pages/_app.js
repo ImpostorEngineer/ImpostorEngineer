@@ -1,5 +1,6 @@
 import '../styles/global.css';
 import Script from 'next/script';
+import '@fontsource/inter/variable-full.css';
 
 export default function App({ Component, pageProps }) {
   return (
