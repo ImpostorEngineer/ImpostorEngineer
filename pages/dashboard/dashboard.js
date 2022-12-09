@@ -112,7 +112,7 @@ const occChartOptions = {
     toolbar: {
       show: false,
     },
-    fontFamily: 'Inter, Roboto, Arial, sans-serif',
+    fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
     type: 'line',
     zoom: {
       enabled: false,
@@ -155,7 +155,7 @@ const occChartOptions = {
       style: {
         color: '#9C9C9C',
         fontSize: '10px',
-        fontFamily: 'Inter, Roboto, sans-serif',
+        fontFamily: 'InterVariable, Roboto, sans-serif',
         fontWeight: 400,
       },
     },
@@ -200,7 +200,7 @@ const ADRChartOptions = {
     toolbar: {
       show: false,
     },
-    fontFamily: 'Inter, Roboto, Arial, sans-serif',
+    fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
     type: 'line',
     zoom: {
       enabled: false,
@@ -243,7 +243,7 @@ const ADRChartOptions = {
       style: {
         color: '#9C9C9C',
         fontSize: '10px',
-        fontFamily: 'Inter, Roboto, sans-serif',
+        fontFamily: 'InterVariable, Roboto, sans-serif',
         fontWeight: 400,
       },
     },
@@ -288,7 +288,7 @@ const revPARChartOptions = {
     toolbar: {
       show: false,
     },
-    fontFamily: 'Inter, Roboto, Arial, sans-serif',
+    fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
     type: 'line',
     zoom: {
       enabled: false,
@@ -331,7 +331,7 @@ const revPARChartOptions = {
       style: {
         color: '#9C9C9C',
         fontSize: '10px',
-        fontFamily: 'Inter, Roboto, sans-serif',
+        fontFamily: 'InterVariable, Roboto, sans-serif',
         fontWeight: 400,
       },
     },
@@ -376,7 +376,7 @@ const tsaChartOptions = {
     toolbar: {
       show: false,
     },
-    fontFamily: 'Inter, Roboto, Arial, sans-serif',
+    fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
     type: 'line',
     zoom: {
       enabled: false,
@@ -434,7 +434,7 @@ const tsaChartOptions = {
       style: {
         color: '#9C9C9C',
         fontSize: '10px',
-        fontFamily: 'Inter, Roboto, sans-serif',
+        fontFamily: 'InterVariable, Roboto, sans-serif',
         fontWeight: 400,
       },
     },
