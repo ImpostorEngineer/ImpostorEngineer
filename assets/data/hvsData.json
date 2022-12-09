@@ -1,0 +1,18 @@
+[
+  { "date": "2007", "occ": 1029156184, "roomsAvailable": 1637891504, "newSupply": 53795 },
+  { "date": "2008", "occ": 1003068718, "roomsAvailable": 1676800275, "newSupply": 106600 },
+  { "date": "2009", "occ": 940828664, "roomsAvailable": 1724566628, "newSupply": 130866 },
+  { "date": "2010", "occ": 1009962441, "roomsAvailable": 1753899529, "newSupply": 80364 },
+  { "date": "2011", "occ": 1057143108, "roomsAvailable": 1761956055, "newSupply": 22074 },
+  { "date": "2012", "occ": 1086378149, "roomsAvailable": 1769394128, "newSupply": 20378 },
+  { "date": "2013", "occ": 1108247634, "roomsAvailable": 1781428345, "newSupply": 32970 },
+  { "date": "2014", "occ": 1153449226, "roomsAvailable": 1791939165, "newSupply": 28797 },
+  { "date": "2015", "occ": 1181939744, "roomsAvailable": 1808351053, "newSupply": 44964 },
+  { "date": "2016", "occ": 1199578098, "roomsAvailable": 1833738042, "newSupply": 69553 },
+  { "date": "2017", "occ": 1228468632, "roomsAvailable": 1864892051, "newSupply": 85353 },
+  { "date": "2018", "occ": 1257480785, "roomsAvailable": 1901445248, "newSupply": 100145 },
+  { "date": "2019", "occ": 1281235008, "roomsAvailable": 1939501975, "newSupply": 104266 },
+  { "date": "2020 F", "occ": 792561966, "roomsAvailable": 1966655003, "newSupply": 74392 },
+  { "date": "2021 F", "occ": 1099706278, "roomsAvailable": 1992221518, "newSupply": 70047 },
+  { "date": "2022 F", "occ": 1281878639, "roomsAvailable": 2018706518, "newSupply": 72562 }
+]

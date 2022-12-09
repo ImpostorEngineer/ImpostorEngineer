@@ -1,0 +1,80 @@
+.container {
+  margin: auto;
+  margin-top: 20px;
+  width: 650px;
+}
+.data {
+  margin-top: 10px;
+}
+.headers {
+  font-weight: 700;
+}
+.row {
+  display: flex;
+  gap: 5px;
+  font-size: 0.75em;
+  padding: 5px;
+  color: var(--text);
+}
+.row:hover {
+  background-color: var(--shadow);
+  color: var(--lightText);
+}
+.row > div {
+  flex-grow: 1; /* do not grow   - initial value: 0 */
+  flex-shrink: 0; /* do not shrink - initial value: 1 */
+}
+.row > div:first-child {
+  flex-basis: 3em; /* width/height  - initial value: auto */
+}
+.row > div:nth-child(2) {
+  flex-basis: 3em; /* width/height  - initial value: auto */
+}
+.row > div:nth-child(3) {
+  flex-basis: 7em; /* width/height  - initial value: auto */
+}
+.row > div:nth-child(4) {
+  flex-basis: 7em; /* width/height  - initial value: auto */
+}
+.row > div:nth-child(5) {
+  flex-basis: 6em; /* width/height  - initial value: auto */
+}
+.row > div:nth-child(6) {
+  flex-basis: 8em; /* width/height  - initial value: auto */
+}
+.row > div:nth-child(7) {
+  flex-basis: 6em; /* width/height  - initial value: auto */
+}
+.cikinput {
+  border-radius: 5px;
+  padding: 6px;
+  width: 250px;
+  border: 1px solid #ccc;
+}
+.formlist {
+  width: 70px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.yearinput {
+  width: 90px;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.searchButton {
+  border-radius: 5px;
+  padding: 5px 8px;
+  background-color: #900;
+  color: #fff;
+  appearance: button;
+  border: 1px solid #ccc;
+}
+.form {
+  display: flex;
+  gap: 5px;
+}
+.form input {
+  flex-grow: 1;
+}
