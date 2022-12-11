@@ -3,7 +3,7 @@ title: 'Simple Count Down and Count Up JavaScript Examples'
 author: 'Impostor Engineer'
 date: '2022-12-10'
 draft: false
-slug: 'hello-world'
+slug: 'count-down-count-up'
 tags: ['code', 'JavaScript', 'count-up', 'count-down']
 banner: 'news-post-banner.png'
 ---
