@@ -158,10 +158,10 @@
   line-height: normal;
 }
 .maincontent {
-  display: flex;
+  /* display: flex; */
 }
 .post {
-  width: 800px;
+  width: 100%;
 }
 .footer {
   display: flex;
@@ -197,7 +197,7 @@
   font-weight: 600;
 }
 .postBody {
-  /* padding-left: 20px; */
+  width: 100%;
 }
 .postBody img {
   filter: drop-shadow(2px 6px 4px var(--shadow));

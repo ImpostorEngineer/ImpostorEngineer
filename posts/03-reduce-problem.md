@@ -54,3 +54,13 @@ const finalListofEvents = data.reduce(function (obj, day) {
     return obj;
 }, {});
 ```
+
+The output looks like this:
+
+```JSON
+finalListofEvents: {
+'2022-12-01': {events: [ {...}, {...} ]},
+'2022-12-02': {events: [ {...}, {...}, {...} ]},
+'2022-12-03': {events: [ {...}, {...} ]}
+}
+```

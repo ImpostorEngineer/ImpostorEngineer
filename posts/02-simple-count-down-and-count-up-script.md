@@ -14,12 +14,9 @@ I googled at first, there were many examples. I couldn't decipher some of them t
 
 ## Count Down Script
 
-For this example we are going to hardcode the `timeLeft`, I actually use the URL to set the timer, code commented. This script can count down for days, like days till Christmas. I didn't know how to `clearInterval` until I worked on this.
+For this example we are going to hardcode the `timeLeft`, I actually use the URL to set the timer, [here is the working example](https://impostor-twitch-overlays.vercel.app/countdown.html?time=5). This script can count down for days, like days till Christmas. I didn't know how to `clearInterval` until I worked on this.
 
 ```JS
-// const urlParams = new URLSearchParams(window.location.search);
-// let timeLeft = urlParams.get('time') * 60;
-
 let timeLeft = 5 // in minutes.
 let counting = setInterval(function () {
   if (timeLeft >= 0) {
@@ -47,7 +44,7 @@ let counting = setInterval(function () {
 
 ## Count Up Script
 
-You can set a `startTime` (in minutes) if you like, otherwise it will start from zero.
+You can set a `startTime` (in minutes) if you like, otherwise it will start from zero. [Here is the working example](https://impostor-twitch-overlays.vercel.app/countup.html).
 
 ```JS
 const urlParams = new URLSearchParams(window.location.search);

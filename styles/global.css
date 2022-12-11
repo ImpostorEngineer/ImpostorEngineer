@@ -50,8 +50,11 @@ img {
   color: #fff;
 }
 
-code {
+.hljs {
+  /* width: 90%; */
   font-size: 0.9rem;
+  border-radius: 15px;
+  box-shadow: 5px 5px 10px var(--shadow);
   white-space: pre;
   -ms-overflow-style: none;
   scrollbar-width: none;
