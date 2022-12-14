@@ -13,10 +13,10 @@ I always had this idea to make a [magic mirror](https://magicmirror.builders/). 
 Minimum Viable Product for the app was:
 
 - [x] pull `events` data from two calendars,
-- [x] sort them based on their start `datetime`,
-- [ ] list them under each day.
+- [x] sort the events based on their start `datetime`,
+- [ ] list each event under the corresponding day/date.
 
-I manage to get the calendar data (will make another post about this) from [Google Calendar API](https://developers.google.com/calendar/api/v3/reference/). Sorting was easy. I had to create a new datetime property to sort the events easily.
+I manage to get the calendar data (will make another post about this) from [Google Calendar API](https://developers.google.com/calendar/api/v3/reference/). Sorting was easy. I had to create a new datetime property to sort the events.
 
 Hard part was trying to figure out how to group all the events under each day. I don't have formal education in coding. I learned from watching some twitch streamers, youtube videos, and learned how to read manuals. My initial solution was a mess. It had multiple `for` loops and a few objects, but it worked, but it was a mess. Then I somehow remembered the [`Array.prototype.reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) function. I have seen [CodingGarden](https://www.twitch.tv/codinggarden) use it before, come to think of it.
 
