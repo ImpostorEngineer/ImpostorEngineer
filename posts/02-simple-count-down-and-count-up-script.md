@@ -5,7 +5,7 @@ date: '2022-12-10'
 draft: false
 slug: 'count-down-count-up'
 tags: ['code', 'JavaScript', 'count-up', 'count-down']
-banner: 'news-post-banner.png'
+banner: '02-count-up.png'
 ---
 
 I don't stream, but that doesn't mean that one day I won't. So I was working on my overlay ideas and decided to write a simple script that will count down for the beginning of the stream and count up for the duration of the stream.

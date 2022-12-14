@@ -26,9 +26,8 @@ export default function Navbar() {
             <Link href={item.link}>{item.name}</Link>
           </div>
         ))}
-
+        <div className={navbarStyle.twitchWrapper}>{isLive.amILive && <TwitchStatus />}</div>
         <div className={navbarStyle.themeSwitch}>
-          {isLive.amILive && <TwitchStatus />}
           <ChangeTheme />
         </div>
       </div>

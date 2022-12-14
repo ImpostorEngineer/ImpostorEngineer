@@ -5,7 +5,7 @@ date: '2022-12-09'
 draft: false
 slug: 'hello-world'
 tags: ['hello', 'world']
-banner: 'news-post-banner.png'
+banner: '01-hello-world.png'
 ---
 
 ## First Post

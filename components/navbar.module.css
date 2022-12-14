@@ -19,17 +19,31 @@
   text-align: right;
 }
 .showNavBar {
-  display: block !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
 }
 .themeSwitch {
   margin-left: auto;
   text-align: right;
+  height: 32px;
+  margin-top: 5px;
 }
 .streaming {
   margin-right: 25px !important;
   color: #c00 !important;
   animation: blink 1s linear infinite;
   text-shadow: 1px 1px 3px var(--shadow);
+}
+.twitchWrapper {
+  flex: 2;
+  justify-items: flex-end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 32px;
 }
 @keyframes blink {
   0% {
