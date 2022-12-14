@@ -10,13 +10,19 @@ banner: '03-reduce-problem.png'
 
 I always had this idea to make a [magic mirror](https://magicmirror.builders/). One of the components of that is calendar events. Instead of using the software, I wanted to create my own event lister. I also have the idea to wall-mount a tablet to use as a family calendar. This app will list the calender events and the current weather forecast. Here I share my solution for listing the events under each day. I hope you find it useful!
 
-Minimum Viable Product for the app was: pull `events` data from two calendars, sort them based on their start `datetime`, and list them under each day. I manage to get the calendar data (will make another post about this) from [Google Calendar API](https://developers.google.com/calendar/api/v3/reference/). Sorting was easy. I had to create a new datetime property to sort the events easily.
+Minimum Viable Product for the app was:
+
+- [x] pull `events` data from two calendars,
+- [x] sort them based on their start `datetime`,
+- [ ] list them under each day.
+
+I manage to get the calendar data (will make another post about this) from [Google Calendar API](https://developers.google.com/calendar/api/v3/reference/). Sorting was easy. I had to create a new datetime property to sort the events easily.
 
 Hard part was trying to figure out how to group all the events under each day. I don't have formal education in coding. I learned from watching some twitch streamers, youtube videos, and learned how to read manuals. My initial solution was a mess. It had multiple `for` loops and a few objects, but it worked, but it was a mess. Then I somehow remembered the [`Array.prototype.reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) function. I have seen [CodingGarden](https://www.twitch.tv/codinggarden) use it before, come to think of it.
 
 ## `Array.prototype.reduce()` Syntax
 
-When you see the word `accumulator`, I thought it only adds values. It can accumulate `objects` too.
+When I saw the word `accumulator`, I thought it only adds values. It can accumulate `objects` too.
 
 ```JavaScript
 Array.reduce(function (accumulator, currentValue) { /* … */ }, initialValue)

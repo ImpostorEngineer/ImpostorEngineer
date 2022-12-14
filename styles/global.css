@@ -62,3 +62,6 @@ img {
 .hljs::-webkit-scrollbar {
   display: none;
 }
+code {
+  font-family: 'Source Code Pro';
+}
