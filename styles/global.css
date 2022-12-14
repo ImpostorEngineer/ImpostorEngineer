@@ -52,7 +52,8 @@ img {
 
 .hljs {
   font-size: 0.9rem;
-  border-radius: 15px;
+  font-family: 'Source Code Pro';
+  border-radius: 10px;
   box-shadow: 5px 5px 10px var(--shadow);
   white-space: pre;
   -ms-overflow-style: none;
