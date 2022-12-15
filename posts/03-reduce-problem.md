@@ -70,6 +70,19 @@ const finalListofEvents = data.reduce(function (obj, day) {
 }, {});
 ```
 
+If we were to write this in a `for` loop, my initial one was not this simple:
+
+```JavaScript
+let finalEvents = {};
+for (events in data) {
+  if (!finalEvents[data[events]['formattedDate']]) {
+    finalEvents[data[events]['formattedDate']] = { events: [data[events]] };
+  } else {
+    finalEvents[data[events]['formattedDate']]['events'].push(data[events]);
+  }
+}
+```
+
 The output looks like this:
 
 ```JSON
