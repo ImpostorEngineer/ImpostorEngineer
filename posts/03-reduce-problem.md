@@ -25,7 +25,9 @@ Hard part was trying to figure out how to group all the events under each day. I
 When I saw the word `accumulator`, I thought it only adds values. It can accumulate `objects` too.
 
 ```JavaScript
-Array.reduce(function (accumulator, currentValue) { /* … */ }, initialValue)
+Array.reduce(function (accumulator, currentValue) {
+                     /* … */
+            }, initialValue)
 ```
 
 Data provided by the Google API looks like this:
