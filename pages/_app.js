@@ -6,7 +6,7 @@ import '@fontsource/source-code-pro';
 export default function App({ Component, pageProps }) {
   return (
     <>
-      <Script strategy='afterInteractive' src='https://www.googletagmanager.com/gtag/js?id=G-JP5LKKYL7V' />
+      <Script strategy='afterInteractive' src='https://www.googletagmanager.com/gtag/js?id=G-XJ11TCK7ZM' />
       <Script
         id='google-analytics'
         strategy='afterInteractive'
@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
           __html: `window.dataLayer = window.dataLayer || []; 
           function gtag(){dataLayer.push(arguments);} 
           gtag('js', new Date());
-          gtag('config', 'G-JP5LKKYL7V', {page_path: window.location.pathname,});`,
+          gtag('config', 'G-XJ11TCK7ZM', {page_path: window.location.pathname,});`,
         }}
       />
       <Component {...pageProps} />
