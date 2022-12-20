@@ -19,11 +19,14 @@ import { useEffect, useState } from 'react';
 export default function Chart() {
   const [dataJSON, setData] = useState(null);
 
+// I'm using an external website, you can use local '/api/data'
+// You have to use the fetch within useEffect, cannot return.
   useEffect(() => {
     fetch('https://www.externalwebsite.com/api/data')
       .then((res) => res.json())
       .then((data) => setData(data)); // You can also apply some functions to the data.
-      // I created a function to convert the data to be used in ApexCharts.
+      // I created a function to convert the data to be used in ApexCharts
+      // setData(someFunction(data)).
   }, []);
 
 // Since the dataJSON is set to null, you need to do something until the data loads.

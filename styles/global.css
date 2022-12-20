@@ -52,7 +52,7 @@ img {
 
 .hljs {
   font-size: 0.9rem;
-  font-family: 'Source Code Pro';
+  font-family: 'Anonymous Pro', monospace;
   border-radius: 10px;
   box-shadow: 5px 5px 10px var(--shadow);
   white-space: pre;
@@ -63,5 +63,5 @@ img {
   display: none;
 }
 code {
-  font-family: 'Source Code Pro';
+  font-family: 'Anonymous Pro', monospace;
 }
