@@ -97,6 +97,10 @@ function laborDataChartOptions(laborData) {
     title: {
       text: 'U.S. Employment',
       align: 'center',
+      style: {
+        fontWeight: 600,
+        fontSize: '16px',
+      },
     },
     xaxis: {
       categories: laborData.dateData,
@@ -201,6 +205,10 @@ function percentDataChartOptions(laborData) {
     title: {
       text: 'U.S. Employment vs 36 month prior % Change',
       align: 'center',
+      style: {
+        fontWeight: 600,
+        fontSize: '16px',
+      },
     },
     xaxis: {
       categories: laborData.dateData,
