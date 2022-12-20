@@ -50,7 +50,8 @@ return (
       <title>Charts</title>
     </Head>
     <section>
-    <CreateChart data={dataJSON.data} options={dataJSON.dataOptions} type={'line'} height={500} />
+    <CreateChart data={dataJSON.data} options={dataJSON.dataOptions}
+                 type={'line'} height={500} />
     </section>
   </Layout>
 )

@@ -22,7 +22,7 @@ Hard part was trying to figure out how to group all the events under each day. I
 
 ## `Array.prototype.reduce()` Syntax
 
-When I saw the word `accumulator`, I thought it only adds values. It can accumulate `objects` too.
+When I saw the word `accumulator`, I thought it only adds numbers 🤦‍♂️. It can accumulate `objects` too.
 
 ```JavaScript
 Array.reduce(function (accumulator, currentValue) {
