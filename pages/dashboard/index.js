@@ -520,7 +520,7 @@ export default function Dashboard() {
       .then((data) => setTsaData(tsaDataChartOptions(data)));
   }, []);
 
-  if (!strData || !tsaData)
+  if (!strData || !tsaData) {
     return (
       <Layout>
         <Head>
@@ -532,6 +532,7 @@ export default function Dashboard() {
         </section>
       </Layout>
     );
+  }
 
   return (
     <Layout>
