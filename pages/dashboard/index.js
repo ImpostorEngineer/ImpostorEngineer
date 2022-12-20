@@ -4,7 +4,7 @@ import utilStyles from '../../styles/utils.module.css';
 import CreateChart from '../../components/apexchartlayout';
 import { useEffect, useState } from 'react';
 
-const updateDate = 'Dec 13, 2022';
+const updateDate = 'Dec 19, 2022';
 
 function tsaDataChartOptions(data) {
   const tsaRawData = data;
@@ -514,13 +514,12 @@ export default function Dashboard() {
   useEffect(() => {
     fetch('https://www.ilhandemirer.com/api/str')
       .then((res) => res.json())
-      .then((data) => setStrData(strDataChartOptions(data)));
+      .then((data) => setStrData(data));
     fetch('https://www.ilhandemirer.com/api/tsa')
       .then((res) => res.json())
-      .then((data) => setTsaData(tsaDataChartOptions(data)));
+      .then((data) => setTsaData(data));
   }, []);
 
-  console.log(strData);
   if (!strData || !tsaData) {
     return (
       <Layout>
@@ -534,6 +533,10 @@ export default function Dashboard() {
       </Layout>
     );
   }
+  const { occChartData, ADRChartData, revPARChartData, occChartOptions, ADRChartOptions, revPARChartOptions } =
+    strDataChartOptions(data);
+
+  const { tsaChartData, tsaChartOptions } = tsaDataChartOptions(data);
 
   return (
     <Layout>
@@ -544,19 +547,19 @@ export default function Dashboard() {
       <section>
         <div>
           <h3>Occupancy Trends:</h3>
-          <CreateChart data={strData.occChartData} options={strData.occChartOptions} type={'line'} height={500} />
+          <CreateChart data={occChartData} options={occChartOptions} type={'line'} height={500} />
         </div>
         <div>
           <h3>ADR Trends:</h3>
-          <CreateChart data={strData.ADRChartData} options={strData.ADRChartOptions} type={'line'} height={500} />
+          <CreateChart data={ADRChartData} options={ADRChartOptions} type={'line'} height={500} />
         </div>
         <div>
           <h3>RevPAR Trends:</h3>
-          <CreateChart data={strData.revPARChartData} options={strData.revPARChartOptions} type={'line'} height={500} />
+          <CreateChart data={revPARChartData} options={revPARChartOptions} type={'line'} height={500} />
         </div>
         <div>
           <h3>TSA Passenger Trends:</h3>
-          <CreateChart data={tsaData.tsaChartData} options={tsaData.tsaChartOptions} type={'line'} height={500} />
+          <CreateChart data={tsaChartData} options={tsaChartOptions} type={'line'} height={500} />
         </div>
       </section>
     </Layout>

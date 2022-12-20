@@ -40,7 +40,9 @@ function percentChange(data) {
   return finalData;
 }
 
-function laborDataChartOptions(laborData) {
+function laborDataChartOptions(data) {
+  const laborData = createDataArray(laborData);
+
   const laborChartData = [
     {
       name: 'Total Employment',
@@ -148,7 +150,8 @@ function laborDataChartOptions(laborData) {
   return { laborChartData, laborChartOptions };
 }
 
-function percentDataChartOptions(laborData) {
+function percentDataChartOptions(data) {
+  const laborData = percentChange(data);
   const percentLaborChartData = [
     {
       name: 'Total Employment',
@@ -279,9 +282,9 @@ export default function LaborStats() {
     );
   }
 
-  const { laborChartData, laborChartOptions } = laborDataChartOptions(createDataArray(laborData));
+  const { laborChartData, laborChartOptions } = laborDataChartOptions(laborData);
 
-  const { percentLaborChartData, percentLaborChartOptions } = percentDataChartOptions(percentChange(laborData));
+  const { percentLaborChartData, percentLaborChartOptions } = percentDataChartOptions(laborData);
 
   return (
     <Layout>
