@@ -14,11 +14,11 @@ export default function Projects() {
         <div>
           <ul className='has-text-weight-medium'>
             <li>
-              <Link href='./secfilings'>SEC Filings</Link>
+              <Link href='projects/secfilings'>SEC Filings</Link>
             </li>
-            {/* <li>
-          <Link href='./laborstats.html'>Labor Stats</Link>
-        </li> */}
+            <li>
+              <Link href='projects/laborstats'>Labor Stats</Link>
+            </li>
             <li>
               <a href='https://impostor-twitch-overlays.vercel.app/' target='_blank'>
                 Impostor Stream Overlays

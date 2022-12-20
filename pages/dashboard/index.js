@@ -520,6 +520,7 @@ export default function Dashboard() {
       .then((data) => setTsaData(tsaDataChartOptions(data)));
   }, []);
 
+  console.log(strData);
   if (!strData || !tsaData) {
     return (
       <Layout>
