@@ -65,8 +65,8 @@
 }
 .banner {
   object-fit: cover;
-  object-position: 5px 5px;
-  height: 142px;
+  object-position: top left;
+  height: 120px;
 }
 .listItem > a,
 .listItem > .lightText {
