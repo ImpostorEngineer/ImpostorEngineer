@@ -534,9 +534,9 @@ export default function Dashboard() {
     );
   }
   const { occChartData, ADRChartData, revPARChartData, occChartOptions, ADRChartOptions, revPARChartOptions } =
-    strDataChartOptions(data);
+    strDataChartOptions(strData);
 
-  const { tsaChartData, tsaChartOptions } = tsaDataChartOptions(data);
+  const { tsaChartData, tsaChartOptions } = tsaDataChartOptions(tsaData);
 
   return (
     <Layout>

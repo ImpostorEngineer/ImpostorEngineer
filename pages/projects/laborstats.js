@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Layout from '../../components/layout';
-import secStyles from '../../components/SECFilings.module.css';
 import utilStyles from '../../styles/utils.module.css';
 import CreateChart from '../../components/apexchartlayout';
 import { useEffect, useState } from 'react';
@@ -41,7 +40,7 @@ function percentChange(data) {
 }
 
 function laborDataChartOptions(data) {
-  const laborData = createDataArray(laborData);
+  const laborData = createDataArray(data);
 
   const laborChartData = [
     {
