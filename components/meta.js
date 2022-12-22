@@ -14,18 +14,18 @@ export default function Meta() {
       crossOrigin='anonymous'
     /> */}
     <script src='https://kit.fontawesome.com/ab5e2af120.js' crossorigin='anonymous'></script>
-    <meta name='description' content='Management faculty, share news and data on this site.' />
+    <meta name='description' content='I am not an engineer, just a hobbyist.' />
     <meta itemProp='name' content='Impostor Engineer Personal Website' />
-    <meta itemProp='description' content='Management faculty, share news and data on this site.' />
+    <meta itemProp='description' content='I am not an engineer, just a hobbyist.' />
     <meta itemProp='image' content='https://impostorengineer.vercel.app/images/wide-card.png' />
     <meta property='og:url' content='https://impostorengineer.vercel.app' />
     <meta property='og:type' content='website' />
     <meta property='og:title' content='Impostor Engineer Personal Website' />
-    <meta property='og:description' content='Management faculty, share news and data on this site.' />
+    <meta property='og:description' content='I am not an engineer, just a hobbyist.' />
     <meta property='og:image' content='https://impostorengineer.vercel.app/images/wide-card.png' />
     <meta name='twitter:card' content='summary_large_image' />
     <meta name='twitter:title' content='Impostor Engineer Personal Website' />
-    <meta name='twitter:description' content='Management faculty, share news and data on this site.' />
+    <meta name='twitter:description' content='I am not an engineer, just a hobbyist.' />
     <meta name='twitter:image' content='https://impostorengineer.vercel.app/images/wide-card.png' />
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_TRACKING_ID}`} />
     <script
