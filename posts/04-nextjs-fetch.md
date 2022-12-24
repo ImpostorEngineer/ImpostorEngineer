@@ -8,7 +8,7 @@ tags: ['code', 'JavaScript', 'nextjs', 'fetch']
 banner: '04-nextjs-fetch.png'
 ---
 
-Here is an example of `useEffect` usage for API data fetch. In this blog I'm using data from external data sources. I didn't want to create a server-side fetch.
+Here is an example of `useEffect` usage for API data fetch. In this blog I'm using data from an external data sources. I didn't want to create a server-side fetch. There are other ways to [fetch data in NEXT.js](https://nextjs.org/docs/basic-features/data-fetching/overview) depending on your application's use case. I preferred client-side rendering.
 
 ```JavaScript
 import Head from 'next/head';
@@ -20,14 +20,12 @@ export default function Chart() {
   const [dataJSON, setData] = useState(null);
 
 // I'm using an external website, you can use local '/api/data'
-// You have to use the fetch within useEffect, cannot return.
   useEffect(() => {
     fetch('https://www.externalwebsite.com/api/data')
       .then((res) => res.json())
-      .then((data) => setData(data)); // You can also apply some functions to the data.
-      // I created a function to convert the data to be used in ApexCharts
-      // setData(someFunction(data)).
+      .then((data) => setData(data));
   }, []);
+
 
 // Since the dataJSON is set to null, you need to do something until the data loads.
 // I chose to display a message, you can create a loading screen here.
