@@ -9,7 +9,7 @@ export default function Projects() {
       <Head>
         <title>Projects</title>
       </Head>
-      <h3 className='title is-4'>Some of my Projects:</h3>
+      <h3 className={utilStyles.headingLg}>Some of my Projects:</h3>
       <div className={utilStyles.postBody}>
         <div>
           <ul className='has-text-weight-medium'>
