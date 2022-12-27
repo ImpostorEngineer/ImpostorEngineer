@@ -56,7 +56,7 @@ function tsaDataChartOptions(data) {
       toolbar: {
         show: false,
       },
-      fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
       type: 'line',
       zoom: {
         enabled: false,
@@ -114,7 +114,7 @@ function tsaDataChartOptions(data) {
         style: {
           color: '#9C9C9C',
           fontSize: '10px',
-          fontFamily: 'InterVariable, Roboto, sans-serif',
+          fontFamily: 'Inter, Roboto, sans-serif',
           fontWeight: 400,
         },
       },
@@ -258,7 +258,7 @@ function strDataChartOptions(data) {
       toolbar: {
         show: false,
       },
-      fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
       type: 'line',
       zoom: {
         enabled: false,
@@ -301,7 +301,7 @@ function strDataChartOptions(data) {
         style: {
           color: '#9C9C9C',
           fontSize: '10px',
-          fontFamily: 'InterVariable, Roboto, sans-serif',
+          fontFamily: 'Inter, Roboto, sans-serif',
           fontWeight: 400,
         },
       },
@@ -345,7 +345,7 @@ function strDataChartOptions(data) {
       toolbar: {
         show: false,
       },
-      fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
       type: 'line',
       zoom: {
         enabled: false,
@@ -388,7 +388,7 @@ function strDataChartOptions(data) {
         style: {
           color: '#9C9C9C',
           fontSize: '10px',
-          fontFamily: 'InterVariable, Roboto, sans-serif',
+          fontFamily: 'Inter, Roboto, sans-serif',
           fontWeight: 400,
         },
       },
@@ -432,7 +432,7 @@ function strDataChartOptions(data) {
       toolbar: {
         show: false,
       },
-      fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
       type: 'line',
       zoom: {
         enabled: false,
@@ -475,7 +475,7 @@ function strDataChartOptions(data) {
         style: {
           color: '#9C9C9C',
           fontSize: '10px',
-          fontFamily: 'InterVariable, Roboto, sans-serif',
+          fontFamily: 'Inter, Roboto, sans-serif',
           fontWeight: 400,
         },
       },
