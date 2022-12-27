@@ -4,7 +4,7 @@ import utilStyles from '../../styles/utils.module.css';
 import CreateChart from '../../components/apexchartlayout';
 import { useEffect, useState } from 'react';
 
-const updateDate = 'Dec 19, 2022';
+const updateDate = 'Dec 27, 2022';
 
 function tsaDataChartOptions(data) {
   const tsaRawData = data;
