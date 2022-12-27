@@ -20,3 +20,6 @@
 .container ul {
   padding-inline-start: 20px;
 }
+.main {
+  min-height: 400px;
+}

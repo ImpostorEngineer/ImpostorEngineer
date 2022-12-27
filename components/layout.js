@@ -38,7 +38,7 @@ export default function Layout({ children, home, post }) {
         <header className={styles.header}>
           <Navbar />
         </header>
-        <main>
+        <main className={styles.main}>
           <section>{children}</section>
         </main>
         <Footer />
