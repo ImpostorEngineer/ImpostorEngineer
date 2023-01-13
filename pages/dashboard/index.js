@@ -303,7 +303,7 @@ function strDataChartOptions(data) {
       height: 35,
     },
     xaxis: {
-      categories: strdata['2023']['date'],
+      categories: strData['2023']['date'],
       labels: {
         rotate: -45,
         maxHeight: 50,
