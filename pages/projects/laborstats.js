@@ -398,17 +398,24 @@ function cpiDataChartOptions(data) {
     yaxis: [
       {
         seriesName: 'CPI',
+        show: true,
         forceNiceScale: true,
         decimalsInFloat: 2,
       },
       {
         opposite: true,
+        show: true,
+        min: -2,
+        max: 10,
         seriesName: '% Change',
         forceNiceScale: true,
         decimalsInFloat: 2,
       },
       {
         opposite: true,
+        show: false,
+        min: -2,
+        max: 10,
         seriesName: '12 Month % Change',
         forceNiceScale: true,
         decimalsInFloat: 2,
