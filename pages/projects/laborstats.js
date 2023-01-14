@@ -47,9 +47,9 @@ function percentChange(data) {
 
 function createCPIData(data) {
   const cpiRawData = data.Results.series.filter((s) => s.seriesID == 'CUSR0000SA0')[0];
-
   const cpiChartData = cpiRawData.data.reduce((obj, month, i) => {
     const previousMonth = cpiRawData.data[i + 1];
+    const twelveMonths = cpiRawData.data[i + 12];
     if (!obj['date']) {
       obj['date'] = [`${month['year']}-${month['periodName'].slice(0, 3)}`];
     } else {
@@ -67,6 +67,15 @@ function createCPIData(data) {
         obj['change'].unshift(0);
       } else {
         obj['change'].unshift(Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10);
+      }
+    }
+    if (!obj['twelveMonthChange']) {
+      obj['twelveMonthChange'] = [Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10];
+    } else {
+      if (!twelveMonths) {
+        obj['twelveMonthChange'].unshift(0);
+      } else {
+        obj['twelveMonthChange'].unshift(Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10);
       }
     }
     return obj;
@@ -127,7 +136,7 @@ function laborDataChartOptions(data) {
       enabled: false,
     },
     stroke: {
-      curve: 'straight',
+      curve: 'smooth',
       width: 3,
     },
     title: {
@@ -142,10 +151,11 @@ function laborDataChartOptions(data) {
     },
     subtitle: {
       text: 'Source: BLS',
+      align: 'left',
       offsetX: 10,
       style: {
         color: '#9C9C9C',
-        fontSize: '10px',
+        fontSize: '11px',
         fontFamily: 'Inter, Roboto, sans-serif',
         fontWeight: 400,
       },
@@ -237,14 +247,14 @@ function percentDataChartOptions(data) {
       enabled: false,
     },
     stroke: {
-      curve: 'straight',
+      curve: 'smooth',
       width: 3,
     },
     title: {
       text: 'U.S. Employment vs 36 month prior % Change',
+      align: 'left',
       offsetX: 10,
       margin: 10,
-      align: 'left',
       style: {
         fontWeight: 600,
         fontSize: '16px',
@@ -252,10 +262,11 @@ function percentDataChartOptions(data) {
     },
     subtitle: {
       text: 'Source: BLS',
+      align: 'left',
       offsetX: 10,
       style: {
         color: '#9C9C9C',
-        fontSize: '10px',
+        fontSize: '11px',
         fontFamily: 'Inter, Roboto, sans-serif',
         fontWeight: 400,
       },
@@ -307,6 +318,10 @@ function cpiDataChartOptions(data) {
       name: '% Change',
       data: cpiData['change'],
     },
+    {
+      name: '12 Month % Change',
+      data: cpiData['twelveMonthChange'],
+    },
   ];
 
   const cpiChartOptions = {
@@ -339,16 +354,16 @@ function cpiDataChartOptions(data) {
         enabled: false,
       },
     },
-    colors: ['#d90429', '#ffc300'],
+    colors: ['#d90429', '#ffc300', '#0EB300'],
     fill: {
       type: 'solid',
-      opacity: [1, 1],
+      opacity: [1, 1, 1],
     },
     dataLabels: {
       enabled: false,
     },
     stroke: {
-      curve: 'straight',
+      curve: 'smooth',
       width: 3,
     },
     title: {
@@ -363,10 +378,11 @@ function cpiDataChartOptions(data) {
     },
     subtitle: {
       text: 'Source: BLS',
+      align: 'left',
       offsetX: 10,
       style: {
         color: '#9C9C9C',
-        fontSize: '10px',
+        fontSize: '11px',
         fontFamily: 'Inter, Roboto, sans-serif',
         fontWeight: 400,
       },
@@ -388,6 +404,12 @@ function cpiDataChartOptions(data) {
       {
         opposite: true,
         seriesName: '% Change',
+        forceNiceScale: true,
+        decimalsInFloat: 2,
+      },
+      {
+        opposite: true,
+        seriesName: '12 Month % Change',
         forceNiceScale: true,
         decimalsInFloat: 2,
       },
@@ -430,7 +452,7 @@ export default function LaborStats() {
       <Head>
         <title>U.S. Economic Data</title>
       </Head>
-      <h2 className={utilStyles.headingLg}>U.S. Employment Data</h2>
+      <h2 className={utilStyles.headingLg}>U.S. Economic Data</h2>
       <section>
         <div>
           <h3>CPI</h3>
