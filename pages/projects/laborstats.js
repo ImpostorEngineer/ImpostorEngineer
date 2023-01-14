@@ -53,18 +53,18 @@ function createCPIData(data) {
     if (!obj['date']) {
       obj['date'] = [`${month['year']}-${month['periodName']}`];
     } else {
-      obj['date'].unshift([`${month['year']}-${month['periodName']}`]);
+      obj['date'].unshift(`${month['year']}-${month['periodName']}`);
     }
     if (!obj['cpiValue']) {
-      obj['cpiValue'] = [month['value']];
+      obj['cpiValue'] = [+month['value']];
     } else {
-      obj['cpiValue'].unshift([month['value']]);
+      obj['cpiValue'].unshift(+month['value']);
     }
     if (!obj['change']) {
       obj['change'] = [Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10];
     } else {
       if (previousMonth) {
-        obj['change'].unshift([Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10]);
+        obj['change'].unshift(Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10);
       }
     }
     return obj;
