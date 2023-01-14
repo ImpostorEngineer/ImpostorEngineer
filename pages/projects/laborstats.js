@@ -14,7 +14,7 @@ function createLaborDataArray(data) {
 
   for (let i = 0; i < employmentRawData.data.length; i++) {
     employmentData.unshift(employmentRawData.data[i].value);
-    dateData.unshift(employmentRawData.data[i].year + '-' + employmentRawData.data[i].period);
+    dateData.unshift(employmentRawData.data[i].year + '-' + employmentRawData.data[i].periodName.slice(0, 3));
   }
   for (let i = 0; i < hospitalityEmploymentRawData.data.length; i++) {
     hospitalityEmploymentData.unshift(hospitalityEmploymentRawData.data[i].value);
@@ -34,7 +34,7 @@ function percentChange(data) {
 
   for (let i = 35; i < employmentRawData.data.length; i++) {
     employmentData.unshift((employmentRawData.data[i - 35].value / employmentRawData.data[i].value - 1) * 100);
-    dateData.unshift(employmentRawData.data[i - 35].year + '-' + employmentRawData.data[i - 35].period);
+    dateData.unshift(employmentRawData.data[i - 35].year + '-' + employmentRawData.data[i - 35].periodName.slice(0, 3));
   }
   for (let i = 35; i < hospitalityEmploymentRawData.data.length; i++) {
     hospitalityEmploymentData.unshift(
@@ -51,9 +51,9 @@ function createCPIData(data) {
   const cpiChartData = cpiRawData.data.reduce((obj, month, i) => {
     const previousMonth = cpiRawData.data[i + 1];
     if (!obj['date']) {
-      obj['date'] = [`${month['year']}-${month['periodName']}`];
+      obj['date'] = [`${month['year']}-${month['periodName'].slice(0, 3)}`];
     } else {
-      obj['date'].unshift(`${month['year']}-${month['periodName']}`);
+      obj['date'].unshift(`${month['year']}-${month['periodName'].slice(0, 3)}`);
     }
     if (!obj['cpiValue']) {
       obj['cpiValue'] = [+month['value']];
@@ -110,7 +110,7 @@ function laborDataChartOptions(data) {
         color: '#000',
         opacity: 1,
       },
-      fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
       height: 400,
       width: 800,
       type: 'line',
@@ -138,22 +138,20 @@ function laborDataChartOptions(data) {
         fontSize: '16px',
       },
     },
+    subtitle: {
+      text: 'Source: BLS',
+      style: {
+        color: '#9C9C9C',
+        fontSize: '10px',
+        fontFamily: 'Inter, Roboto, sans-serif',
+        fontWeight: 400,
+      },
+    },
     xaxis: {
       categories: laborData.dateData,
       labels: {
         rotate: -45,
         maxHeight: 80,
-      },
-      title: {
-        text: 'Source: BLS',
-        offsetX: -18,
-        offsetY: 140,
-        style: {
-          color: '#9C9C9C',
-          fontSize: '10px',
-          fontFamily: 'InterVariable, Roboto, sans-serif',
-          fontWeight: 400,
-        },
       },
       tickAmount: 15,
     },
@@ -219,7 +217,7 @@ function percentDataChartOptions(data) {
         color: '#000',
         opacity: 1,
       },
-      fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
       height: 400,
       width: 800,
       type: 'line',
@@ -247,22 +245,20 @@ function percentDataChartOptions(data) {
         fontSize: '16px',
       },
     },
+    subtitle: {
+      text: 'Source: BLS',
+      style: {
+        color: '#9C9C9C',
+        fontSize: '10px',
+        fontFamily: 'Inter, Roboto, sans-serif',
+        fontWeight: 400,
+      },
+    },
     xaxis: {
       categories: laborData.dateData,
       labels: {
         rotate: -45,
         maxHeight: 80,
-      },
-      title: {
-        text: 'Source: BLS',
-        offsetX: -18,
-        offsetY: 140,
-        style: {
-          color: '#9C9C9C',
-          fontSize: '10px',
-          fontFamily: 'InterVariable, Roboto, sans-serif',
-          fontWeight: 400,
-        },
       },
       tickAmount: 15,
     },
@@ -329,7 +325,7 @@ function cpiDataChartOptions(data) {
         color: '#000',
         opacity: 1,
       },
-      fontFamily: 'InterVariable, Roboto, Arial, sans-serif',
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
       height: 400,
       width: 800,
       type: 'line',
@@ -357,22 +353,20 @@ function cpiDataChartOptions(data) {
         fontSize: '16px',
       },
     },
+    subtitle: {
+      text: 'Source: BLS',
+      style: {
+        color: '#9C9C9C',
+        fontSize: '10px',
+        fontFamily: 'Inter, Roboto, sans-serif',
+        fontWeight: 400,
+      },
+    },
     xaxis: {
       categories: cpiData['date'],
       labels: {
         rotate: -45,
         maxHeight: 80,
-      },
-      title: {
-        text: 'Source: BLS',
-        offsetX: -18,
-        offsetY: 140,
-        style: {
-          color: '#9C9C9C',
-          fontSize: '10px',
-          fontFamily: 'InterVariable, Roboto, sans-serif',
-          fontWeight: 400,
-        },
       },
       tickAmount: 15,
     },
