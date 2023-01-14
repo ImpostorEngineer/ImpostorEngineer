@@ -9,14 +9,15 @@ function createDataArray(data) {
   let employmentData = [];
   let hospitalityEmploymentData = [];
 
-  const seriesData = data.Results.series;
+  const employmentRawData = data.Results.series.filter((s) => s.seriesID == 'CES0000000001');
+  const hospitalityEmploymentRawData = data.Results.series.filter((s) => s.seriesID == 'CES7000000001');
 
-  for (let i = 0; i < seriesData[0].data.length; i++) {
-    employmentData.unshift(seriesData[0].data[i].value);
-    dateData.unshift(seriesData[0].data[i].year + '-' + seriesData[0].data[i].period);
+  for (let i = 0; i < employmentRawData.data.length; i++) {
+    employmentData.unshift(employmentRawData.data[i].value);
+    dateData.unshift(employmentRawData.data[i].year + '-' + employmentRawData.data[i].period);
   }
-  for (let i = 0; i < seriesData[1].data.length; i++) {
-    hospitalityEmploymentData.unshift(seriesData[1].data[i].value);
+  for (let i = 0; i < hospitalityEmploymentRawData.data.length; i++) {
+    hospitalityEmploymentData.unshift(hospitalityEmploymentRawData.data[i].value);
   }
 
   const finalData = { dateData, employmentData, hospitalityEmploymentData };
@@ -27,13 +28,18 @@ function percentChange(data) {
   let dateData = [];
   let employmentData = [];
   let hospitalityEmploymentData = [];
-  const seriesData = data.Results.series;
-  for (let i = 35; i < seriesData[0].data.length; i++) {
-    employmentData.unshift((seriesData[0].data[i - 35].value / seriesData[0].data[i].value - 1) * 100);
-    dateData.unshift(seriesData[0].data[i - 35].year + '-' + seriesData[0].data[i - 35].period);
+
+  const employmentRawData = data.Results.series.filter((s) => s.seriesID == 'CES0000000001');
+  const hospitalityEmploymentRawData = data.Results.series.filter((s) => s.seriesID == 'CES7000000001');
+
+  for (let i = 35; i < employmentRawData.data.length; i++) {
+    employmentData.unshift((employmentRawData.data[i - 35].value / employmentRawData.data[i].value - 1) * 100);
+    dateData.unshift(employmentRawData.data[i - 35].year + '-' + employmentRawData.data[i - 35].period);
   }
-  for (let i = 35; i < seriesData[1].data.length; i++) {
-    hospitalityEmploymentData.unshift((seriesData[1].data[i - 35].value / seriesData[1].data[i].value - 1) * 100);
+  for (let i = 35; i < hospitalityEmploymentRawData.data.length; i++) {
+    hospitalityEmploymentData.unshift(
+      (hospitalityEmploymentRawData.data[i - 35].value / hospitalityEmploymentRawData.data[i].value - 1) * 100
+    );
   }
   const finalData = { dateData, employmentData, hospitalityEmploymentData };
   return finalData;

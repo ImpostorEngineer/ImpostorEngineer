@@ -7,7 +7,7 @@ async function GetLaborStats() {
   const laborStats = await axios.post(
     url,
     {
-      seriesid: ['CES0000000001', 'CES7000000001'],
+      seriesid: ['CES0000000001', 'CES7000000001', 'CUSR0000SA0'],
       startyear: startYear,
       endyear: currentYear,
       registrationkey: process.env.BLS_KEY,
