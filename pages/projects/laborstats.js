@@ -9,8 +9,8 @@ function createDataArray(data) {
   let employmentData = [];
   let hospitalityEmploymentData = [];
 
-  const employmentRawData = data.Results.series.filter((s) => s.seriesID == 'CES0000000001');
-  const hospitalityEmploymentRawData = data.Results.series.filter((s) => s.seriesID == 'CES7000000001');
+  const employmentRawData = data.Results.series.filter((s) => s.seriesID == 'CES0000000001')[0];
+  const hospitalityEmploymentRawData = data.Results.series.filter((s) => s.seriesID == 'CES7000000001')[0];
 
   for (let i = 0; i < employmentRawData.data.length; i++) {
     employmentData.unshift(employmentRawData.data[i].value);
@@ -29,8 +29,8 @@ function percentChange(data) {
   let employmentData = [];
   let hospitalityEmploymentData = [];
 
-  const employmentRawData = data.Results.series.filter((s) => s.seriesID == 'CES0000000001');
-  const hospitalityEmploymentRawData = data.Results.series.filter((s) => s.seriesID == 'CES7000000001');
+  const employmentRawData = data.Results.series.filter((s) => s.seriesID == 'CES0000000001')[0];
+  const hospitalityEmploymentRawData = data.Results.series.filter((s) => s.seriesID == 'CES7000000001')[0];
 
   for (let i = 35; i < employmentRawData.data.length; i++) {
     employmentData.unshift((employmentRawData.data[i - 35].value / employmentRawData.data[i].value - 1) * 100);
