@@ -49,7 +49,7 @@ function createCPIData(data) {
   const cpiRawData = data.Results.series.filter((s) => s.seriesID == 'CUSR0000SA0')[0];
 
   const cpiChartData = cpiRawData.data.reduce((obj, month, i) => {
-    const previousMonth = cpiRawData[i + 1];
+    const previousMonth = cpiRawData.data[i + 1];
     if (!obj['date']) {
       obj['date'] = [`${month['year']}-${month['periodName']}`];
     } else {
