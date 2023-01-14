@@ -63,7 +63,9 @@ function createCPIData(data) {
     if (!obj['change']) {
       obj['change'] = [Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10];
     } else {
-      if (previousMonth) {
+      if (!previousMonth) {
+        obj['change'].unshift(0);
+      } else {
         obj['change'].unshift(Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10);
       }
     }
