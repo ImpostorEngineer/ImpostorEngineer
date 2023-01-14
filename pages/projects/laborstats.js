@@ -132,7 +132,9 @@ function laborDataChartOptions(data) {
     },
     title: {
       text: 'U.S. Employment',
-      align: 'center',
+      align: 'left',
+      offsetX: 10,
+      margin: 10,
       style: {
         fontWeight: 600,
         fontSize: '16px',
@@ -140,6 +142,7 @@ function laborDataChartOptions(data) {
     },
     subtitle: {
       text: 'Source: BLS',
+      offsetX: 10,
       style: {
         color: '#9C9C9C',
         fontSize: '10px',
@@ -239,7 +242,9 @@ function percentDataChartOptions(data) {
     },
     title: {
       text: 'U.S. Employment vs 36 month prior % Change',
-      align: 'center',
+      offsetX: 10,
+      margin: 10,
+      align: 'left',
       style: {
         fontWeight: 600,
         fontSize: '16px',
@@ -247,6 +252,7 @@ function percentDataChartOptions(data) {
     },
     subtitle: {
       text: 'Source: BLS',
+      offsetX: 10,
       style: {
         color: '#9C9C9C',
         fontSize: '10px',
@@ -347,7 +353,9 @@ function cpiDataChartOptions(data) {
     },
     title: {
       text: 'CPI',
-      align: 'center',
+      align: 'left',
+      offsetX: 10,
+      margin: 10,
       style: {
         fontWeight: 600,
         fontSize: '16px',
@@ -355,6 +363,7 @@ function cpiDataChartOptions(data) {
     },
     subtitle: {
       text: 'Source: BLS',
+      offsetX: 10,
       style: {
         color: '#9C9C9C',
         fontSize: '10px',
@@ -419,7 +428,7 @@ export default function LaborStats() {
   return (
     <Layout>
       <Head>
-        <title>U.S. Employment Data</title>
+        <title>U.S. Economic Data</title>
       </Head>
       <h2 className={utilStyles.headingLg}>U.S. Employment Data</h2>
       <section>

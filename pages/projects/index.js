@@ -17,7 +17,7 @@ export default function Projects() {
               <Link href='projects/secfilings'>SEC Filings</Link>
             </li>
             <li>
-              <Link href='projects/laborstats'>Labor Stats</Link>
+              <Link href='projects/laborstats'>U.S. Economy Charts</Link>
             </li>
             <li>
               <a href='https://impostor-twitch-overlays.vercel.app/' target='_blank'>
