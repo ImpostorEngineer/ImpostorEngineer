@@ -159,7 +159,6 @@ function laborDataChartOptions(data) {
       background: '#000',
       dropShadow: {
         enabled: true,
-        enabledOnSeries: [0, 1, 2],
         top: 1,
         left: 1,
         blur: 0,
@@ -279,7 +278,6 @@ function percentDataChartOptions(data) {
       background: '#000',
       dropShadow: {
         enabled: true,
-        enabledOnSeries: [0, 1, 2],
         top: 1,
         left: 1,
         blur: 0,
@@ -404,7 +402,6 @@ function cpiDataChartOptions(data) {
       background: '#000',
       dropShadow: {
         enabled: true,
-        enabledOnSeries: [0, 1, 2],
         top: 1,
         left: 1,
         blur: 0,
