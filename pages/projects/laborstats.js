@@ -531,15 +531,15 @@ function cpiComponentsChart(data) {
     data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEHB')[0]
   );
   const cpiPartsChartData = [
-    { name: 'Food Not Adjusted', data: foodNotAdjusted.twelveMonthChange.slice(12) },
-    { name: 'Food at home Not Adjusted', data: foodAtHomeNotAdjusted.twelveMonthChange.slice(12) },
-    { name: 'Food away from home Not Adjusted', data: foodAwayNotAdjusted.twelveMonthChange.slice(12) },
-    { name: 'Energy Not Adjusted', data: energyNotAdjusted.twelveMonthChange.slice(12) },
-    { name: 'Gasoline (all types) Not Adjusted', data: gasolineNotAdjusted.twelveMonthChange.slice(12) },
-    { name: 'New vehicles Not Adjusted', data: newVehiclesNotAdjusted.twelveMonthChange.slice(12) },
-    { name: 'Used cars and trucks Not Adjusted', data: usedCarsNotAdjusted.twelveMonthChange.slice(12) },
-    { name: 'Rent of primary residence Not Adjusted', data: rentNotAdjusted.twelveMonthChange.slice(12) },
-    { name: 'Lodging away from home Not Adjusted', data: lodgingNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Food', data: foodNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Food at Home', data: foodAtHomeNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Food Away from Home', data: foodAwayNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Energy', data: energyNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Gasoline', data: gasolineNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'New Vehicles', data: newVehiclesNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Used Cars and Trucks', data: usedCarsNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Rent', data: rentNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Lodging', data: lodgingNotAdjusted.twelveMonthChange.slice(12) },
   ];
 
   const cpiPartsChartOptions = {
@@ -593,7 +593,7 @@ function cpiComponentsChart(data) {
       },
     },
     subtitle: {
-      text: 'Source: BLS',
+      text: 'Not Seasonally Adjusted, Source: BLS',
       align: 'left',
       offsetX: 10,
       style: {
