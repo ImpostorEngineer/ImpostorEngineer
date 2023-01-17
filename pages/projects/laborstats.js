@@ -45,11 +45,50 @@ function percentChange(data) {
   return finalData;
 }
 
+function monthlyPercentChange(series) {
+  const percentChange = series.data.reduce((obj, month, i) => {
+    const previousMonth = series.data[i + 1];
+    if (!obj['date']) {
+      obj['date'] = [`${month['year']}-${month['periodName'].slice(0, 3)}`];
+    } else {
+      obj['date'].unshift(`${month['year']}-${month['periodName'].slice(0, 3)}`);
+    }
+    if (!obj['change']) {
+      obj['change'] = [Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10];
+    } else {
+      if (!previousMonth) {
+        obj['change'].unshift(0);
+      } else {
+        obj['change'].unshift(Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10);
+      }
+    }
+    return obj;
+  }, {});
+  return percentChange;
+}
+
+function twelveMonthPercentChange(series) {
+  const twelveMonthChange = series.data.reduce((obj, month, i) => {
+    const twelveMonths = series.data[i + 12];
+    if (!obj['twelveMonthChange']) {
+      obj['twelveMonthChange'] = [Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10];
+    } else {
+      if (!twelveMonths) {
+        obj['twelveMonthChange'].unshift(0);
+      } else {
+        obj['twelveMonthChange'].unshift(Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10);
+      }
+    }
+    return obj;
+  }, {});
+  return twelveMonthChange;
+}
+
 function createCPIData(data) {
   const cpiRawData = data.Results.series.filter((s) => s.seriesID == 'CUSR0000SA0')[0];
-  const cpiChartData = cpiRawData.data.reduce((obj, month, i) => {
+  const cpiUnAdjustedRawData = data.Results.series.filter((s) => s.seriesID == 'CUUR0000SA0')[0];
+  let cpiChartData = cpiRawData.data.reduce((obj, month, i) => {
     const previousMonth = cpiRawData.data[i + 1];
-    const twelveMonths = cpiRawData.data[i + 12];
     if (!obj['date']) {
       obj['date'] = [`${month['year']}-${month['periodName'].slice(0, 3)}`];
     } else {
@@ -69,6 +108,11 @@ function createCPIData(data) {
         obj['change'].unshift(Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10);
       }
     }
+    return obj;
+  }, {});
+
+  const cpiUnAdjustedTwelveMonthChange = cpiUnAdjustedRawData.data.reduce((obj, month, i) => {
+    const twelveMonths = cpiUnAdjustedRawData.data[i + 12];
     if (!obj['twelveMonthChange']) {
       obj['twelveMonthChange'] = [Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10];
     } else {
@@ -80,6 +124,9 @@ function createCPIData(data) {
     }
     return obj;
   }, {});
+
+  cpiChartData['twelveMonthChange'] = cpiUnAdjustedTwelveMonthChange['twelveMonthChange'];
+
   return cpiChartData;
 }
 
@@ -167,6 +214,15 @@ function laborDataChartOptions(data) {
         maxHeight: 80,
       },
       tickAmount: 15,
+    },
+    grid: {
+      borderColor: '#333',
+      opacity: 0.1,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
     },
     yaxis: [
       {
@@ -279,6 +335,15 @@ function percentDataChartOptions(data) {
       },
       tickAmount: 15,
     },
+    grid: {
+      borderColor: '#333',
+      opacity: 0.1,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
     yaxis: [
       {
         seriesName: 'Total Employment',
@@ -315,11 +380,11 @@ function cpiDataChartOptions(data) {
       data: cpiData['cpiValue'],
     },
     {
-      name: '% Change',
+      name: '% Change, Seasonally Adjusted',
       data: cpiData['change'],
     },
     {
-      name: '12 Month % Change',
+      name: '12-Month % Change, Not Seasonally Adjusted',
       data: cpiData['twelveMonthChange'],
     },
   ];
@@ -357,7 +422,7 @@ function cpiDataChartOptions(data) {
     colors: ['#d90429', '#ffc300', '#0EB300'],
     fill: {
       type: 'solid',
-      opacity: [1, 1, 1],
+      opacity: [1, 1],
     },
     dataLabels: {
       enabled: false,
@@ -367,7 +432,7 @@ function cpiDataChartOptions(data) {
       width: 3,
     },
     title: {
-      text: 'CPI',
+      text: 'Consumer Price Index',
       align: 'left',
       offsetX: 10,
       margin: 10,
@@ -387,6 +452,11 @@ function cpiDataChartOptions(data) {
         fontWeight: 400,
       },
     },
+    legend: {
+      show: true,
+      fontSize: '10px',
+      offsetY: -5,
+    },
     xaxis: {
       categories: cpiData['date'],
       labels: {
@@ -395,12 +465,22 @@ function cpiDataChartOptions(data) {
       },
       tickAmount: 15,
     },
+    grid: {
+      borderColor: '#333',
+      opacity: 0.1,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
     yaxis: [
       {
         seriesName: 'CPI',
         show: true,
         forceNiceScale: true,
         decimalsInFloat: 2,
+        tickAmount: 8,
       },
       {
         opposite: true,
@@ -423,6 +503,135 @@ function cpiDataChartOptions(data) {
     ],
   };
   return { cpiChartData, cpiChartOptions };
+}
+
+function cpiComponentsChart(data) {
+  const foodAdjusted = monthlyPercentChange(data.Results.series.filter((s) => s.seriesID == 'CUSR0000SAF1')[0]);
+  const foodNotAdjusted = twelveMonthPercentChange(data.Results.series.filter((s) => s.seriesID == 'CUUR0000SAF1')[0]);
+  const foodAtHomeNotAdjusted = twelveMonthPercentChange(
+    data.Results.series.filter((s) => s.seriesID == 'CUUR0000SAF11')[0]
+  );
+  const foodAwayNotAdjusted = twelveMonthPercentChange(
+    data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEFV')[0]
+  );
+  const energyNotAdjusted = twelveMonthPercentChange(
+    data.Results.series.filter((s) => s.seriesID == 'CUUR0000SA0E')[0]
+  );
+  const gasolineNotAdjusted = twelveMonthPercentChange(
+    data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETB01')[0]
+  );
+  const newVehiclesNotAdjusted = twelveMonthPercentChange(
+    data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETA01')[0]
+  );
+  const usedCarsNotAdjusted = twelveMonthPercentChange(
+    data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETA02')[0]
+  );
+  const rentNotAdjusted = twelveMonthPercentChange(data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEHA')[0]);
+  const lodgingNotAdjusted = twelveMonthPercentChange(
+    data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEHB')[0]
+  );
+  const cpiPartsChartData = [
+    { name: 'Food Not Adjusted', data: foodNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Food at home Not Adjusted', data: foodAtHomeNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Food away from home Not Adjusted', data: foodAwayNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Energy Not Adjusted', data: energyNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Gasoline (all types) Not Adjusted', data: gasolineNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'New vehicles Not Adjusted', data: newVehiclesNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Used cars and trucks Not Adjusted', data: usedCarsNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Rent of primary residence Not Adjusted', data: rentNotAdjusted.twelveMonthChange.slice(12) },
+    { name: 'Lodging away from home Not Adjusted', data: lodgingNotAdjusted.twelveMonthChange.slice(12) },
+  ];
+
+  const cpiPartsChartOptions = {
+    theme: {
+      mode: 'dark',
+      palette: 'palette6',
+      monochrome: {
+        enabled: false,
+        color: '#255aee',
+        shadeTo: 'light',
+        shadeIntensity: 0.65,
+      },
+    },
+    chart: {
+      background: '#000',
+      dropShadow: {
+        enabled: true,
+        top: 1,
+        left: 1,
+        blur: 0,
+        color: '#000',
+        opacity: 1,
+      },
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
+      height: 600,
+      width: 800,
+      type: 'line',
+      zoom: {
+        enabled: false,
+      },
+    },
+    colors: ['#FFFF00', '#008080', '#0000FF', '#800000', '#0EB300', '#C0C0C0', '#4cc9f0', '#AE2012', '#FF00FF'],
+    fill: {
+      type: 'solid',
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth',
+      width: 3,
+    },
+    title: {
+      text: 'Percent changes in CPI for All Urban Consumers: U.S. city average',
+      align: 'left',
+      offsetX: 10,
+      margin: 10,
+      style: {
+        fontWeight: 600,
+        fontSize: '16px',
+      },
+    },
+    subtitle: {
+      text: 'Source: BLS',
+      align: 'left',
+      offsetX: 10,
+      style: {
+        color: '#9C9C9C',
+        fontSize: '11px',
+        fontFamily: 'Inter, Roboto, sans-serif',
+        fontWeight: 400,
+      },
+    },
+    legend: {
+      show: true,
+      fontSize: '10px',
+      offsetY: -5,
+    },
+    xaxis: {
+      categories: foodAdjusted.date.slice(12),
+      labels: {
+        rotate: -45,
+        maxHeight: 70,
+      },
+      tickAmount: 15,
+    },
+    grid: {
+      borderColor: '#333',
+      opacity: 0.1,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    yaxis: {
+      show: true,
+      decimalsInFloat: 2,
+      tickAmount: 8,
+    },
+  };
+  return { cpiPartsChartData, cpiPartsChartOptions };
 }
 
 export default function LaborStats() {
@@ -454,6 +663,8 @@ export default function LaborStats() {
 
   const { cpiChartData, cpiChartOptions } = cpiDataChartOptions(laborData);
 
+  const { cpiPartsChartData, cpiPartsChartOptions } = cpiComponentsChart(laborData);
+
   return (
     <Layout>
       <Head>
@@ -462,8 +673,12 @@ export default function LaborStats() {
       <h2 className={utilStyles.headingLg}>U.S. Economic Data</h2>
       <section>
         <div>
-          <h3>CPI</h3>
+          <h3>Consumer Price Index for All Urban Consumers: U.S. City Average</h3>
           <CreateChart data={cpiChartData} options={cpiChartOptions} type={'line'} height={500} />
+        </div>
+        <div>
+          <h3>Percent changes in CPI for All Urban Consumers: U.S. City Average</h3>
+          <CreateChart data={cpiPartsChartData} options={cpiPartsChartOptions} type={'line'} height={500} />
         </div>
         <div>
           <h3>Current Employment Numbers:</h3>
