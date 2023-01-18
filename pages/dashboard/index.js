@@ -219,6 +219,34 @@ function tsaDataChartOptions(data) {
 
 function strDataChartOptions(data) {
   const strData = data;
+
+  let strDataIndex = { occIndex: [], ADRIndex: [], date: [] };
+
+  const indexedYears = ['2022', '2023'];
+
+  for (let y = 0; y < indexedYears.length; y++) {
+    for (let i = 0; i < 52; i++) {
+      if (strData[indexedYears[y]]['occupancy'][i] != 0) {
+        const occIndex =
+          Math.round((strData[indexedYears[y]]['occupancy'][i] / strData['2019']['occupancy'][i]) * 10000) / 100;
+        strDataIndex['occIndex'].push(occIndex);
+        const ADRIndex = Math.round((strData[indexedYears[y]]['ADR'][i] / strData['2019']['ADR'][i]) * 10000) / 100;
+        strDataIndex['ADRIndex'].push(ADRIndex);
+        strDataIndex['date'].push(strData[indexedYears[y]]['date'][i]);
+      }
+    }
+  }
+
+  const strIndexChartData = [
+    {
+      name: 'ADR Index',
+      data: strDataIndex['ADRIndex'],
+    },
+    {
+      name: 'Occ Index',
+      data: strDataIndex['occIndex'],
+    },
+  ];
   const occChartData = [
     {
       name: '2019',
@@ -285,6 +313,7 @@ function strDataChartOptions(data) {
       data: strData['2023']['RevPAR'],
     },
   ];
+
   const mainChartOptions = {
     chart: {
       background: '#000',
@@ -364,11 +393,135 @@ function strDataChartOptions(data) {
       },
     },
   };
-
+  const indexChartOptions = {
+    title: {
+      text: 'U.S. Hotel Occupancy and ADR Recovery Levels',
+      align: 'left',
+      margin: 10,
+      offsetX: 10,
+      style: {
+        fontWeight: 600,
+        fontSize: '16px',
+      },
+    },
+    stroke: {
+      curve: 'smooth',
+      width: 3,
+    },
+    subtitle: {
+      text: 'Indexed to 2019',
+      align: 'left',
+      offsetX: 10,
+      offsetY: 30,
+    },
+    chart: {
+      background: '#000',
+      dropShadow: {
+        enabled: true,
+        enabledOnSeries: [0, 1],
+        top: 1,
+        left: 1,
+        blur: 0,
+        color: '#000',
+        opacity: 1,
+      },
+      toolbar: {
+        show: true,
+      },
+      fontFamily: 'Inter, Roboto, Arial, sans-serif',
+      type: 'line',
+      zoom: {
+        enabled: true,
+      },
+    },
+    grid: {
+      borderColor: '#333',
+      opacity: 0.1,
+      yaxis: {
+        lines: {
+          show: false,
+        },
+      },
+    },
+    yaxis: {
+      decimalsInFloat: 2,
+    },
+    legend: {
+      height: 35,
+    },
+    xaxis: {
+      categories: strDataIndex['date'],
+      labels: {
+        rotate: -45,
+        maxHeight: 50,
+      },
+      tickAmount: 21,
+      tickPlacement: 'on',
+    },
+    colors: ['#0EB300', '#404AE0'],
+    fill: {
+      type: 'solid',
+      opacity: [1, 1],
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    theme: {
+      mode: 'dark',
+      palette: 'palette6',
+      monochrome: {
+        enabled: false,
+        color: '#255aee',
+        shadeTo: 'light',
+        shadeIntensity: 0.65,
+      },
+    },
+    annotations: {
+      position: 'back',
+      yaxis: [
+        {
+          y: 100,
+          y2: 0,
+          yAxisIndex: 0,
+          strokeDashArray: 0,
+          borderColor: '#333',
+          fillColor: '#ccc',
+          opacity: 0.1,
+          offsetX: 0,
+          offsetY: 0,
+        },
+      ],
+      xaxis: [
+        {
+          x: '7-Jan',
+          x2: 800,
+          strokeDashArray: 0,
+          borderColor: '#333',
+          fillColor: '#ccc',
+          opacity: 0.1,
+          offsetX: 0,
+          offsetY: 0,
+          label: {
+            text: '2023',
+            textAnchor: 'middle',
+            orientation: 'vertical',
+            style: {
+              background: '#fff',
+              color: '#777',
+              fontSize: '11px',
+              fontWeight: 400,
+              fontFamily: undefined,
+              cssClass: 'apexcharts-xaxis-annotation-label',
+            },
+          },
+        },
+      ],
+    },
+  };
   const occChartOptions = {
     ...mainChartOptions,
     title: {
-      text: 'U.S. Hotel Occupancy',
+      text: 'U.S. Hotel Occupancy, (Week Ending)',
       align: 'left',
       margin: 10,
       offsetX: 10,
@@ -378,11 +531,23 @@ function strDataChartOptions(data) {
       },
     },
   };
-
   const ADRChartOptions = {
     ...mainChartOptions,
     title: {
-      text: 'U.S. Hotel ADR (weekly)',
+      text: 'U.S. Hotel ADR, (Week Ending)',
+      align: 'left',
+      margin: 10,
+      offsetX: 10,
+      style: {
+        fontWeight: 600,
+        fontSize: '16px',
+      },
+    },
+  };
+  const revPARChartOptions = {
+    ...mainChartOptions,
+    title: {
+      text: 'U.S. Hotel RevPAR, (Week Ending)',
       align: 'left',
       margin: 10,
       offsetX: 10,
@@ -393,20 +558,16 @@ function strDataChartOptions(data) {
     },
   };
 
-  const revPARChartOptions = {
-    ...mainChartOptions,
-    title: {
-      text: 'U.S. Hotel RevPAR (weekly)',
-      align: 'left',
-      margin: 10,
-      offsetX: 10,
-      style: {
-        fontWeight: 600,
-        fontSize: '16px',
-      },
-    },
+  return {
+    strIndexChartData,
+    occChartData,
+    ADRChartData,
+    revPARChartData,
+    indexChartOptions,
+    occChartOptions,
+    ADRChartOptions,
+    revPARChartOptions,
   };
-  return { occChartData, ADRChartData, revPARChartData, occChartOptions, ADRChartOptions, revPARChartOptions };
 }
 
 export default function Dashboard() {
@@ -435,8 +596,16 @@ export default function Dashboard() {
       </Layout>
     );
   }
-  const { occChartData, ADRChartData, revPARChartData, occChartOptions, ADRChartOptions, revPARChartOptions } =
-    strDataChartOptions(strData);
+  const {
+    strIndexChartData,
+    occChartData,
+    ADRChartData,
+    revPARChartData,
+    indexChartOptions,
+    occChartOptions,
+    ADRChartOptions,
+    revPARChartOptions,
+  } = strDataChartOptions(strData);
 
   const { tsaChartData, tsaChartOptions } = tsaDataChartOptions(tsaData);
 
@@ -447,6 +616,10 @@ export default function Dashboard() {
       </Head>
       <h2 className={utilStyles.headingLg}>U.S. Hospitality Data Dashboard</h2>
       <section>
+        <div>
+          <h3>Recovery Index:</h3>
+          <CreateChart data={strIndexChartData} options={indexChartOptions} type={'line'} height={500} />
+        </div>
         <div>
           <h3>Occupancy Trends:</h3>
           <CreateChart data={occChartData} options={occChartOptions} type={'line'} height={500} />
