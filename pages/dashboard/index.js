@@ -521,7 +521,7 @@ function strDataChartOptions(data) {
   const occChartOptions = {
     ...mainChartOptions,
     title: {
-      text: 'U.S. Hotel Occupancy, (Week Ending)',
+      text: 'U.S. Hotel Occupancy (Week Ending)',
       align: 'left',
       margin: 10,
       offsetX: 10,
@@ -534,7 +534,7 @@ function strDataChartOptions(data) {
   const ADRChartOptions = {
     ...mainChartOptions,
     title: {
-      text: 'U.S. Hotel ADR, (Week Ending)',
+      text: 'U.S. Hotel ADR (Week Ending)',
       align: 'left',
       margin: 10,
       offsetX: 10,
@@ -547,7 +547,7 @@ function strDataChartOptions(data) {
   const revPARChartOptions = {
     ...mainChartOptions,
     title: {
-      text: 'U.S. Hotel RevPAR, (Week Ending)',
+      text: 'U.S. Hotel RevPAR (Week Ending)',
       align: 'left',
       margin: 10,
       offsetX: 10,
