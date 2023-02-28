@@ -225,6 +225,7 @@ function laborDataChartOptions(data) {
     },
     yaxis: [
       {
+        opposite: true,
         seriesName: 'Total Employment',
         forceNiceScale: true,
         decimalsInFloat: 0,
@@ -235,7 +236,7 @@ function laborDataChartOptions(data) {
         },
       },
       {
-        opposite: true,
+        opposite: false,
         seriesName: 'Leisure & Hospitality',
         forceNiceScale: true,
         decimalsInFloat: 0,
@@ -644,7 +645,7 @@ export default function LaborStats() {
     return (
       <Layout>
         <Head>
-          <title>U.S. Employment Data</title>
+          <title>U.S. Economic Data</title>
         </Head>
         <h2 className={utilStyles.headingLg}>U.S. Employment Data</h2>
         <section>
