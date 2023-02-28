@@ -225,7 +225,6 @@ function laborDataChartOptions(data) {
     },
     yaxis: [
       {
-        opposite: true,
         seriesName: 'Total Employment',
         forceNiceScale: true,
         decimalsInFloat: 0,
@@ -236,7 +235,7 @@ function laborDataChartOptions(data) {
         },
       },
       {
-        opposite: false,
+        opposite: true,
         seriesName: 'Leisure & Hospitality',
         forceNiceScale: true,
         decimalsInFloat: 0,
@@ -345,6 +344,7 @@ function percentDataChartOptions(data) {
     },
     yaxis: [
       {
+        opposite: true,
         seriesName: 'Total Employment',
         forceNiceScale: true,
         decimalsInFloat: 2,
@@ -355,7 +355,6 @@ function percentDataChartOptions(data) {
         },
       },
       {
-        opposite: true,
         seriesName: 'Leisure & Hospitality',
         forceNiceScale: true,
         decimalsInFloat: 2,
