@@ -646,7 +646,7 @@ export default function LaborStats() {
         <Head>
           <title>U.S. Economic Data</title>
         </Head>
-        <h2 className={utilStyles.headingLg}>U.S. Employment Data</h2>
+        <h2 className={utilStyles.headingLg}>U.S. Economic Data</h2>
         <section>
           <h3>Please wait while data loads...</h3>
         </section>
