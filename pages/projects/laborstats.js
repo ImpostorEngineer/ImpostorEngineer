@@ -580,7 +580,7 @@ function cpiComponentsChart(data) {
       width: 3,
     },
     title: {
-      text: 'Percent changes in CPI for All Urban Consumers: U.S. city average',
+      text: '12-Month Percent changes in CPI for All Urban Consumers: U.S. city average',
       align: 'left',
       offsetX: 10,
       margin: 10,
@@ -674,7 +674,7 @@ export default function LaborStats() {
           <CreateChart data={cpiChartData} options={cpiChartOptions} type={'line'} height={500} />
         </div>
         <div>
-          <h3>Percent changes in CPI for All Urban Consumers: U.S. City Average</h3>
+          <h3>12-Month Percent changes in CPI for All Urban Consumers: U.S. City Average</h3>
           <CreateChart data={cpiPartsChartData} options={cpiPartsChartOptions} type={'line'} height={500} />
         </div>
         <div>
