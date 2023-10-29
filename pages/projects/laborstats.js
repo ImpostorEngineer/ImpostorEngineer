@@ -241,7 +241,7 @@ function laborDataChartOptions(data) {
         decimalsInFloat: 0,
         labels: {
           formatter: function (val, index) {
-            return (val / 100).toFixed(1) + 'T';
+            return (val / 1000).toFixed(1) + 'M';
           },
         },
       },
