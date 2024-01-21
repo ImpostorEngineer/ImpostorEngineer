@@ -1,10 +1,13 @@
 import * as React from 'react';
+import * as prod from 'react/jsx-runtime';
 import Image from 'next/image';
 import { unified } from 'unified';
 import reactRehyped from 'rehype-react';
 import rehypeParse from 'rehype-parse';
 import utilStyles from '../styles/utils.module.css';
 import Zoom from 'react-medium-image-zoom';
+
+const production = { Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs };
 
 const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
@@ -49,7 +52,7 @@ const components = {
 export default function PostBody({ content }) {
   const contentMD = unified()
     .use(rehypeParse, { fragment: true })
-    .use(reactRehyped, { createElement: React.createElement, components: components })
+    .use(reactRehyped, { createElement: React.createElement, components: components, production })
     .processSync(content).result;
   return <>{contentMD}</>;
 }
