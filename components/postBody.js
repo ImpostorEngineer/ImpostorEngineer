@@ -48,7 +48,7 @@ const components = {
 
 export default function PostBody({ content }) {
   const contentMD = unified()
-    .use(rehypeParse)
+    .use(rehypeParse, { fragment: true })
     .use(reactRehyped, { createElement: React.createElement, components: components })
     .processSync(content).result;
   return <>{contentMD}</>;
