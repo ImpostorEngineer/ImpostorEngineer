@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment, createElement } from 'react';
 import * as prod from 'react/jsx-runtime';
 import Image from 'next/image';
 import { unified } from 'unified';
@@ -52,7 +52,7 @@ const components = {
 export default function PostBody({ content }) {
   const contentMD = unified()
     .use(rehypeParse, { fragment: true })
-    .use(reactRehyped, { createElement: React.createElement, components: components, production })
+    .use(reactRehyped, { createElement: createElement(Fragment), components: components, production })
     .processSync(content).result;
   return <>{contentMD}</>;
 }
