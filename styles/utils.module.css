@@ -255,16 +255,16 @@
   display: block;
   margin: 0px 10px 10px 10px;
 }
-.postBody > div > ul > li > p:nth-child(1) {
+.postBody > ul > li > p:nth-child(1) {
   display: inline-flex;
   margin: 5px 0px 0px 5px !important;
 }
-.postBody > div > ul > li > ul > li {
+.postBody > ul > li > ul > li {
   display: block;
   margin: 0 0 5px 5px;
 }
 
-.postBody > div > ul > li::before {
+.postBody > ul > li::before {
   text-shadow: 1px 1px 0px var(--shadow), 1px 1px 0px var(--shadow);
   content: '\25A0';
   margin-left: -25px;
@@ -273,7 +273,7 @@
   justify-content: flex-start;
 }
 
-.postBody > div > ul > li > ul > li::before {
+.postBody > ul > li > ul > li::before {
   content: '\25CF';
   text-shadow: 1px 1px 0px var(--shadow), 1px 1px 0px var(--shadow);
   margin-left: -20px;

@@ -4,12 +4,12 @@ import utilStyles from '../../styles/utils.module.css';
 import CreateChart from '../../components/apexchartlayout';
 import { useEffect, useState } from 'react';
 
-const updateDate = 'Mar 24, 2023';
+const updateDate = 'Jan 23, 2024';
 
 function tsaDataChartOptions(data) {
   const tsaRawData = data;
   let tsaChartSourceData = tsaRawData['data'].slice(0, 90).reduce((obj, days) => {
-    const years = ['2019', '2020', '2021', '2022', '2023', 'date'];
+    const years = ['2022', '2023', '2024', 'date'];
     for (let year = 0; year < years.length; year++) {
       if (!obj[years[year]]) {
         obj[years[year]] = [days[years[year]]];
@@ -26,29 +26,25 @@ function tsaDataChartOptions(data) {
 
   tsaChartSourceData['gap'] = [];
 
-  for (let i = 0; i < tsaChartSourceData['2023'].length; i++) {
+  for (let i = 0; i < tsaChartSourceData['2024'].length; i++) {
     let gap = '';
-    if (tsaChartSourceData['2023'][i] == 0) {
-      gap = Math.round((1 - tsaChartSourceData['2022'][i] / tsaChartSourceData['2019'][i]) * 10000) / 100;
+    if (tsaChartSourceData['2024'][i] == 0) {
+      gap = Math.round((1 - tsaChartSourceData['2023'][i] / tsaChartSourceData['2022'][i]) * 10000) / 100;
       tsaChartSourceData['gap'].push(gap);
     } else {
-      gap = Math.round((1 - tsaChartSourceData['2023'][i] / tsaChartSourceData['2019'][i]) * 10000) / 100;
+      gap = Math.round((1 - tsaChartSourceData['2024'][i] / tsaChartSourceData['2023'][i]) * 10000) / 100;
       tsaChartSourceData['gap'].push(gap);
     }
   }
 
   const tsaChartData = [
     {
-      name: '2019',
-      data: tsaChartSourceData['2019'],
-    },
-    {
-      name: '2022',
-      data: tsaChartSourceData['2022'],
-    },
-    {
       name: '2023',
       data: tsaChartSourceData['2023'],
+    },
+    {
+      name: '2024',
+      data: tsaChartSourceData['2024'],
     },
     {
       name: 'Gap',
@@ -61,7 +57,7 @@ function tsaDataChartOptions(data) {
       background: '#000',
       dropShadow: {
         enabled: true,
-        enabledOnSeries: [0, 1, 2, 3],
+        enabledOnSeries: [0, 1, 2],
         top: 1,
         left: 1,
         blur: 0,
@@ -96,10 +92,10 @@ function tsaDataChartOptions(data) {
         },
       },
     },
-    colors: ['#d90429', '#404AE0', '#e67e22', '#dddddd'],
+    colors: ['#404AE0', '#e67e22', '#dddddd'],
     fill: {
       type: 'solid',
-      opacity: [0.3, 0.5, 1, 0.2],
+      opacity: [1, 1, 0.2],
     },
     dataLabels: {
       enabled: false,
@@ -143,10 +139,11 @@ function tsaDataChartOptions(data) {
     },
     yaxis: [
       {
-        seriesName: '2019',
+        seriesName: '2023',
         show: true,
         max: 3000000,
-        min: 0,
+        min: 750000,
+        tickAmount: 9,
         decimalsInFloat: 2,
         labels: {
           formatter: function (val, index) {
@@ -155,22 +152,11 @@ function tsaDataChartOptions(data) {
         },
       },
       {
-        seriesName: '2022',
+        seriesName: '2024',
         show: false,
         max: 3000000,
-        min: 0,
-        decimalsInFloat: 0,
-        labels: {
-          formatter: function (val, index) {
-            return (val / 1000000).toFixed(1) + 'M';
-          },
-        },
-      },
-      {
-        seriesName: '2023',
-        show: false,
-        max: 3000000,
-        min: 0,
+        min: 750000,
+        tickAmount: 9,
         decimalsInFloat: 0,
         labels: {
           formatter: function (val, index) {
@@ -202,8 +188,8 @@ function tsaDataChartOptions(data) {
       yaxis: [
         {
           y: 0,
-          y2: -50,
-          yAxisIndex: 3,
+          y2: -35,
+          yAxisIndex: 2,
           strokeDashArray: 0,
           borderColor: '#333',
           fillColor: '#ccc',
@@ -222,19 +208,18 @@ function strDataChartOptions(data) {
 
   let strDataIndex = { occIndex: [], ADRIndex: [], date: [] };
 
-  const indexedYears = ['2022', '2023'];
+  const indexedYears = ['2023', '2024'];
 
   for (let y = 0; y < indexedYears.length; y++) {
-    for (let i = 0; i < 52; i++) {
-      if (strData[indexedYears[y]]['occupancy'][i] != 0) {
-        const occIndex =
-          Math.round((strData[indexedYears[y]]['occupancy'][i] / strData['2019']['occupancy'][i]) * 10000) / 100;
-        strDataIndex['occIndex'].push(occIndex);
-        const ADRIndex = Math.round((strData[indexedYears[y]]['ADR'][i] / strData['2019']['ADR'][i]) * 10000) / 100;
-        strDataIndex['ADRIndex'].push(ADRIndex);
-        strDataIndex['date'].push(strData[indexedYears[y]]['date'][i]);
-      }
-    }
+    strDataIndex['occIndex'].push(
+      ...strData[indexedYears[y]]['occupancy'].map(
+        (o, i) => Math.round((o / strData['2022']['occupancy'][i]) * 10000) / 100
+      )
+    );
+    strDataIndex['ADRIndex'].push(
+      ...strData[indexedYears[y]]['ADR'].map((a, i) => Math.round((a / strData['2022']['ADR'][i]) * 10000) / 100)
+    );
+    strDataIndex['date'].push(...strData[indexedYears[y]]['date']);
   }
 
   const strIndexChartData = [
@@ -247,6 +232,7 @@ function strDataChartOptions(data) {
       data: strDataIndex['occIndex'],
     },
   ];
+
   const occChartData = [
     {
       name: '2019',
@@ -268,7 +254,12 @@ function strDataChartOptions(data) {
       name: '2023',
       data: strData['2023']['occupancy'],
     },
+    {
+      name: '2024',
+      data: strData['2024']['occupancy'],
+    },
   ];
+
   const ADRChartData = [
     {
       name: '2019',
@@ -290,7 +281,12 @@ function strDataChartOptions(data) {
       name: '2023',
       data: strData['2023']['ADR'],
     },
+    {
+      name: '2024',
+      data: strData['2024']['ADR'],
+    },
   ];
+
   const revPARChartData = [
     {
       name: '2019',
@@ -312,6 +308,10 @@ function strDataChartOptions(data) {
       name: '2023',
       data: strData['2023']['RevPAR'],
     },
+    {
+      name: '2024',
+      data: strData['2024']['RevPAR'],
+    },
   ];
 
   const mainChartOptions = {
@@ -319,7 +319,7 @@ function strDataChartOptions(data) {
       background: '#000',
       dropShadow: {
         enabled: true,
-        enabledOnSeries: [0, 1, 2, 3],
+        enabledOnSeries: [5],
         top: 1,
         left: 1,
         blur: 0,
@@ -362,18 +362,19 @@ function strDataChartOptions(data) {
       height: 35,
     },
     xaxis: {
-      categories: strData['2023']['date'],
+      categories: strData['2024']['date'],
       labels: {
         rotate: -45,
         maxHeight: 50,
+        rotateAlways: true,
       },
       tickAmount: 18,
       tickPlacement: 'on',
     },
-    colors: ['#d90429', '#dddddd', '#0EB300', '#404AE0', '#e67e22'],
+    colors: ['#d90429', '#dddddd', '#0EB300', '#404AE0', '#e67e22', '#FF6426'],
     fill: {
       type: 'solid',
-      opacity: [0.3, 0.3, 0.3, 0.5, 1],
+      opacity: [0.25, 0.25, 0.25, 0.25, 0.25, 1],
     },
     dataLabels: {
       enabled: false,
