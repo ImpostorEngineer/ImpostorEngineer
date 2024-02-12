@@ -168,7 +168,7 @@ function tsaDataChartOptions(data) {
         opposite: true,
         seriesName: 'Gap',
         max: 100,
-        min: -35,
+        min: -15,
         tickAmount: 9,
         title: {
           text: 'Gap',
