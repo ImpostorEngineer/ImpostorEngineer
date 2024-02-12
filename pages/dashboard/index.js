@@ -29,10 +29,10 @@ function tsaDataChartOptions(data) {
   for (let i = 0; i < tsaChartSourceData['2024'].length; i++) {
     let gap = '';
     if (tsaChartSourceData['2024'][i] == 0) {
-      gap = Math.round((1 - tsaChartSourceData['2023'][i] / tsaChartSourceData['2022'][i]) * 10000) / 100;
+      gap = Math.round((tsaChartSourceData['2023'][i] / tsaChartSourceData['2022'][i] - 1) * 10000) / 100;
       tsaChartSourceData['gap'].push(gap);
     } else {
-      gap = Math.round((1 - tsaChartSourceData['2024'][i] / tsaChartSourceData['2023'][i]) * 10000) / 100;
+      gap = Math.round((tsaChartSourceData['2024'][i] / tsaChartSourceData['2023'][i] - 1) * 10000) / 100;
       tsaChartSourceData['gap'].push(gap);
     }
   }
