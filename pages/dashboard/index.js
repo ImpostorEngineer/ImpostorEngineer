@@ -3,6 +3,8 @@ import Layout from '../../components/layout';
 import utilStyles from '../../styles/utils.module.css';
 import CreateChart from '../../components/apexchartlayout';
 import { useEffect, useState } from 'react';
+// import strData from '../../assets/data/strdata.json';
+// import tsaData from '../../assets/data/passengerData.json';
 
 const updateDate = 'Jan 23, 2024';
 
@@ -204,11 +206,29 @@ function tsaDataChartOptions(data) {
 }
 
 function strDataChartOptions(data) {
-  const strData = data;
+  let years = [];
+  let opacityVals = [];
+  for (let i in data) {
+    years.push(i);
+    opacityVals.push(0.4);
+  }
+  opacityVals.pop();
+  opacityVals.push(1);
 
-  let strDataIndex = { occIndex: [], ADRIndex: [], date: [] };
+  const maxYear = Math.max(...years).toString();
+
+  let strData = [];
+  for (let i = 0; i < years.length; i++) {
+    strData[years[i]] = {};
+    strData[years[i]]['occupancy'] = data[years[i]].map((o) => o.occupancy);
+    strData[years[i]]['ADR'] = data[years[i]].map((o) => o.ADR);
+    strData[years[i]]['RevPAR'] = data[years[i]].map((o) => o.RevPAR);
+    strData[years[i]]['date'] = data[years[i]].map((o) => o.date);
+    strData[years[i]]['week'] = data[years[i]].map((o) => o.week);
+  }
 
   const indexedYears = ['2023', '2024'];
+  let strDataIndex = { occIndex: [], ADRIndex: [], date: [] };
 
   for (let y = 0; y < indexedYears.length; y++) {
     strDataIndex['occIndex'].push(
@@ -234,6 +254,14 @@ function strDataChartOptions(data) {
   ];
 
   const occChartData = [
+    {
+      name: '2017',
+      data: strData['2017']['occupancy'],
+    },
+    {
+      name: '2018',
+      data: strData['2018']['occupancy'],
+    },
     {
       name: '2019',
       data: strData['2019']['occupancy'],
@@ -262,6 +290,14 @@ function strDataChartOptions(data) {
 
   const ADRChartData = [
     {
+      name: '2017',
+      data: strData['2017']['ADR'],
+    },
+    {
+      name: '2018',
+      data: strData['2018']['ADR'],
+    },
+    {
       name: '2019',
       data: strData['2019']['ADR'],
     },
@@ -288,6 +324,14 @@ function strDataChartOptions(data) {
   ];
 
   const revPARChartData = [
+    {
+      name: '2017',
+      data: strData['2017']['RevPAR'],
+    },
+    {
+      name: '2018',
+      data: strData['2018']['RevPAR'],
+    },
     {
       name: '2019',
       data: strData['2019']['RevPAR'],
@@ -362,7 +406,7 @@ function strDataChartOptions(data) {
       height: 35,
     },
     xaxis: {
-      categories: strData['2024']['date'],
+      categories: strData[maxYear]['date'],
       labels: {
         rotate: -45,
         maxHeight: 50,
@@ -371,10 +415,9 @@ function strDataChartOptions(data) {
       tickAmount: 18,
       tickPlacement: 'on',
     },
-    colors: ['#d90429', '#dddddd', '#0EB300', '#404AE0', '#e67e22', '#FF6426'],
     fill: {
       type: 'solid',
-      opacity: [0.25, 0.25, 0.25, 0.25, 0.25, 1],
+      opacity: [...opacityVals],
     },
     dataLabels: {
       enabled: false,
@@ -396,7 +439,7 @@ function strDataChartOptions(data) {
   };
   const indexChartOptions = {
     title: {
-      text: 'U.S. Hotel Occupancy and ADR Recovery Levels',
+      text: 'U.S. Hotel Occupancy and ADR Index',
       align: 'left',
       margin: 10,
       offsetX: 10,
@@ -410,10 +453,16 @@ function strDataChartOptions(data) {
       width: 3,
     },
     subtitle: {
-      text: 'Indexed to 2019',
+      text: 'Indexed to 2022, Source: STR, str.com',
       align: 'left',
       offsetX: 10,
       offsetY: 30,
+      style: {
+        color: '#9C9C9C',
+        fontSize: '12px',
+        fontFamily: 'Inter, Roboto, sans-serif',
+        fontWeight: 400,
+      },
     },
     chart: {
       background: '#000',
@@ -494,7 +543,7 @@ function strDataChartOptions(data) {
       ],
       xaxis: [
         {
-          x: '7-Jan',
+          x: '1/6/2024',
           x2: 800,
           strokeDashArray: 0,
           borderColor: '#333',
@@ -503,7 +552,7 @@ function strDataChartOptions(data) {
           offsetX: 0,
           offsetY: 0,
           label: {
-            text: '2023',
+            text: '2024',
             textAnchor: 'middle',
             orientation: 'vertical',
             style: {
@@ -519,6 +568,7 @@ function strDataChartOptions(data) {
       ],
     },
   };
+
   const occChartOptions = {
     ...mainChartOptions,
     title: {
