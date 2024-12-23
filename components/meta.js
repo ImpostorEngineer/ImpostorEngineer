@@ -13,7 +13,7 @@ export default function Meta() {
       integrity='sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p'
       crossOrigin='anonymous'
     /> */}
-    <script src='https://kit.fontawesome.com/ab5e2af120.js' crossorigin='anonymous'></script>
+    <script src='https://kit.fontawesome.com/ab5e2af120.js' crossOrigin='anonymous'></script>
     <meta name='description' content='I am not an engineer, just a hobbyist.' />
     <meta itemProp='name' content='Impostor Engineer Personal Website' />
     <meta itemProp='description' content='I am not an engineer, just a hobbyist.' />
