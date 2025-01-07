@@ -1,6 +1,6 @@
+'use client';
 import dynamic from 'next/dynamic';
 import { useTheme } from '../../context/ThemeContext';
-
 import strRawData from '../../assets/data/strdata.json';
 import tsaRawData from '../../assets/data/passengerData.json';
 
