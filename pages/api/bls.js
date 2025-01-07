@@ -44,4 +44,3 @@ export default async function handler(req, res) {
   const laborStats = await GetLaborStats();
   res.status(200).json(laborStats);
 }
-//
