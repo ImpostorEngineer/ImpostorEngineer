@@ -3,9 +3,8 @@ import { CustomMDX } from '@/app/utils/md.js';
 
 export default function Page() {
   const mdContent = getBlogPosts('/about/content/');
-  console.log(mdContent.content);
   return (
-    <section className='py-4'>
+    <section>
       <CustomMDX source={mdContent[0].content} />
     </section>
   );

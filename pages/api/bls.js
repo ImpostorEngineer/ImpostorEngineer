@@ -40,7 +40,8 @@ async function GetLaborStats() {
   return laborStats.data;
 }
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   const laborStats = await GetLaborStats();
   res.status(200).json(laborStats);
-};
+}
+//

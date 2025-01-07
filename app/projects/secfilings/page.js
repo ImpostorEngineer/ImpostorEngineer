@@ -1,3 +1,5 @@
+'use client';
+
 export default function SECFilings() {
   async function getFileLists(cik, formType, year) {
     const url = `https://data.sec.gov/submissions/CIK${cik}.json`;
@@ -37,15 +39,14 @@ export default function SECFilings() {
       if ((finalData[i].form == '10-K') | (finalData[i].form == '10-Q')) {
         financialData = `&nbsp;|&nbsp;<a href='https://www.sec.gov/Archives/edgar/data/${cik}/${folderName}/Financial_Report.xlsx'>XLS</a>`;
       }
-      document.querySelector('#data').innerHTML += `<div class=${secStyles.row}>
-    <div>${finalData[i].tic}</div>
-       <div>${finalData[i].reportYear}</div>
-    <div>${finalData[i].filingDate}</div>
-     <div>${finalData[i].reportDate}</div>
-     <div>${finalData[i].form}</div>
-     <div>${finalData[i].primaryDocDescription}</div>
-     <div><a href='https://www.sec.gov/Archives/edgar/data/${cik}/${folderName}/${finalData[i].primaryDocument}' target='_blank'>Doc</a>${financialData}
-    </div>
+      document.querySelector('#data').innerHTML += `<div class='flex flex-row justify-between text-sm	'>
+      <div>${finalData[i].tic}</div>
+      <div>${finalData[i].reportYear}</div>
+      <div>${finalData[i].filingDate}</div>
+      <div>${finalData[i].reportDate}</div>
+      <div>${finalData[i].form}</div>
+      <div>${finalData[i].primaryDocDescription}</div>
+      <div><a href='https://www.sec.gov/Archives/edgar/data/${cik}/${folderName}/${finalData[i].primaryDocument}' target='_blank'>Doc</a>${financialData}</div>
      </div>
      `;
     }
@@ -66,17 +67,17 @@ export default function SECFilings() {
   }
 
   return (
-    <div className={secStyles.container}>
-      <div className={secStyles.compInfo}>
-        <form className={secStyles.form} onSubmit={formSubmitted}>
+    <section>
+      <div className='mx-4'>
+        <form className='grid gap-x-1 grid-cols-5' onSubmit={formSubmitted}>
           <input
             type='text'
             name='cik'
             id='cikinput'
-            className={secStyles.cikinput}
+            className='rounded-md p-1 col-span-2'
             placeholder='Enter company CIKs, coma separated'
           />
-          <select name='formName' title='formName' id='formlist' className={secStyles.formlist}>
+          <select name='formName' title='formName' id='formlist' className='w-30 p-1 border border-solid rounded-md'>
             <option value=''>All</option>
             <option value='10-K'>10-K</option>
             <option value='10-Q'>10-Q</option>
@@ -87,16 +88,16 @@ export default function SECFilings() {
             type='number'
             name='year'
             id='yearinput'
-            className={secStyles.yearinput}
+            className='rounded-md border border-solid p-1'
             placeholder='Beginning year'
           />
-          <button type='submit' className={secStyles.searchButton}>
+          <button type='submit' className='p-2 font-semibold bg-blue-500 text-white rounded-md w-20'>
             Search
           </button>
         </form>
       </div>
-      <div className={secStyles.data}>
-        <div className={`${secStyles.row} ${secStyles.headers}`}>
+      <div className='mx-4'>
+        <div className='flex justify-between font-semibold mt-4 mb-2'>
           <div>TIC</div>
           <div>Year</div>
           <div>Filing Date</div>
@@ -106,7 +107,7 @@ export default function SECFilings() {
           <div>Doc</div>
         </div>
       </div>
-      <div className={secStyles.dataRows} id='data'></div>
-    </div>
+      <div className='mx-4' id='data'></div>
+    </section>
   );
 }
