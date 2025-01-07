@@ -1,12 +1,13 @@
-import Head from 'next/head';
-import Layout from '../../layout';
-import utilStyles from '../../styles/utils.module.css';
-import CreateChart from '../../components/apexchartlayout';
-import { useEffect, useState } from 'react';
-import strData from '../../assets/data/strdata.json';
-import tsaData from '../../assets/data/passengerData.json';
+import dynamic from 'next/dynamic';
+import { useTheme } from '../../context/ThemeContext';
+
+import strRawData from '../../assets/data/strdata.json';
+import tsaRawData from '../../assets/data/passengerData.json';
 
 export default function Dashboard() {
+  const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+  const { theme } = useTheme();
+
   const updateDate = 'Jan 23, 2024';
 
   function tsaDataChartOptions(data) {
@@ -57,7 +58,6 @@ export default function Dashboard() {
 
     const tsaChartOptions = {
       chart: {
-        background: '#000',
         dropShadow: {
           enabled: true,
           enabledOnSeries: [0, 1, 2],
@@ -77,7 +77,7 @@ export default function Dashboard() {
         },
       },
       theme: {
-        mode: 'dark',
+        mode: theme,
         palette: 'palette6',
         monochrome: {
           enabled: false,
@@ -218,14 +218,15 @@ export default function Dashboard() {
 
     const maxYear = Math.max(...years).toString();
 
-    let strData = [];
+    let strData = {};
     for (let i = 0; i < years.length; i++) {
-      strData[years[i]] = {};
-      strData[years[i]]['occupancy'] = data[years[i]].map((o) => o.occupancy);
-      strData[years[i]]['ADR'] = data[years[i]].map((o) => o.ADR);
-      strData[years[i]]['RevPAR'] = data[years[i]].map((o) => o.RevPAR);
-      strData[years[i]]['date'] = data[years[i]].map((o) => o.date);
-      strData[years[i]]['week'] = data[years[i]].map((o) => o.week);
+      const year = years[i];
+      strData[year] = {};
+      strData[year]['occupancy'] = data[year].map((o) => o.occupancy);
+      strData[year]['ADR'] = data[year].map((o) => o.ADR);
+      strData[year]['RevPAR'] = data[year].map((o) => o.RevPAR);
+      strData[year]['date'] = data[year].map((o) => o.date);
+      strData[year]['week'] = data[year].map((o) => o.week);
     }
 
     const indexedYears = ['2023', '2024'];
@@ -269,7 +270,7 @@ export default function Dashboard() {
       },
       {
         name: '2020',
-        data: strData['2020']['occupancy'],
+        data: strData['2020']['occupancy'].slice(0, 52),
       },
       {
         name: '2021',
@@ -304,7 +305,7 @@ export default function Dashboard() {
       },
       {
         name: '2020',
-        data: strData['2020']['ADR'],
+        data: strData['2020']['ADR'].slice(0, 52),
       },
       {
         name: '2021',
@@ -339,7 +340,7 @@ export default function Dashboard() {
       },
       {
         name: '2020',
-        data: strData['2020']['RevPAR'],
+        data: strData['2020']['RevPAR'].slice(0, 52),
       },
       {
         name: '2021',
@@ -361,10 +362,9 @@ export default function Dashboard() {
 
     const mainChartOptions = {
       chart: {
-        background: '#000',
         dropShadow: {
           enabled: true,
-          enabledOnSeries: [5],
+          enabledOnSeries: [8],
           top: 1,
           left: 1,
           blur: 0,
@@ -428,7 +428,7 @@ export default function Dashboard() {
         width: 3,
       },
       theme: {
-        mode: 'dark',
+        mode: theme,
         palette: 'palette6',
         monochrome: {
           enabled: false,
@@ -466,7 +466,6 @@ export default function Dashboard() {
         },
       },
       chart: {
-        background: '#000',
         dropShadow: {
           enabled: true,
           enabledOnSeries: [0, 1],
@@ -518,7 +517,7 @@ export default function Dashboard() {
         enabled: false,
       },
       theme: {
-        mode: 'dark',
+        mode: theme,
         palette: 'palette6',
         monochrome: {
           enabled: false,
@@ -622,31 +621,29 @@ export default function Dashboard() {
     };
   }
 
-  // const [strData, setStrData] = useState(null);
-  // const [tsaData, setTsaData] = useState(null);
+  // const [strRawData, setStrRawData] = useState(null);
+  // const [tsaRawData, setTsaRawData] = useState(null);
 
   // useEffect(() => {
   //   fetch('https://www.ilhandemirer.com/api/str')
   //     .then((res) => res.json())
-  //     .then((data) => setStrData(data));
+  //     .then((data) => setStrRawData(data));
   //   fetch('https://www.ilhandemirer.com/api/tsa')
   //     .then((res) => res.json())
-  //     .then((data) => setTsaData(data));
+  //     .then((data) => setTsaRawData(data));
   // }, []);
 
-  if (!strData || !tsaData) {
+  if (!strRawData || !strRawData) {
     return (
-      <Layout>
-        <Head>
-          <title>Hospitality Data Dashboard</title>
-        </Head>
-        <h2 className={utilStyles.headingLg}>U.S. Hospitality Data Dashboard</h2>
+      <div>
+        <h2>U.S. Hospitality Data Dashboard</h2>
         <section>
           <h3>Please wait while data loads...</h3>
         </section>
-      </Layout>
+      </div>
     );
   }
+
   const {
     strIndexChartData,
     occChartData,
@@ -656,38 +653,35 @@ export default function Dashboard() {
     occChartOptions,
     ADRChartOptions,
     revPARChartOptions,
-  } = strDataChartOptions(strData);
+  } = strDataChartOptions(strRawData);
 
-  const { tsaChartData, tsaChartOptions } = tsaDataChartOptions(tsaData);
+  const { tsaChartData, tsaChartOptions } = tsaDataChartOptions(tsaRawData);
 
   return (
-    <Layout>
-      <Head>
-        <title>Hospitality Data Dashboard</title>
-      </Head>
-      <h2 className={utilStyles.headingLg}>U.S. Hospitality Data Dashboard</h2>
+    <div>
+      <h2>U.S. Hospitality Data Dashboard</h2>
       <section>
         <div>
           <h3>Recovery Index:</h3>
-          <CreateChart data={strIndexChartData} options={indexChartOptions} type={'line'} height={500} />
+          <Chart series={strIndexChartData} options={indexChartOptions} height={500} className='drop-shadow-lg' />
         </div>
         <div>
           <h3>Occupancy Trends:</h3>
-          <CreateChart data={occChartData} options={occChartOptions} type={'line'} height={500} />
+          <Chart series={occChartData} options={occChartOptions} height={500} className='drop-shadow-lg' />
         </div>
         <div>
           <h3>ADR Trends:</h3>
-          <CreateChart data={ADRChartData} options={ADRChartOptions} type={'line'} height={500} />
+          <Chart series={ADRChartData} options={ADRChartOptions} height={500} className='drop-shadow-lg' />
         </div>
         <div>
           <h3>RevPAR Trends:</h3>
-          <CreateChart data={revPARChartData} options={revPARChartOptions} type={'line'} height={500} />
+          <Chart series={revPARChartData} options={revPARChartOptions} height={500} className='drop-shadow-lg' />
         </div>
         <div>
           <h3>TSA Passenger Trends:</h3>
-          <CreateChart data={tsaChartData} options={tsaChartOptions} type={'line'} height={500} />
+          <Chart series={tsaChartData} options={tsaChartOptions} height={500} className='drop-shadow-lg' />
         </div>
       </section>
-    </Layout>
+    </div>
   );
 }

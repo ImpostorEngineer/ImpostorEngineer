@@ -9,7 +9,7 @@ export default function Projects() {
     <section>
       <h3 className=''>Some of my Projects:</h3>
       <div className=''>
-        <ul className='has-text-weight-medium'>
+        <ul className=''>
           <li>
             <Link href='projects/secfilings'>SEC Filings</Link>
           </li>

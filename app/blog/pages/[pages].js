@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Layout from '../../../components/layout';
+import Layout from '../../layout';
 import utilStyles from '../../../styles/utils.module.css';
 import { getAllPages, getSortedPostsData } from '../../../lib/posts';
 import { getPageNumbers } from '../../../lib/getPageNumbers';

@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className='container absolute bottom-5 mx-auto text-center'>
+    <footer className='container mx-auto text-center my-4'>
       <div className='flex justify-center space-x-4'>
         <div>
           <a className='' href='https://www.kaggle.com/impostorengineer' alt='Kaggle' target='_blank'>

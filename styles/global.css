@@ -2,18 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-:root[data-theme='light'] {
+[data-theme='light'] {
   --text: #000;
-  --background: #ddd;
+  --background: #ffffff;
   --link: #000;
   --hover: #b100a2;
   --shadow: #333;
   --lightText: #666;
 }
+
 [data-theme='dark'] {
   /* Dark Theme */
   --text: #fff;
-  --background: #222222;
+  --background: #212121;
   --link: #fff;
   --hover: #b100a2;
   --shadow: rgb(0, 0, 0);
@@ -38,12 +39,32 @@ body {
 }
 @layer base {
   h1 {
-    @apply text-4xl font-bold mt-6 mb-2;
+    @apply text-4xl font-bold mt-4 mb-2;
   }
   h2 {
-    @apply text-xl font-bold mt-6 mb-2;
+    @apply text-xl font-bold mt-4 mb-2;
+  }
+  h3 {
+    @apply text-lg font-bold mt-4 mb-2;
   }
 }
+
+a {
+  color: var(--link);
+}
+a:hover {
+  @apply no-underline;
+  color: var(--hover);
+}
+li {
+  list-style: square;
+  padding: 0;
+  margin-left: 16px;
+}
+li::marker {
+  color: var(--hover);
+}
+
 /* a {
   color: var(--link);
   text-decoration: none;

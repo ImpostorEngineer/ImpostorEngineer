@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Layout from '../../../components/layout';
+import Layout from '../../layout';
 import utilStyles from '../../../styles/utils.module.css';
 import { getAllPostTags, getSortedPostsData, searchTags } from '../../../lib/posts';
 import PostListing from '../../../components/listposts';

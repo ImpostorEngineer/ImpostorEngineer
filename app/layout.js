@@ -1,20 +1,20 @@
-import './styles/global.css';
-import Footer from './components/footer';
-import Navbar from './components/navbar';
-import { ThemeProvider } from './context/ThemeContext';
+import '../styles/global.css';
+import Footer from '../components/footer';
+import Navbar from '../components/navbar';
+import { ThemeProvider } from '../context/ThemeContext';
 
 export const metadata = {
   title: 'Impostor Engineer',
-  description: 'Impostor Engineer is a blog about data science, machine learning, and artificial intelligence.',
+  description: 'A blog about software engineering, data science, and other things.',
 };
 
-export default function RootLayout({ children }) {
+export default function Layout({ children }) {
   return (
     <html lang='en'>
-      <body className={`container mx-auto px-4 py-4`}>
+      <body className='antialiased max-w-screen-lg mx-4 mt-8 lg:mx-auto'>
         <ThemeProvider>
           <Navbar />
-          <div className='container'>{children}</div>
+          <main className='min-h-96'>{children}</main>
           <Footer />
         </ThemeProvider>
       </body>
