@@ -11,38 +11,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }) {
-  let post = getBlogPosts('blog/posts').find((post) => post.slug === params.slug);
-  if (!post) {
-    return;
-  }
-
-  let { title, date, banner } = post.metadata;
-
-  let ogImage = banner ? banner : `${baseUrl}/og?title=${encodeURIComponent(title)}`;
-  return {
-    title,
-    openGraph: {
-      title,
-      type: 'article',
-      date,
-      url: `${baseUrl}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      images: [ogImage],
-    },
-  };
-}
-
-export default function Blog({ params }) {
-  let post = getBlogPosts('blog/posts').find((post) => post.slug === params.slug);
+export default async function Blog({ params }) {
+  const postParams = await params;
+  let post = getBlogPosts('blog/posts').find((post) => post.slug === postParams.slug);
 
   if (!post) {
     notFound();
