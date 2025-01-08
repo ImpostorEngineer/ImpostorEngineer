@@ -21,6 +21,115 @@
   --lightText: #ccc;
 }
 
+:root {
+  --sh-class: #2d5e9d;
+  --sh-identifier: #354150;
+  --sh-sign: #8996a3;
+  --sh-string: #007f7a;
+  --sh-keyword: #e02518;
+  --sh-comment: #a19595;
+  --sh-jsxliterals: #6266d1;
+  --sh-property: #e25a1c;
+  --sh-entity: #e25a1c;
+}
+
+.post .anchor {
+  @apply absolute invisible no-underline;
+
+  margin-left: -1em;
+  padding-right: 0.5em;
+  width: 80%;
+  max-width: 700px;
+  cursor: pointer;
+}
+
+.anchor:hover {
+  @apply visible;
+}
+
+.post a {
+  @apply underline transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em];
+}
+
+.post .anchor:after {
+  @apply text-neutral-300 dark:text-neutral-700;
+  content: '#';
+}
+
+.post *:hover > .anchor {
+  @apply visible;
+}
+
+.post pre {
+  @apply bg-neutral-50 rounded-lg overflow-x-auto border border-neutral-200 py-2 px-3 text-sm;
+}
+
+.post code {
+  @apply px-1 py-0.5 rounded-lg;
+}
+
+.post pre code {
+  @apply p-0;
+  border: initial;
+  line-height: 1;
+}
+
+.post code span {
+  @apply font-medium;
+}
+
+.post img {
+  /* Don't apply styles to next/image */
+  @apply m-0;
+}
+
+.post p {
+  @apply my-4;
+}
+
+.post h1 {
+  @apply text-4xl font-medium tracking-tight mt-6 mb-2;
+}
+
+.post h2 {
+  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+}
+
+.post h3 {
+  @apply text-xl font-medium tracking-tight mt-6 mb-2;
+}
+
+.post h4 {
+  @apply text-lg font-medium tracking-tight mt-6 mb-2;
+}
+
+.post strong {
+  @apply font-medium;
+}
+
+.post ul {
+  @apply list-disc pl-6;
+}
+
+.post ol {
+  @apply list-decimal pl-6;
+}
+
+.post > :first-child {
+  /* Override removing top margin, causing layout shift */
+  margin-top: 1.25em !important;
+  margin-bottom: 1.25em !important;
+}
+
+pre::-webkit-scrollbar {
+  display: none;
+}
+
+pre {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 html,
 body {
   padding: 0;

@@ -10,7 +10,7 @@ banner: '04-nextjs-fetch.png'
 
 Here is an example of `useEffect` usage for API data fetch. In this blog I'm using data from an external data sources. I didn't want to create a server-side fetch. There are other ways to [fetch data in NEXT.js](https://nextjs.org/docs/basic-features/data-fetching/overview) depending on your application's use case. I preferred client-side rendering.
 
-```JavaScript
+```js
 import Head from 'next/head';
 import Layout from '../../components/layout';
 import CreateChart from '../../components/apexchartlayout';

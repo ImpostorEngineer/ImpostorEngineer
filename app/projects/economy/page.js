@@ -630,9 +630,9 @@ export default function LaborStats() {
       },
       yaxis: {
         show: true,
-        decimalsInFloat: 0,
+        decimalsInFloat: 2,
         tickAmount: 10,
-        max: Math.max(...cpiPartsChartData.map((d) => Math.max(...d.data.slice(12)))) + 5,
+        max: Math.ceil((Math.max(...cpiPartsChartData.map((d) => Math.max(...d.data.slice(12)))) + 5) / 10) + 10,
         min: Math.floor((Math.min(...cpiPartsChartData.map((d) => Math.min(...d.data.slice(12)))) - 5) / 10) * 10,
       },
     };
