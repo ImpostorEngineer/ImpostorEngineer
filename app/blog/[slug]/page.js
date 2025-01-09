@@ -1,7 +1,5 @@
-import { CustomMDX } from '../../utils/md.js';
-import { formatDate, getBlogPosts } from '../../utils//utils.js';
-
-const baseUrl = 'https://impostorengineer.vercel.app';
+import { CustomMDX } from '@/app/utils/md.js';
+import { formatDate, getBlogPosts } from '@/app/utils//utils.js';
 
 export async function generateStaticParams() {
   let posts = getBlogPosts('blog/posts');

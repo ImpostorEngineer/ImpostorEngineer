@@ -158,9 +158,6 @@ body {
   }
 }
 
-a {
-  color: var(--link);
-}
 a:hover {
   @apply no-underline;
   color: var(--hover);

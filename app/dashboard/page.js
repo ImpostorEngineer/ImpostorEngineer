@@ -43,18 +43,22 @@ export default function Dashboard() {
 
     const tsaChartData = [
       {
-        name: '2023',
-        data: tsaChartSourceData['2023'],
-      },
-      {
         name: '2024',
         data: tsaChartSourceData['2024'],
+      },
+      {
+        name: '2023',
+        data: tsaChartSourceData['2023'],
       },
       {
         name: 'Gap',
         data: tsaChartSourceData['gap'],
       },
     ];
+
+    const tsaChartMaxGap = Math.ceil((Math.max(...tsaChartSourceData['gap']) + 5) / 10) * 10;
+    const tsaChartMinGap = Math.floor((Math.min(...tsaChartSourceData['gap']) - 5) / 10) * 10;
+    const tsaChartTickAmount = -(tsaChartMinGap - tsaChartMaxGap) / 10;
 
     const tsaChartOptions = {
       chart: {
@@ -95,10 +99,10 @@ export default function Dashboard() {
           },
         },
       },
-      colors: ['#404AE0', '#e67e22', '#dddddd'],
+      colors: ['#EA3546', '#F26624', '#dddddd'],
       fill: {
         type: 'solid',
-        opacity: [1, 1, 0.2],
+        opacity: [1, 0.4, 0.2],
       },
       dataLabels: {
         enabled: false,
@@ -142,22 +146,10 @@ export default function Dashboard() {
       },
       yaxis: [
         {
-          seriesName: '2023',
-          show: true,
-          max: 3000000,
-          min: 750000,
-          tickAmount: 9,
-          decimalsInFloat: 2,
-          labels: {
-            formatter: function (val, index) {
-              return (val / 1000000).toFixed(1) + 'M';
-            },
-          },
-        },
-        {
           seriesName: '2024',
-          show: false,
-          max: 3000000,
+          showAlways: true,
+          show: true,
+          max: 3200000,
           min: 750000,
           tickAmount: 9,
           decimalsInFloat: 0,
@@ -168,11 +160,25 @@ export default function Dashboard() {
           },
         },
         {
+          seriesName: '2023',
+          show: false,
+          max: 3200000,
+          min: 750000,
+          tickAmount: 9,
+          decimalsInFloat: 2,
+          labels: {
+            formatter: function (val, index) {
+              return (val / 1000000).toFixed(1) + 'M';
+            },
+          },
+        },
+
+        {
           opposite: true,
           seriesName: 'Gap',
-          max: 100,
-          min: -20,
-          tickAmount: 8,
+          max: tsaChartMaxGap,
+          min: tsaChartMinGap,
+          tickAmount: tsaChartTickAmount,
           title: {
             text: 'Gap',
             style: {
@@ -191,7 +197,7 @@ export default function Dashboard() {
         yaxis: [
           {
             y: 0,
-            y2: -35,
+            y2: tsaChartMinGap,
             yAxisIndex: 2,
             strokeDashArray: 0,
             borderColor: '#333',
@@ -364,7 +370,7 @@ export default function Dashboard() {
       chart: {
         dropShadow: {
           enabled: true,
-          enabledOnSeries: [8],
+          enabledOnSeries: [7],
           top: 1,
           left: 1,
           blur: 0,
@@ -402,6 +408,8 @@ export default function Dashboard() {
       },
       yaxis: {
         decimalsInFloat: 2,
+        tickAmount: 10,
+        showAlways: true,
       },
       legend: {
         height: 35,
@@ -544,7 +552,7 @@ export default function Dashboard() {
         xaxis: [
           {
             x: '1/6/2024',
-            x2: 800,
+            x2: strDataIndex['date'][strDataIndex['date'].length - 1],
             strokeDashArray: 0,
             borderColor: '#333',
             fillColor: '#ccc',
@@ -560,7 +568,6 @@ export default function Dashboard() {
                 color: '#777',
                 fontSize: '11px',
                 fontWeight: 400,
-                fontFamily: undefined,
                 cssClass: 'apexcharts-xaxis-annotation-label',
               },
             },
@@ -606,6 +613,10 @@ export default function Dashboard() {
           fontWeight: 600,
           fontSize: '16px',
         },
+      },
+      yaxis: {
+        max: 130,
+        tickAmount: 10,
       },
     };
 
