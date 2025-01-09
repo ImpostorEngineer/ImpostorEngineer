@@ -4,7 +4,7 @@ import { formatDate } from '@/app/utils/utils';
 
 export function BlogPosts({ posts, begin = 0, end = 6 }) {
   return (
-    <div className='grid grid-cols-2 gap-4 px-4'>
+    <div className='grid grid-cols-1 gap-4 px-4 md:grid-cols-2'>
       {posts
         .sort((a, b) => {
           if (new Date(a.metadata.date) > new Date(b.metadata.date)) {
@@ -12,6 +12,7 @@ export function BlogPosts({ posts, begin = 0, end = 6 }) {
           }
           return 1;
         })
+        .filter((post) => post.metadata.draft !== true)
         .slice(begin, end)
         .map((post) => (
           <div key={post.slug} className='w-96 rounded-lg shadow-md bg-gray-800 text-white pb-4'>

@@ -1,0 +1,20 @@
+{
+  "/": {
+    "name": "Home"
+  },
+  "/blog": {
+    "name": "Blog"
+  },
+  "/projects": {
+    "name": "Projects"
+  },
+  "/dashboard": {
+    "name": "Hospitality Data"
+  },
+  "/about": {
+    "name": "About"
+  },
+  "/contact": {
+    "name": "Contact"
+  }
+}

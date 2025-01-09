@@ -1,7 +1,7 @@
 ---
 title: 'Reduce Problem'
 author: 'Impostor Engineer'
-date: '2022-12-16'
+date: '2022-12-15'
 draft: true
 slug: 'reduce-problem'
 tags: ['code', 'JavaScript', 'reduce']

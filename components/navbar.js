@@ -1,34 +1,17 @@
 'use client';
 import Link from 'next/link';
 import { useTheme } from '../context/ThemeContext';
+import MobileNavBar from './mobileNavbar';
+import navLinks from '@/assets/navLinks.json';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
 
-  const navItems = {
-    '/': {
-      name: 'Home',
-    },
-    '/blog': {
-      name: 'Blog',
-    },
-    '/projects': {
-      name: 'Projects',
-    },
-    '/dashboard': {
-      name: 'Hospitality Data',
-    },
-    '/about': {
-      name: 'About',
-    },
-    '/contact': {
-      name: 'Contact',
-    },
-  };
+  const navItems = navLinks;
 
   return (
     <nav className='flex justify-start items-center py-4 mx-auto pb-4'>
-      <div className='flex'>
+      <div className='lg:flex hidden md:ml-6 md:block'>
         {Object.entries(navItems).map(([path, { name }]) => (
           <Link
             key={path}
@@ -39,7 +22,7 @@ export default function Navbar() {
           </Link>
         ))}
       </div>
-      <div className='ml-auto'>
+      <div className='ml-auto hidden md:inline'>
         <Link href='#' onClick={toggleTheme}>
           {theme === 'light' ? (
             <svg
@@ -70,6 +53,7 @@ export default function Navbar() {
           )}
         </Link>
       </div>
+      <MobileNavBar />
     </nav>
   );
 }
