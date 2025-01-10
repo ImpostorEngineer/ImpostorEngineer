@@ -1,9 +1,9 @@
 export default function Footer() {
   return (
-    <footer className='container mx-auto text-center my-4'>
-      <div className='flex justify-center space-x-4'>
-        <div>
-          <a className='' href='https://www.kaggle.com/impostorengineer' alt='Kaggle' target='_blank'>
+    <footer className='w-96 text-center my-6 md:mx-auto'>
+      <div className='grid grid-cols-7 gap-2 mx-6 md:flex md:justify-between md:mx-4 md:space-x-4'>
+        <div className=''>
+          <a href='https://www.kaggle.com/impostorengineer' alt='Kaggle' target='_blank'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 320 512'
@@ -16,7 +16,7 @@ export default function Footer() {
           </a>
         </div>
         <div>
-          <a className='' href='https://www.youtube.com/@impostorengineer' alt='YouTube' target='_blank'>
+          <a href='https://www.youtube.com/@impostorengineer' alt='YouTube' target='_blank'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 576 512'
@@ -29,7 +29,7 @@ export default function Footer() {
           </a>
         </div>
         <div>
-          <a className='' href='https://x.com/ImpostorEnginer' alt='twitter' target='_blank'>
+          <a href='https://x.com/ImpostorEnginer' alt='twitter' target='_blank'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 512 512'
@@ -42,7 +42,7 @@ export default function Footer() {
           </a>
         </div>
         <div>
-          <a className='' href='https://github.com/ImpostorEngineer' alt='github' target='_blank'>
+          <a href='https://github.com/ImpostorEngineer' alt='github' target='_blank'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 496 512'
@@ -54,7 +54,7 @@ export default function Footer() {
             </svg>
           </a>
         </div>
-        <div className=''>Copyright &copy; Impostor Engineer 2022</div>
+        <div className='text-sm col-span-3'>Copyright &copy; Impostor Engineer 2022</div>
       </div>
     </footer>
   );

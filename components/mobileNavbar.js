@@ -11,14 +11,9 @@ export default function MobileNavBar() {
 
   return (
     <div>
-      <div className='md:hidden flex items-center'>
+      <div className='mx-4 md:hidden flex items-center'>
         <button onClick={() => setToggleMenu(!toggleMenu)}>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 20 20'
-            fill='currentColor'
-            className='h-8 w-8 text-gray-900 hover:text-primary-500 dark:text-gray-100 dark:hover:text-primary-400'
-          >
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className='h-8 w-8'>
             <path
               fillRule='evenodd'
               d='M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z'
@@ -33,12 +28,12 @@ export default function MobileNavBar() {
         }`}
       >
         {Object.entries(navItems).map(([path, { name }]) => (
-          <Link key={path} href={path} className='font-bold p-2 ml-2' onClick={() => setToggleMenu(!toggleMenu)}>
+          <Link key={path} href={path} className='font-bold p-2 mx-4' onClick={() => setToggleMenu(!toggleMenu)}>
             {name}
           </Link>
         ))}
 
-        <div className='pl-2 ml-2' onClick={() => setToggleMenu(!toggleMenu)}>
+        <div className='pl-2 mx-4' onClick={() => setToggleMenu(!toggleMenu)}>
           <Link href='#' onClick={toggleTheme}>
             {theme === 'light' ? (
               <svg
