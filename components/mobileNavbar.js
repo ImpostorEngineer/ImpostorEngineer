@@ -33,12 +33,12 @@ export default function MobileNavBar() {
         }`}
       >
         {Object.entries(navItems).map(([path, { name }]) => (
-          <Link key={path} href={path} className='font-bold p-2 ml-2'>
+          <Link key={path} href={path} className='font-bold p-2 ml-2' onClick={() => setToggleMenu(!toggleMenu)}>
             {name}
           </Link>
         ))}
 
-        <div className='pl-2 ml-2'>
+        <div className='pl-2 ml-2' onClick={() => setToggleMenu(!toggleMenu)}>
           <Link href='#' onClick={toggleTheme}>
             {theme === 'light' ? (
               <svg

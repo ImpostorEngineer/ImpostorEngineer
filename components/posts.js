@@ -15,17 +15,19 @@ export function BlogPosts({ posts, begin = 0, end = 6 }) {
         .filter((post) => post.metadata.draft !== true)
         .slice(begin, end)
         .map((post) => (
-          <div key={post.slug} className='w-96 rounded-lg shadow-md bg-gray-800 text-white pb-4'>
-            <Image
-              src={`/images/blogimages/${post.metadata.banner}`}
-              width={384}
-              height={120}
-              alt='banner'
-              title={post.title}
-              className='object-cover object-left-top rounded-t-lg pb-4 h-[120px]'
-            />
-            <Link href={`/blog/${post.slug}`} className='font-bold px-4 pb-2 text-white inline-block'>
-              {post.metadata.title}
+          <div key={post.slug} className='w-[370px] rounded-lg shadow-md bg-gray-800 text-white pb-4'>
+            <Link href={`/blog/${post.slug}`} className=''>
+              <Image
+                src={`/images/blogimages/${post.metadata.banner}`}
+                width={370}
+                height={120}
+                alt='banner'
+                title={post.title}
+                className='object-cover object-left-top rounded-t-lg pb-4 h-[120px] hover:grayscale'
+              />
+              <div className='font-bold px-4 pb-2 text-white inline-block hover:text-[var(--hover)]'>
+                {post.metadata.title}
+              </div>
             </Link>
             <br />
             <small className='flex px-4 gap-2'>

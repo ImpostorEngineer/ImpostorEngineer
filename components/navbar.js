@@ -10,8 +10,8 @@ export default function Navbar() {
   const navItems = navLinks;
 
   return (
-    <nav className='flex justify-start items-center py-4 mx-auto pb-4'>
-      <div className='lg:flex hidden md:ml-6 md:block'>
+    <nav className='flex justify-start items-center py-4 pb-4 mr-8'>
+      <div className='lg:flex hidden md:ml-2 md:block'>
         {Object.entries(navItems).map(([path, { name }]) => (
           <Link
             key={path}
