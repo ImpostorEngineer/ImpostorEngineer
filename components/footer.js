@@ -1,4 +1,6 @@
 export default function Footer() {
+  const today = new Date();
+  const thisYear = today.getFullYear();
   return (
     <footer className='w-96 text-center my-6 md:mx-auto'>
       <div className='grid grid-cols-7 gap-2 mx-6 md:flex md:justify-between md:mx-4 md:space-x-4'>
@@ -54,7 +56,7 @@ export default function Footer() {
             </svg>
           </a>
         </div>
-        <div className='text-sm col-span-3'>Copyright &copy; Impostor Engineer 2022</div>
+        <div className='text-sm col-span-3'>Copyright &copy; Impostor Engineer {thisYear}</div>
       </div>
     </footer>
   );
