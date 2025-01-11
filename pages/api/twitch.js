@@ -22,7 +22,7 @@ export async function getTwitchStatus() {
   return channelStatus;
 }
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   const amILive = await getTwitchStatus();
   res.status(200).json({ amILive });
-};
+}
