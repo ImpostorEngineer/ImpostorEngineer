@@ -33,23 +33,38 @@ export default function SECFilings() {
   }
   function renderHtml(finalData, cik) {
     const filingSize = finalData.length;
+    let tableRows = '';
     for (let i = 0; i < filingSize; i++) {
       const folderName = finalData[i].accessionNumber.replaceAll('-', '');
       let financialData = '';
       if ((finalData[i].form == '10-K') | (finalData[i].form == '10-Q')) {
         financialData = `&nbsp;|&nbsp;<a href='https://www.sec.gov/Archives/edgar/data/${cik}/${folderName}/Financial_Report.xlsx'>XLS</a>`;
       }
-      document.querySelector('#data').innerHTML += `<div class='flex flex-row justify-between text-sm	'>
-      <div>${finalData[i].tic}</div>
-      <div>${finalData[i].reportYear}</div>
-      <div>${finalData[i].filingDate}</div>
-      <div>${finalData[i].reportDate}</div>
-      <div>${finalData[i].form}</div>
-      <div>${finalData[i].primaryDocDescription}</div>
-      <div><a href='https://www.sec.gov/Archives/edgar/data/${cik}/${folderName}/${finalData[i].primaryDocument}' target='_blank'>Doc</a>${financialData}</div>
-     </div>
+      tableRows += `<tr class='text-left border-b font-mono hover:bg-neutral-200'>
+      <td class="px-2">${finalData[i].tic}</td>
+      <td class="px-2">${finalData[i].reportYear}</td>
+      <td class="px-2">${finalData[i].filingDate}</td>
+      <td class="px-2">${finalData[i].reportDate}</td>
+      <td class="px-2">${finalData[i].form}</td>
+      <td class="px-2 overflow-hidden">${finalData[i].primaryDocDescription}</td>
+      <td class="px-2"><a href='https://www.sec.gov/Archives/edgar/data/${cik}/${folderName}/${finalData[i].primaryDocument}' target='_blank'>Doc</a>${financialData}</tr>
+     </tr>
      `;
     }
+    let table = `<thead class="text-left bg-neutral-300">
+    <tr class="border-b">
+          <th class="p-2">TIC</th>
+          <th class="p-2">Year</th>
+          <th class="p-2">Filing Date</th>
+          <th class="p-2">Report Date</th>
+          <th class="p-2">Form</th>
+          <th class="p-2">Description</th>
+          <th class="p-2">Doc</th>
+          </tr>
+          </thead>
+          <tbody>${tableRows}
+          </tbody>`;
+    document.querySelector('#data').innerHTML = table;
   }
   function getFilings(cikList, formType, year) {
     for (let i = 0; i < cikList.length; i++) {
@@ -68,13 +83,13 @@ export default function SECFilings() {
 
   return (
     <section>
-      <div className='mx-4'>
-        <form className='grid gap-x-1 grid-cols-5' onSubmit={formSubmitted}>
+      <div className='mx-auto'>
+        <form className='grid gap-x-1 grid-cols-7' onSubmit={formSubmitted}>
           <input
             type='text'
             name='cik'
             id='cikinput'
-            className='rounded-md p-1 col-span-2'
+            className='rounded-md p-1 col-span-4 border border-solid'
             placeholder='Enter company CIKs, coma separated'
           />
           <select name='formName' title='formName' id='formlist' className='w-30 p-1 border border-solid rounded-md'>
@@ -91,23 +106,12 @@ export default function SECFilings() {
             className='rounded-md border border-solid p-1'
             placeholder='Beginning year'
           />
-          <button type='submit' className='p-2 font-semibold bg-blue-500 text-white rounded-md w-20'>
+          <button type='submit' className='p-2 font-semibold bg-blue-500 text-white rounded-md w-20 ml-auto'>
             Search
           </button>
         </form>
       </div>
-      <div className='mx-4'>
-        <div className='flex justify-between font-semibold mt-4 mb-2'>
-          <div>TIC</div>
-          <div>Year</div>
-          <div>Filing Date</div>
-          <div>Report Date</div>
-          <div>Form</div>
-          <div>Description</div>
-          <div>Doc</div>
-        </div>
-      </div>
-      <div className='mx-4' id='data'></div>
+      <table className='min-w-full mt-2' id='data'></table>
     </section>
   );
 }

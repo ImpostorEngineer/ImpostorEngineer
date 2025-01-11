@@ -1,8 +1,8 @@
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { highlight } from 'sugar-high';
-import React from 'react';
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => <th key={index}>{header}</th>);
@@ -43,7 +43,16 @@ function CustomLink(props) {
 }
 
 function RoundedImage(props) {
-  return <Image alt={props.alt} className='rounded-lg' {...props} />;
+  return (
+    <Image
+      alt={props.alt}
+      className='m-4'
+      {...props}
+      width={100}
+      height={100}
+      style={{ width: '100%', height: 'auto' }}
+    />
+  );
 }
 
 function Code({ children, ...props }) {
@@ -92,6 +101,7 @@ let components = {
   h5: createHeading(5),
   h6: createHeading(6),
   Image: RoundedImage,
+  img: RoundedImage,
   a: CustomLink,
   code: Code,
   Table,

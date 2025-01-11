@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { formatDate } from '@/app/utils/utils';
 
 export function BlogPosts({ posts, begin = 0, end = 6 }) {
+  const today = +new Date();
   return (
     <div className='grid grid-cols-1 gap-4 md:px-4 md:grid-cols-2'>
       {posts
@@ -12,7 +13,11 @@ export function BlogPosts({ posts, begin = 0, end = 6 }) {
           }
           return 1;
         })
-        .filter((post) => post.metadata.draft !== true)
+        .filter((post) => {
+          const timeZoneOffset = new Date(Date.parse(post.metadata.date)).getTimezoneOffset() * 60 * 1001;
+          const postDate = Date.parse(post.metadata.date) + timeZoneOffset;
+          return (post.metadata.draft !== true) & (today >= postDate);
+        })
         .slice(begin, end)
         .map((post) => (
           <div key={post.slug} className='w-[340px] rounded-lg shadow-md bg-gray-800 text-white pb-4 md:w-[370px]'>
