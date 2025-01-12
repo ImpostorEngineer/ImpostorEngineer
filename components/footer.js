@@ -56,7 +56,10 @@ export default function Footer() {
             </svg>
           </a>
         </div>
-        <div className='text-sm col-span-3'>Copyright &copy; Impostor Engineer {thisYear}</div>
+        <div className='text-sm col-span-3'>
+          Copyright &copy; <br />
+          Impostor Engineer {thisYear}
+        </div>
       </div>
     </footer>
   );

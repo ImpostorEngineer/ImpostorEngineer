@@ -20,7 +20,10 @@ export function BlogPosts({ posts, begin = 0, end = 6 }) {
         })
         .slice(begin, end)
         .map((post) => (
-          <div key={post.slug} className='w-[340px] rounded-lg shadow-md bg-gray-800 text-white pb-4 md:w-[370px]'>
+          <div
+            key={post.slug}
+            className='w-[340px] rounded-lg bg-gray-900 text-white pb-4 md:w-[370px] shadow-[3px_3px_10px_rgba(51,51,51,1) dark:shadow-[3px_3px_10px_rgba(0,0,0,.6)]'
+          >
             <Link href={`/blog/${post.slug}`} className=''>
               <Image
                 src={`/images/blogimages/${post.metadata.banner}`}
@@ -37,7 +40,10 @@ export function BlogPosts({ posts, begin = 0, end = 6 }) {
             <br />
             <small className='flex px-4 gap-2'>
               {post.metadata.tags.map((tag) => (
-                <div key={tag} className='rounded-lg bg-gray-700 text-white px-2 py-1'>
+                <div
+                  key={tag}
+                  className='rounded-lg bg-gray-600 text-white px-1 py-1 dark:text-black dark:bg-neutral-200'
+                >
                   <Link href={`/blog/tags/${tag}`}>#{tag}</Link>
                 </div>
               ))}
