@@ -22,7 +22,7 @@ export function BlogPosts({ posts, begin = 0, end = 6 }) {
         .map((post) => (
           <div
             key={post.slug}
-            className='w-[340px] rounded-lg bg-gray-900 text-white pb-4 md:w-[370px] shadow-[3px_3px_10px_rgba(51,51,51,1) dark:shadow-[3px_3px_10px_rgba(0,0,0,.6)]'
+            className='w-[340px] rounded-lg bg-gray-900 text-white pb-4 md:w-[370px] shadow-[3px_3px_10px_rgba(51,51,51,1)]dark:shadow-[3px_3px_10px_rgba(0,0,0,.6)]'
           >
             <Link href={`/blog/${post.slug}`} className=''>
               <Image
