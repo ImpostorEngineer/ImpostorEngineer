@@ -35,7 +35,7 @@ export default function Layout({ children }) {
         <meta name='twitter:description' content='I am not an engineer, just a hobbyist.' />
         <meta name='twitter:image' content='https://impostorengineer.vercel.app/images/wide-card.png' />
       </head>
-      <body className='antialiased w-full mt-8 md:max-w-screen-lg lg:mx-auto light' data-theme='light'>
+      <body className='antialiased w-full mt-1 md:mt-4 md:max-w-screen-lg lg:mx-auto light' data-theme='light'>
         <ThemeProvider>
           <Navbar />
           <main className='min-h-96 mx-4'>{children}</main>
