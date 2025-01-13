@@ -25,8 +25,8 @@ export default function Home() {
         <p className='py-1'>On this page I will share some notes, code, and my projects.</p>
       </section>
       <section className='py-4'>
-        <h2>Latest Blog Posts:</h2>
-        <BlogPosts posts={allPostsData} end={2} />
+        <h2>Latest Blog Post:</h2>
+        <BlogPosts posts={allPostsData} page={1} slice={1} />
       </section>
     </div>
   );

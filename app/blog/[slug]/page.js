@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { CustomMDX } from '@/app/utils/md.js';
-import { formatDate, getBlogPosts } from '@/app/utils/utils.js';
+import { CustomMDX } from '@/app/utils/md';
+import { formatDate, getBlogPosts, readContent } from '@/app/utils/utils';
 import { notFound } from 'next/navigation';
+import 'highlight.js/styles/github-dark.css';
 
 export async function generateStaticParams() {
   let posts = getBlogPosts('blog/posts');
@@ -12,11 +13,12 @@ export async function generateStaticParams() {
 
 export default async function Blog({ params }) {
   const postParams = await params;
-  let post = getBlogPosts('blog/posts').find((post) => post.slug === postParams.slug);
+  const post = getBlogPosts('blog/posts').find((post) => post.slug === postParams.slug);
 
   if (!post) {
     notFound();
   }
+  const contentHTML = await readContent(post.content);
 
   return (
     <section>
@@ -32,7 +34,7 @@ export default async function Blog({ params }) {
         ))}
       </small>
       <article className='post'>
-        <CustomMDX source={post.content} />
+        <CustomMDX source={contentHTML} />
       </article>
     </section>
   );

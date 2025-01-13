@@ -1,6 +1,16 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import remarkGfm from 'remark-gfm';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeImgSize from 'rehype-img-size';
+import { unified } from 'unified';
+import rehypeStringify from 'rehype-stringify';
+import rehypekUnwrapImages from 'rehype-unwrap-images';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 function parseFrontmatter(fileContent) {
   const matterResult = matter(fileContent);
@@ -19,10 +29,27 @@ function readMDXFile(filePath) {
   return parseFrontmatter(rawContent);
 }
 
+export async function readContent(content) {
+  const processedContent = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype)
+    .use(rehypeImgSize, { dir: 'public' })
+    .use(rehypekUnwrapImages)
+    .use(rehypeHighlight)
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings)
+    .use(rehypeStringify)
+    .process(content);
+  const contentHtml = processedContent.toString();
+  return contentHtml;
+}
+
 function getMDXData(dir) {
   let mdxFiles = getMDXFiles(dir);
   return mdxFiles.map((file) => {
     let { metadata, content } = readMDXFile(path.join(dir, file));
+
     let slug = metadata.slug;
 
     return {
@@ -71,4 +98,26 @@ export function formatDate(date, includeRelative = false) {
   }
 
   return `${fullDate} (${formattedDate})`;
+}
+
+export function countedTags(allPostsData) {
+  function countOccurrences(arr, item) {
+    return arr.filter((currentItem) => currentItem === item).length;
+  }
+
+  let allTags = [];
+  allPostsData.map((p) =>
+    p.metadata.tags.map((t) => {
+      allTags.push(t);
+    })
+  );
+
+  const uniqueTags = [...new Set(allTags)];
+
+  const countedTags = uniqueTags.map((tag) => {
+    return { tag: tag, count: countOccurrences(allTags, tag) };
+  });
+
+  const sortedTags = countedTags.sort((a, b) => b.count - a.count);
+  return sortedTags;
 }

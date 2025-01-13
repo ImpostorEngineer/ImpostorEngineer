@@ -546,6 +546,9 @@ export default function LaborStats() {
       { name: 'Lodging', data: lodgingNotAdjusted.twelveMonthChange.slice(12) },
     ];
 
+    const chartMax = (Math.ceil(Math.max(...cpiPartsChartData.map((d) => Math.max(...d.data))) + 5) * 10) / 10;
+    const chartMin = Math.floor((Math.min(...cpiPartsChartData.map((d) => Math.min(...d.data))) - 5) / 10) * 10;
+
     const cpiPartsChartOptions = {
       theme: {
         mode: theme,
@@ -632,8 +635,8 @@ export default function LaborStats() {
         show: true,
         decimalsInFloat: 2,
         tickAmount: 10,
-        max: Math.ceil((Math.max(...cpiPartsChartData.map((d) => Math.max(...d.data.slice(12)))) + 5) / 10) + 10,
-        min: Math.floor((Math.min(...cpiPartsChartData.map((d) => Math.min(...d.data.slice(12)))) - 5) / 10) * 10,
+        max: chartMax,
+        min: chartMin,
       },
     };
 
