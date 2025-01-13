@@ -170,16 +170,3 @@ li {
 li::marker {
   color: var(--hover);
 }
-
-.hljs {
-  font-size: 0.9rem;
-  font-family: 'Source Code Pro', monospace;
-  border-radius: 10px;
-  box-shadow: 5px 5px 10px var(--shadow);
-  white-space: pre;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.hljs::-webkit-scrollbar {
-  display: none;
-}

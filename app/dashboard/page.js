@@ -56,6 +56,8 @@ export default function Dashboard() {
       },
     ];
 
+    const tsaChartMax = Math.ceil((Math.max(...tsaChartSourceData['2024']) + 100000) / 10) * 10;
+    const tsaChartMin = Math.floor((Math.min(...tsaChartSourceData['2024']) - 100000) / 10) * 10;
     const tsaChartMaxGap = Math.ceil((Math.max(...tsaChartSourceData['gap']) + 5) / 10) * 10;
     const tsaChartMinGap = Math.floor((Math.min(...tsaChartSourceData['gap']) - 5) / 10) * 10;
     const tsaChartTickAmount = -(tsaChartMinGap - tsaChartMaxGap) / 10;
@@ -149,8 +151,8 @@ export default function Dashboard() {
           seriesName: '2024',
           showAlways: true,
           show: true,
-          max: 3200000,
-          min: 750000,
+          max: tsaChartMax,
+          min: tsaChartMin,
           tickAmount: 9,
           decimalsInFloat: 0,
           labels: {
@@ -162,8 +164,8 @@ export default function Dashboard() {
         {
           seriesName: '2023',
           show: false,
-          max: 3200000,
-          min: 750000,
+          max: tsaChartMax,
+          min: tsaChartMin,
           tickAmount: 9,
           decimalsInFloat: 2,
           labels: {

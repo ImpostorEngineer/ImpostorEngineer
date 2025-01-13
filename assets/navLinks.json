@@ -1,20 +1,14 @@
-{
-  "/": {
-    "name": "Home"
-  },
-  "/blog": {
-    "name": "Blog"
-  },
-  "/projects": {
+[
+  { "link": "/", "name": "Home" },
+  { "link": "/blog", "name": "Blog" },
+  {
+    "link": "/projects",
     "name": "Projects"
   },
-  "/dashboard": {
-    "name": "Hospitality Data"
-  },
-  "/about": {
-    "name": "About"
-  },
-  "/contact": {
+  { "link": "/dashboard", "name": "Hospitality Data" },
+  { "link": "/about", "name": "About" },
+  {
+    "link": "/contact",
     "name": "Contact"
   }
-}
+]

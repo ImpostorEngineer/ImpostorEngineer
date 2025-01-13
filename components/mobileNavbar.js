@@ -1,12 +1,11 @@
 'use client';
 import Link from 'next/link';
 import { useTheme } from '../context/ThemeContext';
-import navLinks from '@/assets/navLinks.json';
+import navItems from '@/assets/navLinks.json';
 import { useState } from 'react';
 
 export default function MobileNavBar() {
   const { theme, toggleTheme } = useTheme();
-  const navItems = navLinks;
   const [toggleMenu, setToggleMenu] = useState(false);
 
   return (
@@ -27,9 +26,14 @@ export default function MobileNavBar() {
           !toggleMenu ? 'h-0' : 'h-full'
         }`}
       >
-        {Object.entries(navItems).map(([path, { name }]) => (
-          <Link key={path} href={path} className='font-bold p-2 mx-4' onClick={() => setToggleMenu(!toggleMenu)}>
-            {name}
+        {navItems.map((path) => (
+          <Link
+            key={path.name}
+            href={path.link}
+            className='font-bold p-2 mx-4'
+            onClick={() => setToggleMenu(!toggleMenu)}
+          >
+            {path.name}
           </Link>
         ))}
 

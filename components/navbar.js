@@ -2,23 +2,20 @@
 import Link from 'next/link';
 import { useTheme } from '../context/ThemeContext';
 import MobileNavBar from './mobileNavbar';
-import navLinks from '@/assets/navLinks.json';
+import navItems from '@/assets/navLinks.json';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
-
-  const navItems = navLinks;
-
   return (
     <nav className='flex justify-start items-center py-4 pb-4 mr-8'>
       <div className='lg:flex hidden md:ml-2 md:block'>
-        {Object.entries(navItems).map(([path, { name }]) => (
+        {navItems.map((path) => (
           <Link
-            key={path}
-            href={path}
+            key={path.name}
+            href={path.link}
             className='rounded-md text-xl font-bold hover:text-gray-800 hover:bg-gray-300 p-2'
           >
-            {name}
+            {path.name}
           </Link>
         ))}
       </div>
