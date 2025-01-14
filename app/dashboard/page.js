@@ -8,7 +8,7 @@ export default function Dashboard() {
   const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
   const { theme } = useTheme();
 
-  const updateDate = 'Jan 23, 2024';
+  const updateDate = 'Jan 17, 2025';
 
   function tsaDataChartOptions(data) {
     const tsaRawData = data;
