@@ -13,7 +13,7 @@ export default function Dashboard() {
   function tsaDataChartOptions(data) {
     const tsaRawData = data;
     let tsaChartSourceData = tsaRawData['data'].slice(0, 90).reduce((obj, days) => {
-      const years = ['2022', '2023', '2024', 'date'];
+      const years = ['2022', '2023', '2024', '2025', 'date'];
       for (let year = 0; year < years.length; year++) {
         if (!obj[years[year]]) {
           obj[years[year]] = [days[years[year]]];
@@ -30,25 +30,25 @@ export default function Dashboard() {
 
     tsaChartSourceData['gap'] = [];
 
-    for (let i = 0; i < tsaChartSourceData['2024'].length; i++) {
+    for (let i = 0; i < tsaChartSourceData['2025'].length; i++) {
       let gap = '';
-      if (tsaChartSourceData['2024'][i] == 0) {
-        gap = Math.round((tsaChartSourceData['2023'][i] / tsaChartSourceData['2022'][i] - 1) * 10000) / 100;
+      if (tsaChartSourceData['2025'][i] == 0) {
+        gap = Math.round((tsaChartSourceData['2024'][i] / tsaChartSourceData['2023'][i] - 1) * 10000) / 100;
         tsaChartSourceData['gap'].push(gap);
       } else {
-        gap = Math.round((tsaChartSourceData['2024'][i] / tsaChartSourceData['2023'][i] - 1) * 10000) / 100;
+        gap = Math.round((tsaChartSourceData['2025'][i] / tsaChartSourceData['2024'][i] - 1) * 10000) / 100;
         tsaChartSourceData['gap'].push(gap);
       }
     }
 
     const tsaChartData = [
       {
-        name: '2024',
-        data: tsaChartSourceData['2024'],
-      },
-      {
         name: '2023',
         data: tsaChartSourceData['2023'],
+      },
+      {
+        name: '2024',
+        data: tsaChartSourceData['2024'],
       },
       {
         name: 'Gap',
@@ -237,17 +237,19 @@ export default function Dashboard() {
       strData[year]['week'] = data[year].map((o) => o.week);
     }
 
-    const indexedYears = ['2023', '2024'];
+    const indexedYears = ['2023', '2024', '2025'];
     let strDataIndex = { occIndex: [], ADRIndex: [], date: [] };
 
-    for (let y = 0; y < indexedYears.length; y++) {
+    for (let y = 1; y < indexedYears.length; y++) {
       strDataIndex['occIndex'].push(
         ...strData[indexedYears[y]]['occupancy'].map(
-          (o, i) => Math.round((o / strData['2022']['occupancy'][i]) * 10000) / 100
+          (o, i) => Math.round((o / strData[indexedYears[y - 1]]['occupancy'][i]) * 10000) / 100
         )
       );
       strDataIndex['ADRIndex'].push(
-        ...strData[indexedYears[y]]['ADR'].map((a, i) => Math.round((a / strData['2022']['ADR'][i]) * 10000) / 100)
+        ...strData[indexedYears[y]]['ADR'].map(
+          (a, i) => Math.round((a / strData[indexedYears[y - 1]]['ADR'][i]) * 10000) / 100
+        )
       );
       strDataIndex['date'].push(...strData[indexedYears[y]]['date']);
     }
@@ -296,6 +298,10 @@ export default function Dashboard() {
         name: '2024',
         data: strData['2024']['occupancy'],
       },
+      {
+        name: '2025',
+        data: strData['2025']['occupancy'],
+      },
     ];
 
     const ADRChartData = [
@@ -331,6 +337,10 @@ export default function Dashboard() {
         name: '2024',
         data: strData['2024']['ADR'],
       },
+      {
+        name: '2025',
+        data: strData['2025']['ADR'],
+      },
     ];
 
     const revPARChartData = [
@@ -365,6 +375,10 @@ export default function Dashboard() {
       {
         name: '2024',
         data: strData['2024']['RevPAR'],
+      },
+      {
+        name: '2025',
+        data: strData['2025']['RevPAR'],
       },
     ];
 
@@ -464,7 +478,7 @@ export default function Dashboard() {
         width: 3,
       },
       subtitle: {
-        text: 'Indexed to 2022, Source: STR, str.com',
+        text: 'Indexed YOY, Source: STR, str.com',
         align: 'left',
         offsetX: 10,
         offsetY: 30,
@@ -553,8 +567,8 @@ export default function Dashboard() {
         ],
         xaxis: [
           {
-            x: '1/6/2024',
-            x2: strDataIndex['date'][strDataIndex['date'].length - 1],
+            x: '1/4/2025',
+            x2: '12/26/25',
             strokeDashArray: 0,
             borderColor: '#333',
             fillColor: '#ccc',
@@ -562,7 +576,7 @@ export default function Dashboard() {
             offsetX: 0,
             offsetY: 0,
             label: {
-              text: '2024',
+              text: '2025',
               textAnchor: 'middle',
               orientation: 'vertical',
               style: {
