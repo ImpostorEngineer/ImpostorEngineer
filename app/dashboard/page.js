@@ -386,7 +386,7 @@ export default function Dashboard() {
       chart: {
         dropShadow: {
           enabled: true,
-          enabledOnSeries: [7],
+          enabledOnSeries: [8],
           top: 1,
           left: 1,
           blur: 0,
