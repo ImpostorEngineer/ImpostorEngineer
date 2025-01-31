@@ -604,6 +604,11 @@ export default function Dashboard() {
           fontSize: '16px',
         },
       },
+      yaxis: {
+        max: 80,
+        min: 10,
+        tickAmount: 7,
+      },
     };
     const ADRChartOptions = {
       ...mainChartOptions,
@@ -616,6 +621,11 @@ export default function Dashboard() {
           fontWeight: 600,
           fontSize: '16px',
         },
+      },
+      yaxis: {
+        max: 180,
+        min: 80,
+        tickAmount: 10,
       },
     };
     const revPARChartOptions = {
@@ -632,6 +642,7 @@ export default function Dashboard() {
       },
       yaxis: {
         max: 130,
+        min: 30,
         tickAmount: 10,
       },
     };
