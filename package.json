@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "apexcharts": "^4.3.0",
-    "axios": "^1.7.9",
+    "axios": "^1.8.2",
     "dotenv": "^16.4.7",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
