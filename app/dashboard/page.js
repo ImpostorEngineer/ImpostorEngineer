@@ -75,6 +75,14 @@ export default function Dashboard() {
         },
         toolbar: {
           show: true,
+          tools: {
+            download: false,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+          },
         },
         fontFamily: 'Inter, Roboto, Arial, sans-serif',
         type: 'line',
@@ -395,6 +403,14 @@ export default function Dashboard() {
         },
         toolbar: {
           show: true,
+          tools: {
+            download: false,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+          },
         },
         fontFamily: 'Inter, Roboto, Arial, sans-serif',
         type: 'line',

@@ -177,6 +177,17 @@ export default function LaborStats() {
         zoom: {
           enabled: false,
         },
+        toolbar: {
+          show: true,
+          tools: {
+            download: false,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+          },
+        },
       },
       // colors: ['#d90429', '#ffc300'],
       fill: {
@@ -294,6 +305,17 @@ export default function LaborStats() {
         type: 'line',
         zoom: {
           enabled: false,
+        },
+        toolbar: {
+          show: true,
+          tools: {
+            download: false,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+          },
         },
       },
       colors: ['#d90429', '#ffc300'],
@@ -417,6 +439,17 @@ export default function LaborStats() {
         type: 'line',
         zoom: {
           enabled: false,
+        },
+        toolbar: {
+          show: true,
+          tools: {
+            download: false,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+          },
         },
       },
       // colors: ['#d90429', '#ffc300', '#0EB300'],
@@ -575,6 +608,17 @@ export default function LaborStats() {
         type: 'line',
         zoom: {
           enabled: false,
+        },
+        toolbar: {
+          show: true,
+          tools: {
+            download: false,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+          },
         },
       },
       // colors: ['#FFFF00', '#008080', '#0000FF', '#800000', '#0EB300', '#C0C0C0', '#4cc9f0', '#AE2012', '#FF00FF'],
