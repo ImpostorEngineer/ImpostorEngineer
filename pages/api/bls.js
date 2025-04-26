@@ -8,28 +8,28 @@ async function GetLaborStats() {
     url,
     {
       seriesid: [
-        'CES0000000001',
-        'CES7000000001',
-        'CUSR0000SA0',
-        'CUUR0000SA0',
-        'CUSR0000SAF1',
-        'CUUR0000SAF1',
-        'CUSR0000SAF11',
-        'CUUR0000SAF11',
-        'CUSR0000SEFV',
-        'CUUR0000SEFV',
-        'CUSR0000SA0E',
-        'CUUR0000SA0E',
-        'CUSR0000SETB01',
-        'CUUR0000SETB01',
-        'CUSR0000SETA01',
-        'CUUR0000SETA01',
-        'CUSR0000SETA02',
-        'CUUR0000SETA02',
-        'CUSR0000SEHA',
-        'CUUR0000SEHA',
-        'CUSR0000SEHB',
-        'CUUR0000SEHB',
+        'CES0000000001', // All Employees, Not Seasonally Adjusted
+        'CES7000000001', // All Employees: Leisure and Hospitality, Not Seasonally Adjusted
+        'CUSR0000SA0', // Consumer Price Index for All Urban Consumers: All Items in U.S. City Average, Seasonally Adjusted
+        'CUUR0000SA0', // Consumer Price Index for All Urban Consumers: All Items in U.S. City Average, Not Seasonally Adjusted
+        'CUSR0000SAF1', // Food in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SAF1', // Food in U.S. city average, all urban consumers, not seasonally adjusted
+        'CUSR0000SAF11', // Food at home in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SAF11', // Food at home in U.S. city average, all urban consumers, not seasonally adjusted
+        'CUSR0000SEFV', // Food away from home in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SEFV', // Food away from home in U.S. city average, all urban consumers, not seasonally adjusted
+        'CUSR0000SA0E', // Energy in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SA0E', // Energy in U.S. city average, all urban consumers, not seasonally adjusted
+        'CUSR0000SETB01', // Gasoline (all types) in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SETB01', // Gasoline (all types) in U.S. city average, all urban consumers, not seasonally adjusted
+        'CUSR0000SETA01', // New vehicles in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SETA01', // New vehicles in U.S. city average, all urban consumers, not seasonally adjusted
+        'CUSR0000SETA02', // Used cars and trucks in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SETA02', // Used cars and trucks in U.S. city average, all urban consumers, not seasonally adjusted
+        'CUSR0000SEHA', // Rent of primary residence in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SEHA', // Rent of primary residence in U.S. city average, all urban consumers, not seasonally adjusted
+        'CUSR0000SEHB', // Lodging away from home in U.S. city average, all urban consumers, seasonally adjusted
+        'CUUR0000SEHB', // Lodging away from home in U.S. city average, all urban consumers, not seasonally adjusted
       ],
       startyear: startYear,
       endyear: currentYear,
