@@ -5,15 +5,20 @@ import strRawData from '../../assets/data/strdata.json';
 import tsaRawData from '../../assets/data/passengerData.json';
 
 export default function Dashboard() {
-  const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+  const Chart = dynamic(() => import('react-apexcharts').then((mod) => mod.default), { ssr: false });
   const { theme } = useTheme();
 
-  const updateDate = 'April 25, 2025';
+  const updateDate = 'Jan 30, 2026';
+
+  const today = new Date();
+  const beginning = new Date('2026-01-01');
+  const diffMs = today - beginning;
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24)) - 1;
 
   function tsaDataChartOptions(data) {
     const tsaRawData = data;
-    let tsaChartSourceData = tsaRawData['data'].slice(0, 90).reduce((obj, days) => {
-      const years = ['2022', '2023', '2024', '2025', 'date'];
+    let tsaChartSourceData = tsaRawData['data'].slice(0, diffDays).reduce((obj, days) => {
+      const years = ['2024', '2025', '2026', 'date'];
       for (let year = 0; year < years.length; year++) {
         if (!obj[years[year]]) {
           obj[years[year]] = [days[years[year]]];
@@ -30,25 +35,25 @@ export default function Dashboard() {
 
     tsaChartSourceData['gap'] = [];
 
-    for (let i = 0; i < tsaChartSourceData['2025'].length; i++) {
+    for (let i = 0; i < tsaChartSourceData['2026'].length; i++) {
       let gap = '';
-      if (tsaChartSourceData['2025'][i] == 0) {
-        gap = Math.round((tsaChartSourceData['2024'][i] / tsaChartSourceData['2023'][i] - 1) * 10000) / 100;
+      if (tsaChartSourceData['2026'][i] == 0) {
+        gap = Math.round((tsaChartSourceData['2025'][i] / tsaChartSourceData['2024'][i] - 1) * 10000) / 100;
         tsaChartSourceData['gap'].push(gap);
       } else {
-        gap = Math.round((tsaChartSourceData['2025'][i] / tsaChartSourceData['2024'][i] - 1) * 10000) / 100;
+        gap = Math.round((tsaChartSourceData['2026'][i] / tsaChartSourceData['2025'][i] - 1) * 10000) / 100;
         tsaChartSourceData['gap'].push(gap);
       }
     }
 
     const tsaChartData = [
       {
-        name: '2023',
-        data: tsaChartSourceData['2023'],
+        name: '2025',
+        data: tsaChartSourceData['2025'],
       },
       {
-        name: '2024',
-        data: tsaChartSourceData['2024'],
+        name: '2026',
+        data: tsaChartSourceData['2026'],
       },
       {
         name: 'Gap',
@@ -56,8 +61,8 @@ export default function Dashboard() {
       },
     ];
 
-    const tsaChartMax = Math.ceil((Math.max(...tsaChartSourceData['2024']) + 100000) / 10) * 10;
-    const tsaChartMin = Math.floor((Math.min(...tsaChartSourceData['2024']) - 100000) / 10) * 10;
+    const tsaChartMax = Math.ceil((Math.max(...tsaChartSourceData['2026']) + 100000) / 10) * 10;
+    const tsaChartMin = Math.floor((Math.min(...tsaChartSourceData['2026']) - 100000) / 10) * 10;
     const tsaChartMaxGap = Math.ceil((Math.max(...tsaChartSourceData['gap']) + 5) / 10) * 10;
     const tsaChartMinGap = Math.floor((Math.min(...tsaChartSourceData['gap']) - 5) / 10) * 10;
     const tsaChartTickAmount = -(tsaChartMinGap - tsaChartMaxGap) / 10;
@@ -66,23 +71,15 @@ export default function Dashboard() {
       chart: {
         dropShadow: {
           enabled: true,
-          enabledOnSeries: [0, 1, 2],
+          enabledOnSeries: [0, 1],
           top: 1,
           left: 1,
           blur: 0,
           color: '#000',
-          opacity: 1,
+          opacity: 0.5,
         },
         toolbar: {
-          show: true,
-          tools: {
-            download: false,
-            selection: true,
-            zoom: true,
-            zoomin: true,
-            zoomout: true,
-            pan: true,
-          },
+          show: false,
         },
         fontFamily: 'Inter, Roboto, Arial, sans-serif',
         type: 'line',
@@ -101,18 +98,18 @@ export default function Dashboard() {
         },
       },
       grid: {
-        borderColor: '#333',
+        borderColor: '#ececec',
         opacity: 0.1,
         yaxis: {
           lines: {
-            show: true,
+            show: false,
           },
         },
       },
-      colors: ['#EA3546', '#F26624', '#dddddd'],
+      colors: ['#4580ff', '#d25b00', '#b8b8b8'],
       fill: {
         type: 'solid',
-        opacity: [1, 0.4, 0.2],
+        opacity: [0.5, 1, 0.7],
       },
       dataLabels: {
         enabled: false,
@@ -156,21 +153,7 @@ export default function Dashboard() {
       },
       yaxis: [
         {
-          seriesName: '2024',
-          showAlways: true,
-          show: true,
-          max: tsaChartMax,
-          min: tsaChartMin,
-          tickAmount: 9,
-          decimalsInFloat: 0,
-          labels: {
-            formatter: function (val, index) {
-              return (val / 1000000).toFixed(1) + 'M';
-            },
-          },
-        },
-        {
-          seriesName: '2023',
+          seriesName: '2025',
           show: false,
           max: tsaChartMax,
           min: tsaChartMin,
@@ -182,7 +165,20 @@ export default function Dashboard() {
             },
           },
         },
-
+        {
+          seriesName: '2026',
+          show: true,
+          showAlways: true,
+          max: tsaChartMax,
+          min: tsaChartMin,
+          tickAmount: 9,
+          decimalsInFloat: 0,
+          labels: {
+            formatter: function (val, index) {
+              return (val / 1000000).toFixed(1) + 'M';
+            },
+          },
+        },
         {
           opposite: true,
           seriesName: 'Gap',
@@ -190,7 +186,7 @@ export default function Dashboard() {
           min: tsaChartMinGap,
           tickAmount: tsaChartTickAmount,
           title: {
-            text: 'Gap',
+            text: 'Gap (Positive is better)',
             style: {
               fontWeight: 600,
             },
@@ -203,20 +199,46 @@ export default function Dashboard() {
         },
       ],
       annotations: {
-        position: 'back',
-        yaxis: [
-          {
-            y: 0,
-            y2: tsaChartMinGap,
-            yAxisIndex: 2,
-            strokeDashArray: 0,
-            borderColor: '#333',
-            fillColor: '#ccc',
-            opacity: 0.2,
-            offsetX: 0,
-            offsetY: 0,
-          },
-        ],
+        // position: 'back',
+        // yaxis: [
+        //   {
+        //     y: 0,
+        //     y2: tsaChartMinGap,
+        //     yAxisIndex: 2,
+        //     strokeDashArray: [5, 5],
+        //     borderColor: '#000',
+        //     // fillColor: '#eee',
+        //     opacity: 0.05,
+        //     offsetX: 0,
+        //     offsetY: 0,
+        //   },
+        // ],
+        //   xaxis: [
+        //     {
+        //       x: '1/1/2026',
+        //       x2: tsaChartMaxDate,
+        //       yAxisIndex: 2,
+        //       strokeDashArray: 0,
+        //       borderColor: '#333',
+        //       fillColor: '#ccc',
+        //       opacity: 0.2,
+        //       offsetX: 0,
+        //       offsetY: 0,
+        //       label: {
+        //         text: '2026',
+        //         textAnchor: 'middle',
+        //         orientation: 'vertical',
+        //         style: {
+        //           background: '#fff',
+        //           color: '#777',
+        //           fontSize: '11px',
+        //           fontWeight: 400,
+        //           fontFamily: undefined,
+        //           cssClass: 'apexcharts-xaxis-annotation-label',
+        //         },
+        //       },
+        //     },
+        //   ],
       },
     };
     return { tsaChartData, tsaChartOptions };
@@ -245,19 +267,19 @@ export default function Dashboard() {
       strData[year]['week'] = data[year].map((o) => o.week);
     }
 
-    const indexedYears = ['2023', '2024', '2025'];
+    const indexedYears = ['2024', '2025', '2026'];
     let strDataIndex = { occIndex: [], ADRIndex: [], date: [] };
 
     for (let y = 1; y < indexedYears.length; y++) {
       strDataIndex['occIndex'].push(
         ...strData[indexedYears[y]]['occupancy'].map(
-          (o, i) => Math.round((o / strData[indexedYears[y - 1]]['occupancy'][i]) * 10000) / 100
-        )
+          (o, i) => Math.round((o / strData[indexedYears[y - 1]]['occupancy'][i]) * 10000) / 100,
+        ),
       );
       strDataIndex['ADRIndex'].push(
         ...strData[indexedYears[y]]['ADR'].map(
-          (a, i) => Math.round((a / strData[indexedYears[y - 1]]['ADR'][i]) * 10000) / 100
-        )
+          (a, i) => Math.round((a / strData[indexedYears[y - 1]]['ADR'][i]) * 10000) / 100,
+        ),
       );
       strDataIndex['date'].push(...strData[indexedYears[y]]['date']);
     }
@@ -310,6 +332,10 @@ export default function Dashboard() {
         name: '2025',
         data: strData['2025']['occupancy'],
       },
+      {
+        name: '2026',
+        data: strData['2026']['occupancy'],
+      },
     ];
 
     const ADRChartData = [
@@ -348,6 +374,10 @@ export default function Dashboard() {
       {
         name: '2025',
         data: strData['2025']['ADR'],
+      },
+      {
+        name: '2026',
+        data: strData['2026']['ADR'],
       },
     ];
 
@@ -388,13 +418,17 @@ export default function Dashboard() {
         name: '2025',
         data: strData['2025']['RevPAR'],
       },
+      {
+        name: '2026',
+        data: strData['2026']['RevPAR'],
+      },
     ];
 
     const mainChartOptions = {
       chart: {
         dropShadow: {
           enabled: true,
-          enabledOnSeries: [8],
+          enabledOnSeries: [9],
           top: 1,
           left: 1,
           blur: 0,
@@ -434,7 +468,7 @@ export default function Dashboard() {
         opacity: 0.1,
         yaxis: {
           lines: {
-            show: true,
+            show: false,
           },
         },
       },
