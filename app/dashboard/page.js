@@ -267,22 +267,29 @@ export default function Dashboard() {
       strData[year]['week'] = data[year].map((o) => o.week);
     }
 
-    const indexedYears = ['2024', '2025', '2026'];
-    let strDataIndex = { occIndex: [], ADRIndex: [], date: [] };
+    const strDataIndex = { occIndex: [], ADRIndex: [], date: [] };
+    const strDataOcc = [];
+    const strDataADR = [];
+    const strDataDate = [];
 
-    for (let y = 1; y < indexedYears.length; y++) {
-      strDataIndex['occIndex'].push(
-        ...strData[indexedYears[y]]['occupancy'].map(
-          (o, i) => Math.round((o / strData[indexedYears[y - 1]]['occupancy'][i]) * 10000) / 100,
-        ),
-      );
-      strDataIndex['ADRIndex'].push(
-        ...strData[indexedYears[y]]['ADR'].map(
-          (a, i) => Math.round((a / strData[indexedYears[y - 1]]['ADR'][i]) * 10000) / 100,
-        ),
-      );
-      strDataIndex['date'].push(...strData[indexedYears[y]]['date']);
+    const indexedYears = ['2024', '2025', '2026'];
+    for (let y = 0; y < indexedYears.length; y++) {
+      strDataOcc.push(...strData[indexedYears[y]]['occupancy']);
+      strDataADR.push(...strData[indexedYears[y]]['ADR']);
+      strDataDate.push(...strData[indexedYears[y]]['date']);
     }
+
+    strDataIndex['occIndex'].push(
+      ...strDataOcc.slice(52).map((o, i) => {
+        return Math.round((o / strDataOcc[i]) * 10000) / 100;
+      }),
+    );
+    strDataIndex['ADRIndex'].push(
+      ...strDataADR.slice(52).map((o, i) => {
+        return Math.round((o / strDataADR[i]) * 10000) / 100;
+      }),
+    );
+    strDataIndex['date'].push(...strDataDate.slice(52));
 
     const strIndexChartData = [
       {
@@ -330,7 +337,7 @@ export default function Dashboard() {
       },
       {
         name: '2025',
-        data: strData['2025']['occupancy'],
+        data: strData['2025']['occupancy'].slice(0, 52),
       },
       {
         name: '2026',
@@ -373,7 +380,7 @@ export default function Dashboard() {
       },
       {
         name: '2025',
-        data: strData['2025']['ADR'],
+        data: strData['2025']['ADR'].slice(0, 52),
       },
       {
         name: '2026',
@@ -416,7 +423,7 @@ export default function Dashboard() {
       },
       {
         name: '2025',
-        data: strData['2025']['RevPAR'],
+        data: strData['2025']['RevPAR'].slice(0, 52),
       },
       {
         name: '2026',
@@ -436,14 +443,14 @@ export default function Dashboard() {
           opacity: 1,
         },
         toolbar: {
-          show: true,
+          show: false,
           tools: {
-            download: false,
-            selection: true,
-            zoom: true,
-            zoomin: true,
-            zoomout: true,
-            pan: true,
+            download: true,
+            selection: false,
+            zoom: false,
+            zoomin: false,
+            zoomout: false,
+            pan: false,
           },
         },
         fontFamily: 'Inter, Roboto, Arial, sans-serif',
@@ -464,7 +471,7 @@ export default function Dashboard() {
         },
       },
       grid: {
-        borderColor: '#333',
+        borderColor: '#ccc',
         opacity: 0.1,
         yaxis: {
           lines: {
@@ -474,11 +481,9 @@ export default function Dashboard() {
       },
       yaxis: {
         decimalsInFloat: 2,
-        tickAmount: 10,
-        showAlways: true,
       },
       legend: {
-        height: 35,
+        height: 50,
       },
       xaxis: {
         categories: strData[maxYear]['date'],
@@ -490,6 +495,7 @@ export default function Dashboard() {
         tickAmount: 18,
         tickPlacement: 'on',
       },
+      // colors: ['#c39bd3', '#a8a8a8', '#6bfbec', '#dddddd', '#0EB300', '#404AE0', '#e67e22', '#FF5733'],
       fill: {
         type: 'solid',
         opacity: [...opacityVals],
@@ -528,7 +534,7 @@ export default function Dashboard() {
         width: 3,
       },
       subtitle: {
-        text: 'Indexed YOY, Source: STR, str.com',
+        text: 'Index YOY, Source: STR, str.com',
         align: 'left',
         offsetX: 10,
         offsetY: 30,
@@ -550,7 +556,7 @@ export default function Dashboard() {
           opacity: 1,
         },
         toolbar: {
-          show: true,
+          show: false,
         },
         fontFamily: 'Inter, Roboto, Arial, sans-serif',
         type: 'line',
@@ -569,6 +575,9 @@ export default function Dashboard() {
       },
       yaxis: {
         decimalsInFloat: 2,
+        min: 85,
+        max: 125,
+        tickAmount: 8,
       },
       legend: {
         height: 35,
@@ -579,7 +588,7 @@ export default function Dashboard() {
           rotate: -45,
           maxHeight: 50,
         },
-        tickAmount: 21,
+        tickAmount: 25,
         tickPlacement: 'on',
       },
       colors: ['#0EB300', '#404AE0'],
@@ -617,8 +626,8 @@ export default function Dashboard() {
         ],
         xaxis: [
           {
-            x: '1/4/2025',
-            x2: '12/26/25',
+            x: '1/3/2026',
+            x2: '1/2/2027',
             strokeDashArray: 0,
             borderColor: '#333',
             fillColor: '#ccc',
@@ -626,7 +635,7 @@ export default function Dashboard() {
             offsetX: 0,
             offsetY: 0,
             label: {
-              text: '2025',
+              text: '2026',
               textAnchor: 'middle',
               orientation: 'vertical',
               style: {
@@ -634,6 +643,7 @@ export default function Dashboard() {
                 color: '#777',
                 fontSize: '11px',
                 fontWeight: 400,
+                fontFamily: 'sans-serif',
                 cssClass: 'apexcharts-xaxis-annotation-label',
               },
             },
@@ -641,7 +651,6 @@ export default function Dashboard() {
         ],
       },
     };
-
     const occChartOptions = {
       ...mainChartOptions,
       title: {
@@ -655,11 +664,12 @@ export default function Dashboard() {
         },
       },
       yaxis: {
+        min: 20,
         max: 80,
-        min: 10,
-        tickAmount: 7,
+        tickAmount: 6,
       },
     };
+
     const ADRChartOptions = {
       ...mainChartOptions,
       title: {
@@ -673,11 +683,12 @@ export default function Dashboard() {
         },
       },
       yaxis: {
+        min: 60,
         max: 180,
-        min: 80,
-        tickAmount: 10,
+        tickAmount: 6,
       },
     };
+
     const revPARChartOptions = {
       ...mainChartOptions,
       title: {
@@ -692,8 +703,8 @@ export default function Dashboard() {
       },
       yaxis: {
         max: 130,
-        min: 30,
-        tickAmount: 10,
+        min: 0,
+        tickAmount: 5,
       },
     };
 
