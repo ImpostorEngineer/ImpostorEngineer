@@ -39,16 +39,30 @@ export default function LaborStats() {
     for (let i = 35; i < employmentRawData.data.length; i++) {
       employmentData.unshift((employmentRawData.data[i - 35].value / employmentRawData.data[i].value - 1) * 100);
       dateData.unshift(
-        employmentRawData.data[i - 35].year + '-' + employmentRawData.data[i - 35].periodName.slice(0, 3)
+        employmentRawData.data[i - 35].year + '-' + employmentRawData.data[i - 35].periodName.slice(0, 3),
       );
     }
     for (let i = 35; i < hospitalityEmploymentRawData.data.length; i++) {
       hospitalityEmploymentData.unshift(
-        (hospitalityEmploymentRawData.data[i - 35].value / hospitalityEmploymentRawData.data[i].value - 1) * 100
+        (hospitalityEmploymentRawData.data[i - 35].value / hospitalityEmploymentRawData.data[i].value - 1) * 100,
       );
     }
     const finalData = { dateData, employmentData, hospitalityEmploymentData };
     return finalData;
+  }
+
+  // BLS returns '-' for months with no data (e.g. Oct 2025 shutdown). Use null so ApexCharts
+  // draws a gap; NaN corrupts the SVG path and hides the whole line.
+  function toValue(month) {
+    const value = parseFloat(month?.['value']);
+    return isNaN(value) ? null : value;
+  }
+
+  function valueChange(month, previousMonth) {
+    const current = toValue(month);
+    const previous = toValue(previousMonth);
+    if (current === null || previous === null) return null;
+    return Math.round((current / previous - 1) * 1000) / 10;
   }
 
   function monthlyPercentChange(series) {
@@ -60,12 +74,12 @@ export default function LaborStats() {
         obj['date'].unshift(`${month['year']}-${month['periodName'].slice(0, 3)}`);
       }
       if (!obj['change']) {
-        obj['change'] = [Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10];
+        obj['change'] = [valueChange(month, previousMonth)];
       } else {
         if (!previousMonth) {
           obj['change'].unshift(0);
         } else {
-          obj['change'].unshift(Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10);
+          obj['change'].unshift(valueChange(month, previousMonth));
         }
       }
       return obj;
@@ -77,12 +91,12 @@ export default function LaborStats() {
     const twelveMonthChange = series.data.reduce((obj, month, i) => {
       const twelveMonths = series.data[i + 12];
       if (!obj['twelveMonthChange']) {
-        obj['twelveMonthChange'] = [Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10];
+        obj['twelveMonthChange'] = [valueChange(month, twelveMonths)];
       } else {
         if (!twelveMonths) {
           obj['twelveMonthChange'].unshift(0);
         } else {
-          obj['twelveMonthChange'].unshift(Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10);
+          obj['twelveMonthChange'].unshift(valueChange(month, twelveMonths));
         }
       }
       return obj;
@@ -101,17 +115,17 @@ export default function LaborStats() {
         obj['date'].unshift(`${month['year']}-${month['periodName'].slice(0, 3)}`);
       }
       if (!obj['cpiValue']) {
-        obj['cpiValue'] = [+month['value']];
+        obj['cpiValue'] = [toValue(month)];
       } else {
-        obj['cpiValue'].unshift(+month['value']);
+        obj['cpiValue'].unshift(toValue(month));
       }
       if (!obj['change']) {
-        obj['change'] = [Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10];
+        obj['change'] = [valueChange(month, previousMonth)];
       } else {
         if (!previousMonth) {
           obj['change'].unshift(0);
         } else {
-          obj['change'].unshift(Math.round((month['value'] / previousMonth['value'] - 1) * 1000) / 10);
+          obj['change'].unshift(valueChange(month, previousMonth));
         }
       }
       return obj;
@@ -120,12 +134,12 @@ export default function LaborStats() {
     const cpiUnAdjustedTwelveMonthChange = cpiUnAdjustedRawData.data.reduce((obj, month, i) => {
       const twelveMonths = cpiUnAdjustedRawData.data[i + 12];
       if (!obj['twelveMonthChange']) {
-        obj['twelveMonthChange'] = [Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10];
+        obj['twelveMonthChange'] = [valueChange(month, twelveMonths)];
       } else {
         if (!twelveMonths) {
           obj['twelveMonthChange'].unshift(0);
         } else {
-          obj['twelveMonthChange'].unshift(Math.round((month['value'] / twelveMonths['value'] - 1) * 1000) / 10);
+          obj['twelveMonthChange'].unshift(valueChange(month, twelveMonths));
         }
       }
       return obj;
@@ -397,6 +411,7 @@ export default function LaborStats() {
 
   function cpiDataChartOptions(data) {
     const cpiData = createCPIData(data);
+    console.log('cpiData', cpiData);
 
     const cpiChartData = [
       {
@@ -452,7 +467,7 @@ export default function LaborStats() {
           },
         },
       },
-      // colors: ['#d90429', '#ffc300', '#0EB300'],
+      colors: ['#d90429', '#ffc300', '#0EB300'],
       fill: {
         type: 'solid',
         opacity: [1, 1],
@@ -520,7 +535,7 @@ export default function LaborStats() {
           show: true,
           min: -2,
           max: 10,
-          seriesName: '% Change',
+          seriesName: '% Change, Seasonally Adjusted',
           forceNiceScale: true,
           decimalsInFloat: 2,
         },
@@ -529,7 +544,7 @@ export default function LaborStats() {
           show: false,
           min: -2,
           max: 10,
-          seriesName: '12 Month % Change',
+          seriesName: '12-Month % Change, Not Seasonally Adjusted',
           forceNiceScale: true,
           decimalsInFloat: 2,
         },
@@ -541,31 +556,31 @@ export default function LaborStats() {
   function cpiComponentsChart(data) {
     const foodAdjusted = monthlyPercentChange(data.Results.series.filter((s) => s.seriesID == 'CUSR0000SAF1')[0]);
     const foodNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SAF1')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SAF1')[0],
     );
     const foodAtHomeNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SAF11')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SAF11')[0],
     );
     const foodAwayNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEFV')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEFV')[0],
     );
     const energyNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SA0E')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SA0E')[0],
     );
     const gasolineNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETB01')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETB01')[0],
     );
     const newVehiclesNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETA01')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETA01')[0],
     );
     const usedCarsNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETA02')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SETA02')[0],
     );
     const rentNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEHA')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEHA')[0],
     );
     const lodgingNotAdjusted = twelveMonthPercentChange(
-      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEHB')[0]
+      data.Results.series.filter((s) => s.seriesID == 'CUUR0000SEHB')[0],
     );
     const cpiPartsChartData = [
       { name: 'Food', data: foodNotAdjusted.twelveMonthChange.slice(12) },

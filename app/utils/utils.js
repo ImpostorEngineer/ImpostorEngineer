@@ -4,13 +4,35 @@ import matter from 'gray-matter';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import rehypeImgSize from 'rehype-img-size';
+import { imageSize } from 'image-size';
 import { unified } from 'unified';
 import rehypeStringify from 'rehype-stringify';
 import rehypekUnwrapImages from 'rehype-unwrap-images';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+
+// Replacement for rehype-img-size, which is incompatible with image-size v2.
+// Adds width/height attributes to local <img> tags, resolving src against `dir`.
+function rehypeImgSize({ dir = 'public' } = {}) {
+  const visit = (node) => {
+    if (node.type === 'element' && node.tagName === 'img') {
+      const src = node.properties?.src;
+      if (typeof src === 'string' && !/^(https?:)?\/\//.test(src) && !src.startsWith('data:')) {
+        try {
+          const filePath = path.join(process.cwd(), dir, decodeURI(src.split(/[?#]/)[0]));
+          const { width, height } = imageSize(fs.readFileSync(filePath));
+          node.properties.width ??= width;
+          node.properties.height ??= height;
+        } catch (err) {
+          console.warn(`rehypeImgSize: could not read size for ${src}: ${err.message}`);
+        }
+      }
+    }
+    node.children?.forEach(visit);
+  };
+  return (tree) => visit(tree);
+}
 
 function parseFrontmatter(fileContent) {
   const matterResult = matter(fileContent);
